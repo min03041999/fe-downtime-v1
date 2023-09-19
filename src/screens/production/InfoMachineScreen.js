@@ -12,8 +12,8 @@ const PaperStyle = {
 };
 
 const InfoMachineScreen = () => {
-    const [scannerResult, setScannerResult] = useState("fsdfds");
-    const [statusSubmit, setStatusSubmit] = useState(true);
+    const [scannerResult, setScannerResult] = useState("");
+    const [statusSubmit, setStatusSubmit] = useState(false);
 
     const onReScanner = () => {
         setScannerResult("");
