@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const InfoUserScreen = () => {
     return (
@@ -6,4 +6,4 @@ const InfoUserScreen = () => {
     )
 }
 
-export default InfoUserScreen
+export default InfoUserScreen;
