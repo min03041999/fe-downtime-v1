@@ -6,7 +6,7 @@ import ElectricScreen from './screens/electric/ElectricScreen.js';
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<ElectricScreen />} />
+      <Route path="/electric/*" element={<ElectricScreen />} />
       <Route path="/product/*" element={<ProductionScreen />} />
     </Routes>
   );
