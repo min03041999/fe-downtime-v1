@@ -51,18 +51,18 @@ const InfoMachineScreen = () => {
                             >
                                 <Button
                                     variant="contained"
+                                    color="primary"
+                                    size="small"
+                                    onClick={onSubmit}>
+                                    Xác nhận
+                                </Button>
+                                <Button
+                                    variant="contained"
                                     color="error"
                                     size="small"
                                     onClick={onReScanner}
                                 >
                                     Quét lại
-                                </Button>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    size="small"
-                                    onClick={onSubmit}>
-                                    Xác nhận
                                 </Button>
                             </Stack>
                         </Box>
