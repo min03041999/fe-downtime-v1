@@ -47,8 +47,6 @@ const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
 function ColorlibStepIcon(props) {
   const { active, completed, className } = props;
 
-  console.log(active, completed, className);
-
   const icons = {
     1: <ArticleIcon />,
     2: <QrCodeIcon />,
@@ -85,7 +83,7 @@ const steps = [
   },
 ];
 
-export default function VerticalLinearStepper() {
+export default function ProgressStatus() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [open, setOpen] = React.useState(false);
 
@@ -148,7 +146,6 @@ export default function VerticalLinearStepper() {
                         {step.label} - {step.description}
                       </StepLabel>
                       <StepContent>
-                        {/* <Typography>{step.description}</Typography> */}
                         <Box sx={{ mb: 2 }}>
                           <div>
                             <Button

@@ -14,7 +14,7 @@ const PaperStyle = {
 
 const InfoMachineScreen = () => {
     const auth = useSelector((state) => state.auth);
-    const [scannerResult, setScannerResult] = useState("gdfgdfg");
+    const [scannerResult, setScannerResult] = useState("fdsfdsf");
     const [statusSubmit, setStatusSubmit] = useState(false);
 
     const onReScanner = () => {
