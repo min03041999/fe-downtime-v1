@@ -13,10 +13,10 @@ export const login = createAsyncThunk(
     }
 );
 
-// export const logout = createAsyncThunk("auth/logout",
-//     async () => {
-//         await AuthService.logout();
-//     });
+export const logout = createAsyncThunk("auth/logout",
+    async () => {
+        await AuthService.logout();
+    });
 
 export const authSlice = createSlice({
     name: "auth",
@@ -41,11 +41,11 @@ export const authSlice = createSlice({
             state.errorMessage = action.payload.error_message;
         });
 
-        // builder.addCase(logout.fulfilled, (state, action) => {
-        //     state.isLoading = false;
-        //     state.user = null;
-        //     state.errorMessage = "";
-        // });
+        builder.addCase(logout.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.user = null;
+            state.errorMessage = "";
+        });
     },
 });
 
