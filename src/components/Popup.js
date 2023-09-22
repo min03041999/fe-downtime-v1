@@ -4,7 +4,7 @@ import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlin
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 
 const Popup = (props) => {
-    const { statusPopup } = props;
+    const { statusPopup, errorMessage } = props;
 
     return (
         <Box component="div"
@@ -17,9 +17,9 @@ const Popup = (props) => {
             }}>
             {
                 statusPopup ? (
-                    <PopupSuccess />
+                    <PopupSuccess errorMessage={errorMessage} />
                 ) : (
-                    <PopupFail />
+                    <PopupFail errorMessage={errorMessage} />
                 )
             }
         </Box>
@@ -45,22 +45,24 @@ const contentStyle = {
 }
 
 
-const PopupSuccess = () => {
+const PopupSuccess = (props) => {
+    const { errorMessage } = props;
     return (
         <>
             <Avatar sx={avatarStyle}> <CheckCircleOutlineRoundedIcon sx={{ color: "#00860d", fontSize: "80px" }} /></Avatar>
             <Typography variant="h6">Hoàn thành</Typography>
-            <Typography variant="div" style={contentStyle}>Bạn đã hoàn tất đơn đề nghị thông báo máy hư!</Typography>
+            <Typography variant="div" style={contentStyle}>{errorMessage}</Typography>
         </>
     )
 }
 
-const PopupFail = () => {
+const PopupFail = (props) => {
+    const { errorMessage } = props;
     return (
         <>
             <Avatar sx={avatarStyle}> <CancelOutlinedIcon sx={{ color: "#d32f2f", fontSize: "80px" }} /></Avatar>
             <Typography variant="h6" sx={{ color: "#d32f2f" }}>Lỗi dữ liệu</Typography>
-            <Typography variant="div" style={contentStyle}>Vui lòng làm lại đơn đề nghị hệ thông báo máy hư!</Typography>
+            <Typography variant="div" style={contentStyle}>{errorMessage}</Typography>
         </>
     )
 }

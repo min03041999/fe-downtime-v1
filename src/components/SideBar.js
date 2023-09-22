@@ -14,8 +14,9 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Banner from "./Banner";
-import { Link, useLocation } from "react-router-dom";
-
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/features/auth";
 
 const menuSliderContainer = {
     minWidth: 250,
@@ -24,7 +25,9 @@ const menuSliderContainer = {
 };
 
 const SideBar = (props) => {
-    const { sideBarMenu, children } = props;
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { sideBarMenu, user, children } = props;
     const { pathname } = useLocation();
 
     const active = sideBarMenu.findIndex((e) => e.path === pathname);
@@ -35,10 +38,15 @@ const SideBar = (props) => {
         setOpen(!open);
     };
 
+    const onLogOut = () => {
+        navigate("/");
+        dispatch(logout());
+    }
+
     return (
         <React.Fragment>
             <CssBaseline />
-            <Banner />
+            <Banner user={user} />
 
             {/* Content Body */}
             <Box
@@ -81,7 +89,7 @@ const SideBar = (props) => {
                                         boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
                                     }}
                                 >
-                                    <Typography variant="h5">Time Down</Typography>
+                                    <Typography variant="h5">{user?.factory} - Time Down</Typography>
                                 </Box>
                                 <Box
                                     sx={{
@@ -125,7 +133,7 @@ const SideBar = (props) => {
                                         Supports
                                     </Typography>
                                     <List component="nav">
-                                        <ListItemButton component={Link}>
+                                        <ListItemButton component={Link} onClick={onLogOut}>
                                             <ListItemIcon>
                                                 <LogoutIcon />
                                             </ListItemIcon>

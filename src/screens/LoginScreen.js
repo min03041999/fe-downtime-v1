@@ -55,10 +55,18 @@ export default function LoginScreen(props) {
     useEffect(() => {
         if (auth !== null) {
             const permission = auth.user?.permission;
-            if (permission === 1) {
-                navigate("/product");
-            } else {
-                navigate("/electric");
+            switch (permission) {
+                case 0:
+                    navigate("/dashboard");
+                    break;
+                case 1:
+                case 2:
+                    navigate("/electric");
+                    break;
+                case 3:
+                    navigate("/product");
+                    break;
+                default:
             }
         }
 
