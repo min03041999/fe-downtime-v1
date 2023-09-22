@@ -37,7 +37,7 @@ const WorkListScreen = () => {
                                         Nội dung
                                     </TableCell>
                                     <TableCell style={{ fontWeight: "bold", minWidth: "170px" }}>
-                                        Người yêu cầu
+                                        Người gửi yêu cầu
                                     </TableCell>
                                     <TableCell></TableCell>
                                 </TableRow>

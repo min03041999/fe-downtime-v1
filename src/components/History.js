@@ -1,15 +1,11 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import StepContent from "@mui/material/StepContent";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
+import Typography from "@mui/material/Typography";
 
 import ArticleIcon from "@mui/icons-material/Article";
 import QrCodeIcon from "@mui/icons-material/QrCode";
@@ -85,21 +81,8 @@ const steps = [
   },
 ];
 
-export default function VerticalLinearStepper() {
-  const [activeStep, setActiveStep] = React.useState(0);
+export default function History() {
   const [open, setOpen] = React.useState(false);
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
 
   const handleClick = () => {
     setOpen(!open);
@@ -134,53 +117,15 @@ export default function VerticalLinearStepper() {
                 variant="outlined"
                 sx={{ width: "100%", padding: "0 15px" }}
               >
-                <Stepper activeStep={activeStep} orientation="vertical">
+                <Stepper activeStep={-1} orientation="vertical">
                   {steps.map((step, index) => (
                     <Step key={index}>
-                      <StepLabel
-                        StepIconComponent={ColorlibStepIcon}
-                        optional={
-                          index === 3 ? (
-                            <Typography variant="caption">Last step</Typography>
-                          ) : null
-                        }
-                      >
+                      <StepLabel StepIconComponent={ColorlibStepIcon}>
                         {step.label} - {step.description}
                       </StepLabel>
-                      <StepContent>
-                        {/* <Typography>{step.description}</Typography> */}
-                        <Box sx={{ mb: 2 }}>
-                          <div>
-                            <Button
-                              variant="contained"
-                              onClick={handleNext}
-                              sx={{ mt: 1, mr: 1 }}
-                            >
-                              {index === steps.length - 1
-                                ? "Finish"
-                                : "Continue"}
-                            </Button>
-                            <Button
-                              disabled={index === 0}
-                              onClick={handleBack}
-                              sx={{ mt: 1, mr: 1 }}
-                            >
-                              Back
-                            </Button>
-                          </div>
-                        </Box>
-                      </StepContent>
                     </Step>
                   ))}
                 </Stepper>
-                {activeStep === steps.length && (
-                  <Paper square elevation={0} sx={{ p: 3 }}>
-                    <Typography>Hoàn thành!</Typography>
-                    <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-                      Chạy lại
-                    </Button>
-                  </Paper>
-                )}
               </Card>
             </ListItem>
           </List>
