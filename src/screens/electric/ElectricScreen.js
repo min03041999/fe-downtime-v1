@@ -35,12 +35,12 @@ const ElectricScreen = () => {
     ];
     return (
         <React.Fragment>
-            {auth.user === null ? (
-                <LoginScreen />
-            ) : (
+            {auth.user !== null && auth.user?.permission === 1 ? (
                 <SideBar sideBarMenu={sideBarMenu}>
                     <RoutesElectric />
                 </SideBar>
+            ) : (
+                <LoginScreen />
             )}
         </React.Fragment>
     )
