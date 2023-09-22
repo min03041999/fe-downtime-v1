@@ -1,10 +1,13 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 // import BackgroundImage from "../assets/Images/bg-login.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login } from "../redux/features/auth";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -33,16 +36,33 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function LoginScreen(props) {
-    const { setLogin } = props;
+    const auth = useSelector((state) => state.auth);
+
+    const dispatch = useDispatch();
+    let navigate = useNavigate();
+
     const initialValues = {
         username: "",
         password: "",
     };
 
     const handleSubmit = (values, { setSubmitting }) => {
-        setLogin(true);
+        const { username, password } = values;
+        dispatch(login({ username, password }));
         setSubmitting(false);
     };
+
+    useEffect(() => {
+        if (auth !== null) {
+            const permission = auth.user?.permission;
+            if (permission === 1) {
+                navigate("/product");
+            } else {
+                navigate("/electric");
+            }
+        }
+
+    }, [auth, navigate])
 
     return (
         <div style={ContainerStyle}>

@@ -6,31 +6,31 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 
 const ProductionScreen = () => {
-  const [login, setLogin] = useState(true);
-  const sideBarMenu = [
-    {
-      icon: <NotificationsNoneIcon />,
-      text: "Thông báo máy hư",
-      path: "/product",
-    },
-    {
-      icon: <AutorenewIcon />,
-      text: "Trạng thái xử lý",
-      path: "/product/status",
-    },
-  ];
+    const [login, setLogin] = useState(true);
+    const sideBarMenu = [
+        {
+            icon: <NotificationsNoneIcon />,
+            text: "Thông báo máy hư",
+            path: "/product",
+        },
+        {
+            icon: <AutorenewIcon />,
+            text: "Trạng thái xử lý",
+            path: "/product/status",
+        },
+    ];
 
-  return (
-    <React.Fragment>
-      {login === false ? (
-        <LoginScreen setLogin={setLogin} />
-      ) : (
-        <SideBar sideBarMenu={sideBarMenu}>
-          <RoutesProdution />
-        </SideBar>
-      )}
-    </React.Fragment>
-  );
+    return (
+        <React.Fragment>
+            {login === false ? (
+                <LoginScreen setLogin={setLogin} />
+            ) : (
+                <SideBar sideBarMenu={sideBarMenu}>
+                    <RoutesProdution />
+                </SideBar>
+            )}
+        </React.Fragment>
+    );
 };
 
 export default ProductionScreen;

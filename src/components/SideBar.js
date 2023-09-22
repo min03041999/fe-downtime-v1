@@ -14,7 +14,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Banner from "./Banner";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 
 const menuSliderContainer = {
@@ -99,7 +99,7 @@ const SideBar = (props) => {
                                     <List component="nav">
                                         {
                                             sideBarMenu.map((listItem, index) => (
-                                                <ListItemButton to={listItem.path} key={index}>
+                                                <ListItemButton component={Link} to={listItem.path} key={index}>
                                                     <ListItemIcon style={{ color: active === index ? "#1565c0" : "" }}>
                                                         {listItem.icon}
                                                     </ListItemIcon>
@@ -125,7 +125,7 @@ const SideBar = (props) => {
                                         Supports
                                     </Typography>
                                     <List component="nav">
-                                        <ListItemButton>
+                                        <ListItemButton component={Link}>
                                             <ListItemIcon>
                                                 <LogoutIcon />
                                             </ListItemIcon>
