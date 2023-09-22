@@ -6,7 +6,7 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 
 const ProductionScreen = () => {
-    const [login, setLogin] = useState(false);
+    const [login, setLogin] = useState(true);
     const sideBarMenu = [
         {
             icon: <NotificationsNoneIcon />,
@@ -30,7 +30,7 @@ const ProductionScreen = () => {
                 </SideBar>
             )}
         </React.Fragment>
-    )
-}
+    );
+};
 
 export default ProductionScreen;
