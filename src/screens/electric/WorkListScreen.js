@@ -1,7 +1,21 @@
-import React from 'react';
-import { Box, Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button } from '@mui/material';
-import BreadCrumb from '../../components/BreadCrumb';
-import Title from '../../components/Title';
+import React, { useState, useEffect } from "react";
+import {
+    Box,
+    Paper,
+    TableContainer,
+    Table,
+    TableHead,
+    TableRow,
+    TableCell,
+    TableBody,
+    Button,
+} from "@mui/material";
+import { DataGrid } from '@mui/x-data-grid';
+import BreadCrumb from "../../components/BreadCrumb";
+import Title from "../../components/Title";
+import { useDispatch, useSelector } from "react-redux";
+import { get_task_damage } from "../../redux/features/electric";
+import AlertDialog from "../../components/AlertDialog";
 
 const PaperStyle = {
     position: "relative",
@@ -9,13 +23,69 @@ const PaperStyle = {
     padding: "10px",
 };
 
-const WorkListScreen = () => {
+const TableList = (props) => {
+    const columns = [
+        {
+            field: 'first',
+            // headerClassName: 'super-app-theme--header',
+            headerAlign: 'center',
+            width: 140,
+        },
+        {
+            field: 'last',
+            // headerClassName: 'super-app-theme--header',
+            headerAlign: 'center',
+            width: 140,
+        },
+    ];
 
     const rows = [
-        { id: 1, machine: 'May-1', content: 'đứt dây điện', user: "Nguyen Van A" },
-        { id: 2, machine: 'May-2', content: 'máy lỗi, không hoạt động được', user: "Nguyen Van B" },
-        { id: 3, machine: 'May-3', content: 'máy không mở được', user: "Nguyen Van C" },
+        {
+            id: 1,
+            first: 'Jane',
+            last: 'Carter',
+        },
+        {
+            id: 2,
+            first: 'Jack',
+            last: 'Smith',
+        },
+        {
+            id: 3,
+            first: 'Gill',
+            last: 'Martin',
+        },
     ];
+    return (
+        <Box
+            sx={{
+                height: 300,
+                width: '100%',
+                '& .super-app-theme--header': {
+                    backgroundColor: '#1565c0', color: "#fff"
+                },
+            }}
+        >
+            <DataGrid rows={rows} columns={columns} checkboxSelection />
+        </Box>
+    )
+}
+
+const WorkListScreen = () => {
+    const dispatch = useDispatch();
+    const [open, setOpen] = useState(false);
+    const { area } = useSelector((state) => state.auth.user);
+    const listTask = useSelector(
+        (state) => state.electric.dataTaskReportDamageList
+    );
+
+    useEffect(() => {
+        dispatch(get_task_damage({ area }));
+    }, [area]);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
 
     return (
         <Box component="div">
@@ -26,45 +96,43 @@ const WorkListScreen = () => {
             >
                 <Paper sx={PaperStyle} elevation={5}>
                     <Title titleText={"Danh sách công việc"} />
-                    <TableContainer >
+                    <TableContainer>
                         <Table stickyHeader aria-label="sticky table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell style={{ fontWeight: "bold", minWidth: "170px" }}>
+                                    <TableCell style={{ fontWeight: "bold", minWidth: "120px", backgroundColor: "#1976d2", color: "#fff" }}>
                                         Mã Máy
                                     </TableCell>
-                                    <TableCell style={{ fontWeight: "bold", minWidth: "170px" }}>
+                                    <TableCell style={{ fontWeight: "bold", minWidth: "120px", backgroundColor: "#1976d2", color: "#fff" }}>
                                         Nội dung
                                     </TableCell>
-                                    <TableCell style={{ fontWeight: "bold", minWidth: "170px" }}>
+                                    <TableCell style={{ fontWeight: "bold", minWidth: "150px", backgroundColor: "#1976d2", color: "#fff" }}>
                                         Người gửi yêu cầu
                                     </TableCell>
-                                    <TableCell></TableCell>
+                                    <TableCell style={{ fontWeight: "bold", minWidth: "120px", backgroundColor: "#1976d2", color: "#fff" }}></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.map((row, index) => (
+                                {listTask.map((row, index) => (
                                     <TableRow
                                         key={index}
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-
+                                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                     >
                                         <TableCell component="th" scope="row">
-                                            {row.machine}
+                                            {row.id_machine}
                                         </TableCell>
-                                        <TableCell >
-                                            {row.content}
+                                        <TableCell>{row.remark}</TableCell>
+                                        <TableCell>
+                                            {row.name} - {row.id_user_request}
                                         </TableCell>
-                                        <TableCell >
-                                            {row.user}
-                                        </TableCell>
-                                        <TableCell >
+                                        <TableCell>
                                             <Button
                                                 variant="contained"
                                                 color="primary"
                                                 sx={{
-                                                    whiteSpace: "nowrap"
+                                                    whiteSpace: "nowrap",
                                                 }}
+                                                onClick={handleClickOpen}
                                             >
                                                 Giao phó
                                             </Button>
@@ -76,8 +144,12 @@ const WorkListScreen = () => {
                     </TableContainer>
                 </Paper>
             </Box>
+
+            <AlertDialog open={open} setOpen={setOpen}>
+                <TableList />
+            </AlertDialog>
         </Box>
-    )
-}
+    );
+};
 
 export default WorkListScreen;

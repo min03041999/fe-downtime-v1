@@ -14,7 +14,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Banner from "./Banner";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/features/auth";
 
@@ -26,7 +26,6 @@ const menuSliderContainer = {
 
 const SideBar = (props) => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { sideBarMenu, user, children } = props;
     const { pathname } = useLocation();
 
@@ -39,7 +38,6 @@ const SideBar = (props) => {
     };
 
     const onLogOut = () => {
-        navigate("/");
         dispatch(logout());
     }
 
@@ -133,7 +131,7 @@ const SideBar = (props) => {
                                         Supports
                                     </Typography>
                                     <List component="nav">
-                                        <ListItemButton component={Link} onClick={onLogOut}>
+                                        <ListItemButton onClick={onLogOut}>
                                             <ListItemIcon>
                                                 <LogoutIcon />
                                             </ListItemIcon>

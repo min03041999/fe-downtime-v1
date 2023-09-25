@@ -32,7 +32,6 @@ export const productSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(get_report_damage.fulfilled, (state, action) => {
             state.data = action.payload.data;
-            state.errorMessage = action.payload.error_message;
         });
         builder.addCase(report_damage.rejected, (state, action) => {
             state.errorCode = action.payload.error_code;

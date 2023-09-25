@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 
 const Banner = (props) => {
     const { user } = props;
+
     return (
         <React.Fragment>
             <Box
