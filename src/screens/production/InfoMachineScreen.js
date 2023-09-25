@@ -4,6 +4,7 @@ import BreadCrumb from "../../components/BreadCrumb";
 import Scanner from "../../components/Scanner";
 import ScannerInfo from "../../components/ScannerInfo";
 import Form from "../../components/Form";
+import { useSelector } from "react-redux";
 
 const PaperStyle = {
     position: "relative",
@@ -12,7 +13,8 @@ const PaperStyle = {
 };
 
 const InfoMachineScreen = () => {
-    const [scannerResult, setScannerResult] = useState("");
+    const auth = useSelector((state) => state.auth);
+    const [scannerResult, setScannerResult] = useState("Machine-2");
     const [statusSubmit, setStatusSubmit] = useState(false);
 
     const onReScanner = () => {
@@ -37,6 +39,7 @@ const InfoMachineScreen = () => {
                             setStatusSubmit={setStatusSubmit}
                             scannerResult={scannerResult}
                             setScannerResult={setScannerResult}
+                            user={auth.user}
                         />
                     ) : (
                         <Box component="div">

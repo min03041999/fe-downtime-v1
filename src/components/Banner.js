@@ -1,7 +1,9 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
-const Banner = () => {
+const Banner = (props) => {
+    const { user } = props;
+
     return (
         <React.Fragment>
             <Box
@@ -35,14 +37,14 @@ const Banner = () => {
                         Họ & tên: &nbsp;
                     </Typography>
                     <Typography variant="div" fontWeight={400} sx={{ fontSize: "14px" }}>
-                        AMin Mohamad
+                        {user.name}
                     </Typography>
                     <br />
                     <Typography variant="div" fontWeight={600} sx={{ fontSize: "14px" }}>
                         Đơn vị: &nbsp;
                     </Typography>
                     <Typography variant="div" fontWeight={400} sx={{ fontSize: "14px" }}>
-                        IT - Software
+                        {user.lean}
                     </Typography>
                 </Box>
             </Box>

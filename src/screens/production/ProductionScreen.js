@@ -24,7 +24,7 @@ const ProductionScreen = () => {
     return (
         <React.Fragment>
             {auth.user !== null && auth.user?.permission === 3 ? (
-                <SideBar sideBarMenu={sideBarMenu}>
+                <SideBar sideBarMenu={sideBarMenu} user={auth.user}>
                     <RoutesProdution />
                 </SideBar>
             ) : (

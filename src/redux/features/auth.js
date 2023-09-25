@@ -3,9 +3,9 @@ import AuthService from "../services/auth.services";
 
 export const login = createAsyncThunk(
     "auth/login",
-    async ({ username, password }) => {
+    async ({ username, password, factory }) => {
         try {
-            const data = await AuthService.login(username, password);
+            const data = await AuthService.login(username, password, factory);
             return { user: data };
         } catch (error) {
             return error.message;

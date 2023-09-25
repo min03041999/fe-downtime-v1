@@ -1,15 +1,12 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import StepContent from "@mui/material/StepContent";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
+import Chip from "@mui/material/Chip";
 
 import ArticleIcon from "@mui/icons-material/Article";
 import QrCodeIcon from "@mui/icons-material/QrCode";
@@ -47,8 +44,6 @@ const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
 function ColorlibStepIcon(props) {
   const { active, completed, className } = props;
 
-  console.log(active, completed, className);
-
   const icons = {
     1: <ArticleIcon />,
     2: <QrCodeIcon />,
@@ -85,107 +80,79 @@ const steps = [
   },
 ];
 
-export default function VerticalLinearStepper() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [open, setOpen] = React.useState(false);
+export default function ProgressStatus({ listReport }) {
+  const [open, setOpen] = useState(listReport || []);
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
-  const handleClick = () => {
-    setOpen(!open);
+  const handleClick = (index) => {
+    const isOpen = open.includes(index);
+    if (isOpen) {
+      setOpen(open.filter((item) => item !== index));
+    } else {
+      setOpen([...open, index]);
+    }
   };
 
   return (
     <Stack sx={{ width: "100%" }} spacing={2}>
-      <List
-        sx={{ width: "100%", bgcolor: "primary.dark", borderRadius: "5px" }}
-        component="nav"
-        aria-labelledby="nested-list-subheader"
-      >
-        <ListItemButton onClick={handleClick}>
-          <ListItemText>
-            <Typography
-              variant="body1"
-              style={{ color: "white", fontSize: "14px", paddingLeft: "10px" }}
+      {listReport === null
+        ? []
+        : listReport.map((product, index) => (
+            <List
+              sx={{
+                width: "100%",
+                bgcolor: "primary.dark",
+                borderRadius: "5px",
+              }}
+              component="nav"
+              key={index}
             >
-              {new Date().toLocaleDateString()} - iPhone 15 Pro Max
-            </Typography>
-          </ListItemText>
-          {open ? (
-            <ExpandLess style={{ color: "white" }} />
-          ) : (
-            <ExpandMore style={{ color: "white" }} />
-          )}
-        </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem>
-              <Card
-                variant="outlined"
-                sx={{ width: "100%", padding: "0 15px" }}
-              >
-                <Stepper activeStep={activeStep} orientation="vertical">
-                  {steps.map((step, index) => (
-                    <Step key={index}>
-                      <StepLabel
-                        StepIconComponent={ColorlibStepIcon}
-                        optional={
-                          index === 3 ? (
-                            <Typography variant="caption">Last step</Typography>
-                          ) : null
-                        }
-                      >
-                        {step.label} - {step.description}
-                      </StepLabel>
-                      <StepContent>
-                        {/* <Typography>{step.description}</Typography> */}
-                        <Box sx={{ mb: 2 }}>
-                          <div>
-                            <Button
-                              variant="contained"
-                              onClick={handleNext}
-                              sx={{ mt: 1, mr: 1 }}
-                            >
-                              {index === steps.length - 1
-                                ? "Finish"
-                                : "Continue"}
-                            </Button>
-                            <Button
-                              disabled={index === 0}
-                              onClick={handleBack}
-                              sx={{ mt: 1, mr: 1 }}
-                            >
-                              Back
-                            </Button>
-                          </div>
-                        </Box>
-                      </StepContent>
-                    </Step>
-                  ))}
-                </Stepper>
-                {activeStep === steps.length && (
-                  <Paper square elevation={0} sx={{ p: 3 }}>
-                    <Typography>Hoàn thành!</Typography>
-                    <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-                      Chạy lại
-                    </Button>
-                  </Paper>
+              <ListItemButton onClick={() => handleClick(index)}>
+                <ListItemText>
+                  <Typography
+                    variant="body1"
+                    style={{
+                      color: "white",
+                      fontSize: "14px",
+                    }}
+                  >
+                    <Chip
+                      label={product["date_user_request"].split("T")[0]}
+                      color="primary"
+                    />{" "}
+                    - <Chip label={product["id_machine"]} color="primary" />
+                  </Typography>
+                </ListItemText>
+                {open.includes(index) ? (
+                  <ExpandLess style={{ color: "white" }} />
+                ) : (
+                  <ExpandMore style={{ color: "white" }} />
                 )}
-              </Card>
-            </ListItem>
-          </List>
-        </Collapse>
-      </List>
+              </ListItemButton>
+              <Collapse in={open.includes(index)} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItem>
+                    <Card
+                      variant="outlined"
+                      sx={{ width: "100%", padding: "0 15px" }}
+                    >
+                      <Stepper
+                        activeStep={product["status"] - 1}
+                        orientation="vertical"
+                      >
+                        {steps.map((step, index) => (
+                          <Step key={index}>
+                            <StepLabel StepIconComponent={ColorlibStepIcon}>
+                              {step.label} - {step.description}
+                            </StepLabel>
+                          </Step>
+                        ))}
+                      </Stepper>
+                    </Card>
+                  </ListItem>
+                </List>
+              </Collapse>
+            </List>
+          ))}
     </Stack>
   );
 }

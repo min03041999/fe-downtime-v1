@@ -70,7 +70,7 @@ const StatusScreen = () => {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          <ProgressStatus />
+          {/* <ProgressStatus /> */}
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           <History />

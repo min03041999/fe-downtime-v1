@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Box, Tabs, Tab } from "@mui/material";
 import BreadCrumb from "../../components/BreadCrumb";
 import ProgressStatus from "../../components/ProgressStatus";
+import { useDispatch, useSelector } from "react-redux";
+import { get_report_damage } from "../../redux/features/product";
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -38,10 +40,18 @@ function a11yProps(index) {
 }
 
 const StatusScreen = () => {
+    const dispatch = useDispatch();
+    const { user } = useSelector((state) => state.auth);
+    const { data } = useSelector((state) => state.product);
+
+    useEffect(() => {
+        const id_user_request = user.user_name;
+        dispatch(get_report_damage({ id_user_request }))
+    }, [user]);
+
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
-        console.log(newValue);
         setValue(newValue);
     };
     return (
@@ -69,7 +79,7 @@ const StatusScreen = () => {
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
-                    <ProgressStatus />
+                    <ProgressStatus listReport={data} />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
                     History is empty

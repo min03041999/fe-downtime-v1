@@ -1,11 +1,12 @@
 import axios from "axios";
 import { BASE_URL } from "../../utils/env";
 
-const login = (username, password) => {
+const login = (username, password, factory) => {
     return axios
         .post(BASE_URL + "/auth/login", {
             username,
             password,
+            factory,
         }, {
             headers: {
                 "Content-Type": "application/json",

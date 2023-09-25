@@ -1,15 +1,11 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
+import Grid from "@mui/material/Grid";
 
 import Typography from "@mui/material/Typography";
-import ConstructionIcon from "@mui/icons-material/Construction";
-import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 
 import { PieChart, Pie, Cell, Legend } from "recharts";
 
@@ -24,89 +20,163 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 export default function InfoUserScreen() {
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ width: "100%" }} display="flex" justifyContent="space-evenly">
-        <Paper elevation={4} style={{ width: "45%", height: "fit-content" }}>
-          <List sx={{ width: "100%" }}>
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  <ConstructionIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-            </ListItem>
-          </List>
-        </Paper>
-
-        <Paper elevation={3} style={{ width: "45%", height: "fit-content" }}>
-          <List
-            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+    <Box marginTop={1}>
+      <Box
+        margin="5px"
+        borderRadius="30px"
+        display="flex"
+        justifyContent="space-between"
+      >
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems={"center"}
+          padding="10px 0"
+          borderRadius="25px"
+          border="3px solid #ccc"
+          width="49%"
+        >
+          <Box>
+            <Typography
+              variant="h6"
+              component="h6"
+              color="black"
+              fontWeight="bold"
+              textTransform="uppercase"
+            >
+              Today's Fixes
+            </Typography>
+          </Box>
+          <Box
+            width="80%"
+            height="70px"
+            bgcolor="primary.dark"
+            borderRadius="25px"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
           >
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  <LeaderboardIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary="Photos" secondary="Jan 9, 2014" />
-            </ListItem>
-          </List>
-        </Paper>
+            <Typography variant="h3" component="h3" color="white">
+              6
+            </Typography>
+          </Box>
+        </Box>
+
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems={"center"}
+          padding="10px 0"
+          borderRadius="25px"
+          border="3px solid #ccc"
+          width="49%"
+        >
+          <Box>
+            <Typography
+              variant="h6"
+              component="h6"
+              color="black"
+              fontWeight="bold"
+              textTransform="uppercase"
+            >
+              Avg Fix Time
+            </Typography>
+          </Box>
+          <Box
+            width="80%"
+            height="70px"
+            bgcolor="primary.dark"
+            borderRadius="25px"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Typography variant="h3" component="h3" color="white">
+              15:15
+            </Typography>
+          </Box>
+        </Box>
       </Box>
 
       <Box
-        border="5px solid #ccc"
-        borderRadius={15}
-        marginTop={1}
-        padding="30px 0 0 36px"
+        padding="30px 30px 15px 30px"
+        margin="5px"
+        borderRadius="30px"
+        border="3px solid #ccc"
       >
         <Typography
-          sx={{
-            textTransform: "uppercase",
-            fontSize: "14px",
-            fontWeight: "bold",
-          }}
+          style={{ textTransform: "uppercase" }}
+          fontSize={14}
+          fontWeight="bold"
+          variant="h4"
+          component="div"
         >
           Passed machine tests
         </Typography>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            fontSize: "14px",
-          }}
-        >
-          <ul>
-            <li>Sm. Computer</li>
-            <li>Med. Computer</li>
-            <li>SN Post</li>
-            <li>DN Post</li>
-          </ul>
-          <ul>
-            <li>Zag Zag</li>
-            <li>Hammer</li>
-          </ul>
-        </div>
+
+        <Grid container spacing={2} style={{ fontSize: 14 }}>
+          <Grid item xs={6}>
+            <List style={{ fontSize: 14 }}>
+              <ListItem style={{ padding: "0 0 0 16px" }}>
+                <ListItemText>
+                  <Typography sx={{ fontSize: "14px" }}>
+                    Sm. Computer
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+              <ListItem style={{ padding: "0 0 0 16px" }}>
+                <ListItemText>
+                  <Typography sx={{ fontSize: "14px" }}>
+                    Med. Computer
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+              <ListItem style={{ padding: "0 0 0 16px" }}>
+                <ListItemText>
+                  <Typography sx={{ fontSize: "14px" }}>SN Post</Typography>
+                </ListItemText>
+              </ListItem>
+              <ListItem style={{ padding: "0 0 0 16px" }}>
+                <ListItemText>
+                  <Typography sx={{ fontSize: "14px" }}>DN Post</Typography>
+                </ListItemText>
+              </ListItem>
+            </List>
+          </Grid>
+          <Grid item xs={6}>
+            <List>
+              <ListItem style={{ padding: "0 0 0 16px" }}>
+                <ListItemText>
+                  <Typography sx={{ fontSize: "14px" }}>Zag Zag</Typography>
+                </ListItemText>
+              </ListItem>
+              <ListItem style={{ padding: "0 0 0 16px" }}>
+                <ListItemText>
+                  <Typography sx={{ fontSize: "14px" }}>Hammer</Typography>
+                </ListItemText>
+              </ListItem>
+            </List>
+          </Grid>
+        </Grid>
       </Box>
 
       <Box
-        border="5px solid #ccc"
-        borderRadius={15}
-        marginTop={1}
-        padding="30px 0 0px 36px"
+        padding="30px 30px 15px 30px"
+        margin="5px"
+        borderRadius="30px"
+        border="3px solid #ccc"
       >
         <Typography
-          sx={{
-            textTransform: "uppercase",
-            fontSize: "14px",
-            fontWeight: "bold",
-          }}
+          style={{ textTransform: "uppercase" }}
+          fontSize={14}
+          fontWeight="bold"
+          variant="h4"
+          component="div"
         >
           avg fix time by category
         </Typography>
-        <Box>
-          <PieChart width={350} height={250}>
+        <Box display="flex" justifyContent="center">
+          <PieChart width={250} height={250}>
             <Pie
               data={data}
               cx="50%"
@@ -126,9 +196,9 @@ export default function InfoUserScreen() {
               ))}
             </Pie>
             <Legend
-              verticalAlign="middle"
-              align="left"
-              layout="vertical"
+              verticalAlign="bottom"
+              align="center"
+              layout="horizontal"
               iconType="circle"
             />
           </PieChart>
