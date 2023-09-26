@@ -18,7 +18,7 @@ const login = (username, password, factory) => {
                 localStorage.setItem("access_token", JSON.stringify(res.data.accessToken));
                 localStorage.setItem("user", JSON.stringify(res.data.user));
             }
-            return res.data.user;
+            return res;
         }).catch((error) => {
             return error.response.data;
         });

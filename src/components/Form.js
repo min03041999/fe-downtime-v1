@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, TextField, Grid, Stack, Button } from "@mui/material";
+import { Box, Typography, TextField, Grid, Stack, Button, MenuItem } from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
@@ -25,26 +25,30 @@ const Form = (props) => {
 
     const validationSchema = Yup.object().shape({
         FullName: Yup.string().required("Vui lòng nhập họ và tên!"),
+        factory: Yup.string().required("Vui lòng nhập nhà máy!"),
         id_user_request: Yup.string().required("Vui lòng nhập số thẻ!"),
         Lean: Yup.string().required("Vui lòng nhập đơn vị!"),
         DateReport: Yup.string().required("Vui lòng nhập ngày!"),
         id_machine: Yup.string().required("Vui lòng nhập mã máy!"),
+        fixer: Yup.string().required("Vui lòng nhập người sửa!"),
         remark: Yup.string().required("Vui lòng nhập lý do hư máy"),
     });
 
     const formik = useFormik({
         initialValues: {
             FullName: user.name,
+            factory: user.factory,
             id_user_request: user.user_name,
             Lean: user.lean,
             DateReport: dayjs(new Date()),
             id_machine: scannerResult,
+            fixer: "",
             remark: "",
         },
         validationSchema,
         onSubmit: (data) => {
-            const { id_machine, id_user_request, remark } = data;
-            dispatch(report_damage({ id_machine, id_user_request, remark }));
+            const { id_machine, id_user_request, remark, factory, fixer } = data;
+            dispatch(report_damage({ id_machine, id_user_request, remark, factory, fixer }));
         },
     });
 
@@ -114,7 +118,7 @@ const Form = (props) => {
                         rowSpacing={2}
                         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                     >
-                        <Grid item xs={12} md={12}>
+                        <Grid item xs={6} md={6}>
                             <TextField
                                 label="Họ và tên"
                                 name="FullName"
@@ -136,6 +140,31 @@ const Form = (props) => {
                                 }
                                 onChange={formik.handleChange}
                                 value={formik.values.FullName}
+                                inputProps={{ readOnly: true }}
+                            />
+                        </Grid>
+                        <Grid item xs={6} md={6}>
+                            <TextField
+                                label="Nhà máy"
+                                name="factory"
+                                variant="outlined"
+                                size="small"
+                                fullWidth
+                                className={
+                                    formik.errors.factory && formik.touched.factory
+                                        ? "is-invalid"
+                                        : ""
+                                }
+                                error={
+                                    formik.errors.factory && formik.touched.factory === true
+                                }
+                                helperText={
+                                    formik.errors.factory && formik.touched.factory
+                                        ? formik.errors.factory
+                                        : null
+                                }
+                                onChange={formik.handleChange}
+                                value={formik.values.factory}
                                 inputProps={{ readOnly: true }}
                             />
                         </Grid>
@@ -238,6 +267,32 @@ const Form = (props) => {
                                 value={formik.values.id_machine}
                                 inputProps={{ readOnly: true }}
                             />
+                        </Grid>
+                        <Grid item xs={6} md={6}>
+                            <TextField
+                                select
+                                name="fixer"
+                                fullWidth
+                                label="Thợ sửa"
+                                size="small"
+                                className={
+                                    formik.errors.fixer && formik.touched.fixer
+                                        ? "is-invalid"
+                                        : ""
+                                }
+                                error={formik.errors.fixer && formik.touched.fixer === true}
+                                helperText={
+                                    formik.errors.fixer && formik.touched.fixer
+                                        ? formik.errors.fixer
+                                        : null
+                                }
+                                onChange={formik.handleChange}
+                                value={formik.values.fixer}
+                            >
+                                <MenuItem value="TD">Thợ Điện</MenuItem>
+                                <MenuItem value="TM">Thợ Máy</MenuItem>
+                            </TextField>
+
                         </Grid>
                         <Grid item xs={12} md={12}>
                             <TextField

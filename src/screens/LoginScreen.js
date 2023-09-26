@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import MenuItem from '@mui/material/MenuItem';
-// import BackgroundImage from "../assets/Images/bg-login.jpg";
+import React, { useEffect } from "react";
+import {
+    Button,
+    TextField,
+    Box,
+    Typography,
+    Paper,
+    MenuItem,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../redux/features/auth";
-
+import { login, setErrorCode } from "../redux/features/auth";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { Toast } from "../utils/toast";
 
 const ContainerStyle = {
     position: "relative",
     width: "100%",
     height: "100vh",
-    // backgroundImage: `url(${BackgroundImage})`,
-    // backgroundRepeat: "round",
 };
 
 const PaperStyle = {
@@ -35,10 +34,9 @@ const validationSchema = Yup.object().shape({
     username: Yup.string().required("Vui lòng không để trống!"),
     password: Yup.string().required("Vui lòng không để trống!"),
     factory: Yup.string().required("Vui lòng không để trống!"),
-
 });
 
-export default function LoginScreen(props) {
+export default function LoginScreen() {
     const auth = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -53,10 +51,22 @@ export default function LoginScreen(props) {
         onSubmit: (data) => {
             const { username, password, factory } = data;
             dispatch(login({ username, password, factory }));
-        }
-    })
+
+
+        },
+    });
 
     useEffect(() => {
+
+        if (auth.errorCode !== 0 && auth.errorCode !== null) {
+            Toast.fire({
+                icon: 'error',
+                title: auth.errorMessage,
+            })
+        }
+
+        dispatch(setErrorCode(0));
+
         const permission = auth.user?.permission;
 
         switch (permission) {
@@ -76,8 +86,7 @@ export default function LoginScreen(props) {
                 navigate("/");
                 break;
         }
-
-    }, [auth, navigate])
+    }, [auth, navigate, dispatch]);
 
     return (
         <div style={ContainerStyle}>
@@ -116,9 +125,7 @@ export default function LoginScreen(props) {
                                     ? "is-invalid"
                                     : ""
                             }
-                            error={
-                                formik.errors.username && formik.touched.username === true
-                            }
+                            error={formik.errors.username && formik.touched.username === true}
                             helperText={
                                 formik.errors.username && formik.touched.username
                                     ? formik.errors.username
@@ -139,9 +146,7 @@ export default function LoginScreen(props) {
                                     ? "is-invalid"
                                     : ""
                             }
-                            error={
-                                formik.errors.password && formik.touched.password === true
-                            }
+                            error={formik.errors.password && formik.touched.password === true}
                             helperText={
                                 formik.errors.password && formik.touched.password
                                     ? formik.errors.password
@@ -162,9 +167,7 @@ export default function LoginScreen(props) {
                                     ? "is-invalid"
                                     : ""
                             }
-                            error={
-                                formik.errors.factory && formik.touched.factory === true
-                            }
+                            error={formik.errors.factory && formik.touched.factory === true}
                             helperText={
                                 formik.errors.factory && formik.touched.factory
                                     ? formik.errors.factory
@@ -190,6 +193,6 @@ export default function LoginScreen(props) {
                     </Box>
                 </Box>
             </Paper>
-        </div >
+        </div>
     );
 }

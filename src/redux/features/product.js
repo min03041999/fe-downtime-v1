@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import ProductServices from "../services/product.services";
 
-export const get_report_damage = createAsyncThunk("damage_report/getTaskInfo", async ({ id_user_request }) => {
+export const get_report_damage = createAsyncThunk("damage_report/getTaskInfo", async ({ id_user_request, factory }) => {
     try {
-        const data = await ProductServices.get_report_damage(id_user_request);
+        const data = await ProductServices.get_report_damage(id_user_request, factory);
         return data;
     } catch (error) {
         return error.message;
@@ -12,9 +12,9 @@ export const get_report_damage = createAsyncThunk("damage_report/getTaskInfo", a
 
 export const report_damage = createAsyncThunk(
     "/damage_report/callMechanic",
-    async ({ id_machine, id_user_request, remark }) => {
+    async ({ id_machine, id_user_request, remark, factory, fixer }) => {
         try {
-            const data = await ProductServices.report_damage(id_machine, id_user_request, remark);
+            const data = await ProductServices.report_damage(id_machine, id_user_request, remark, factory, fixer);
             return data;
         } catch (error) {
             return error.message;

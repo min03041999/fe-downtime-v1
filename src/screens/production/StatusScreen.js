@@ -1,14 +1,19 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
 import { Box, Tabs, Tab } from "@mui/material";
-import BreadCrumb from "../../components/BreadCrumb";
-import ProgressStatus from "../../components/ProgressStatus";
 import { useDispatch, useSelector } from "react-redux";
 import { get_report_damage } from "../../redux/features/product";
+import BreadCrumb from "../../components/BreadCrumb";
+import ProgressStatus from "../../components/ProgressStatus";
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        "aria-controls": `simple-tabpanel-${index}`,
+    };
+}
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
-
     return (
         <div
             role="tabpanel"
@@ -26,30 +31,18 @@ function CustomTabPanel(props) {
     );
 }
 
-CustomTabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-    return {
-        id: `simple-tab-${index}`,
-        "aria-controls": `simple-tabpanel-${index}`,
-    };
-}
-
 const StatusScreen = () => {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
     const { data } = useSelector((state) => state.product);
 
     useEffect(() => {
-        const id_user_request = user.user_name;
-        dispatch(get_report_damage({ id_user_request }))
-    }, [user]);
+        const { user_name, factory } = user;
+        const id_user_request = user_name;
+        dispatch(get_report_damage({ id_user_request, factory }))
+    }, [user, dispatch]);
 
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
