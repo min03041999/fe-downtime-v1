@@ -74,14 +74,14 @@ const TableList = (props) => {
 const WorkListScreen = () => {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
-    const { area } = useSelector((state) => state.auth.user);
+    const { factory, floor } = useSelector((state) => state.auth.user);
     const listTask = useSelector(
         (state) => state.electric.dataTaskReportDamageList
     );
 
     useEffect(() => {
-        dispatch(get_task_damage({ area }));
-    }, [area]);
+        dispatch(get_task_damage({ factory, floor }));
+    }, [factory, floor]);
 
     const handleClickOpen = () => {
         setOpen(true);

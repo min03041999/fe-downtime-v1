@@ -1,9 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import ElectricServices from "../services/electric.services";
 
-export const get_task_damage = createAsyncThunk("/task/getMehalist", async ({ area }) => {
+//Get Task => Manager
+export const get_task_damage = createAsyncThunk("/task/getMehalist", async ({ factory, floor }) => {
     try {
-        const data = await ElectricServices.get_task_damage(area);
+        const data = await ElectricServices.get_task_damage(factory, floor);
+        return data;
+    } catch (error) {
+        return error.message;
+    }
+})
+
+//List Status => Employee
+export const get_report_damage = createAsyncThunk("damage_report/getTaskInfo", async ({ id_user_request, factory }) => {
+    try {
+        const data = await ElectricServices.get_report_damage(id_user_request, factory);
         return data;
     } catch (error) {
         return error.message;
