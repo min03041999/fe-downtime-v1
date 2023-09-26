@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
 const AlertDialog = (props) => {
-    const { open, setOpen, children } = props;
+    const { open, setOpen, headerModal, children } = props;
 
     const handleClose = () => {
         setOpen(false);
@@ -21,13 +21,12 @@ const AlertDialog = (props) => {
             onClose={handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
-            sx={{
-                margin: "-20px"
-            }}
+            fullWidth
+            maxWidth="sm"
         >
             <DialogTitle >
                 <Typography sx={{ fontWeight: "600", fontSize: "14px" }}>
-                    Danh sách nhân viên
+                    {headerModal}
                 </Typography>
             </DialogTitle>
             <IconButton

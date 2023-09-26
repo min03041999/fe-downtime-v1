@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, TextField, Grid, Stack, Button, MenuItem } from "@mui/material";
+import {
+    Box,
+    Typography,
+    TextField,
+    Grid,
+    Stack,
+    Button,
+    MenuItem,
+} from "@mui/material";
 import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Popup from "./Popup";
 import { useDispatch, useSelector } from "react-redux";
-import { report_damage } from "../redux/features/product";
+import { report_damage, setErrorCode } from "../redux/features/product";
 
 const Form = (props) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const product = useSelector((state) => state.product);
     const { formText, setStatusSubmit, scannerResult, setScannerResult, user } =
@@ -21,6 +30,13 @@ const Form = (props) => {
     const onCancel = () => {
         setScannerResult("");
         setStatusSubmit(false);
+    };
+
+    const onNextPage = () => {
+        setScannerResult("");
+        dispatch(setErrorCode(null));
+        setStatusForm(false);;
+        navigate("/product/status");
     };
 
     const validationSchema = Yup.object().shape({
@@ -48,7 +64,9 @@ const Form = (props) => {
         validationSchema,
         onSubmit: (data) => {
             const { id_machine, id_user_request, remark, factory, fixer } = data;
-            dispatch(report_damage({ id_machine, id_user_request, remark, factory, fixer }));
+            dispatch(
+                report_damage({ id_machine, id_user_request, remark, factory, fixer })
+            );
         },
     });
 
@@ -89,16 +107,15 @@ const Form = (props) => {
                             justifyContent: "center",
                         }}
                     >
-                        <Link to="/product/status">
-                            <Button
-                                type="button"
-                                variant="contained"
-                                color="primary"
-                                size="small"
-                            >
-                                Theo dõi trạng thái
-                            </Button>
-                        </Link>
+                        <Button
+                            type="button"
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            onClick={onNextPage}
+                        >
+                            Theo dõi trạng thái
+                        </Button>
 
                         <Button
                             type="button"
@@ -155,9 +172,7 @@ const Form = (props) => {
                                         ? "is-invalid"
                                         : ""
                                 }
-                                error={
-                                    formik.errors.factory && formik.touched.factory === true
-                                }
+                                error={formik.errors.factory && formik.touched.factory === true}
                                 helperText={
                                     formik.errors.factory && formik.touched.factory
                                         ? formik.errors.factory
@@ -292,7 +307,6 @@ const Form = (props) => {
                                 <MenuItem value="TD">Thợ Điện</MenuItem>
                                 <MenuItem value="TM">Thợ Máy</MenuItem>
                             </TextField>
-
                         </Grid>
                         <Grid item xs={12} md={12}>
                             <TextField

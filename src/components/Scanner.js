@@ -4,7 +4,6 @@ import { Box, Typography } from "@mui/material";
 
 const Scanner = (props) => {
   const { scanner, scannerResult, setScannerResult } = props;
-
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("render", {
       qrbox: {
