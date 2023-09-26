@@ -1,13 +1,20 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
 import { Box, Tabs, Tab } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { get_work_list_report_employee } from "../../redux/features/electric";
 import BreadCrumb from "../../components/BreadCrumb";
 import ProgressStatus from "../../components/ProgressStatus";
-import History from "../../components/History";
+// import History from "../../components/History";
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -25,26 +32,26 @@ function CustomTabPanel(props) {
   );
 }
 
-CustomTabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
 const StatusScreen = () => {
-  const [value, setValue] = React.useState(0);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const { workListReportEmployee } = useSelector((state) => state.electric);
+
+
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    const { user_name, factory } = user;
+    const id_user_mechanic = user_name;
+    dispatch(get_work_list_report_employee({ id_user_mechanic, factory }))
+  }, [user, dispatch])
+
 
   const handleChange = (event, newValue) => {
-    console.log(newValue);
     setValue(newValue);
   };
+
+
   return (
     <Box component="div">
       <BreadCrumb breadCrumb={"Trạng thái xử lý"} />
@@ -70,7 +77,7 @@ const StatusScreen = () => {
           </Tabs>
         </Box>
         <CustomTabPanel value={value} index={0}>
-          {/* <ProgressStatus /> */}
+          <ProgressStatus listReport={workListReportEmployee} user={user} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
           {/* <History /> */}

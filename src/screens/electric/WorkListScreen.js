@@ -145,7 +145,7 @@ const WorkListScreen = () => {
                 </Paper>
             </Box>
 
-            <AlertDialog open={open} setOpen={setOpen}>
+            <AlertDialog open={open} setOpen={setOpen} headerModal={"Danh sách nhân viên"}>
                 <TableList />
             </AlertDialog>
         </Box>

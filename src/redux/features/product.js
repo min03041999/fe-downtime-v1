@@ -1,6 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import ProductServices from "../services/product.services";
 
+export const setErrorCode = (errorCode) => {
+    console.log(errorCode);
+    return {
+        type: 'product/setErrorCode',
+        payload: errorCode,
+    };
+};
+
+
 export const get_report_damage = createAsyncThunk("damage_report/getTaskInfo", async ({ id_user_request, factory }) => {
     try {
         const data = await ProductServices.get_report_damage(id_user_request, factory);
@@ -28,6 +37,11 @@ export const productSlice = createSlice({
         errorCode: null,
         errorMessage: "",
         data: null,
+    },
+    reducers: {
+        setErrorCode: (state, action) => {
+            state.errorCode = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(get_report_damage.fulfilled, (state, action) => {
