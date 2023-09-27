@@ -3,9 +3,9 @@ import { Html5QrcodeScanner, Html5QrcodeScanType } from "html5-qrcode";
 import { Box, Typography } from "@mui/material";
 
 const Scanner = (props) => {
-  const { scanner, scannerResult, setScannerResult } = props;
+  const { idMachine, scanner, scannerResult, setScannerResult } = props;
   useEffect(() => {
-    const scanner = new Html5QrcodeScanner("render", {
+    const scanner = new Html5QrcodeScanner(`render-${idMachine}`, {
       qrbox: {
         width: 250,
         height: 250,
@@ -36,7 +36,7 @@ const Scanner = (props) => {
         {scanner}
       </Typography>
       <Box component="div">
-        {scannerResult ? <></> : <Box component="div" id="render"></Box>}
+        {scannerResult ? <></> : <Box component="div" id={`render-${idMachine}`}></Box>}
       </Box>
     </>
   );

@@ -37,7 +37,6 @@ const StatusScreen = () => {
   const { user } = useSelector((state) => state.auth);
   const { workListReportEmployee } = useSelector((state) => state.electric);
 
-
   const [value, setValue] = useState(0);
 
   useEffect(() => {
