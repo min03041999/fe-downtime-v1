@@ -266,6 +266,7 @@ export const ScannerElectric = (props) => {
       await dispatch(
         get_work_list_report_employee({ id_user_mechanic, factory })
       );
+      setScannerResult("");
     } else {
       dispatch(setErrorCode(10001, "Mã QRCode/BarCode không trùng khớp!"));
     }
