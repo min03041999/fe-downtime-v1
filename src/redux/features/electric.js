@@ -2,10 +2,13 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import ElectricServices from "../services/electric.services";
 
 //common
-export const setErrorCode = (errorCode) => {
+export const setErrorCode = (errorCode, errorMessage) => {
     return {
         type: 'electric/setErrorCode',
-        payload: errorCode,
+        payload: {
+            errorCode,
+            errorMessage,
+        },
     };
 };
 
@@ -49,7 +52,8 @@ export const electricSlice = createSlice({
     },
     reducers: {
         setErrorCode: (state, action) => {
-            state.errorCode = action.payload;
+            state.errorCode = action.payload.errorCode;
+            state.errorMessage = action.payload.errorMessage;
         },
     },
     extraReducers: (builder) => {
@@ -60,7 +64,8 @@ export const electricSlice = createSlice({
             state.workListReportEmployee = action.payload.data;
         });
         builder.addCase(scanner_fix_mechanic.fulfilled, (state, action) => {
-            console.log(action.payload);
+            state.errorCode = action.payload.error_code;
+            state.errorMessage = action.payload.error_message;
         });
     }
 })

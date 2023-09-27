@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Stepper,
@@ -14,7 +14,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  Collapse
+  Collapse,
 } from "@mui/material";
 
 import ArticleIcon from "@mui/icons-material/Article";
@@ -28,9 +28,14 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import AlertDialog from "./AlertDialog";
 import Scanner from "./Scanner";
 import ScannerInfo from "./ScannerInfo";
+import { Toast } from "../utils/toast";
 
-import { useDispatch } from "react-redux";
-import { scanner_fix_mechanic } from "../redux/features/electric";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  scanner_fix_mechanic,
+  get_work_list_report_employee,
+  setErrorCode,
+} from "../redux/features/electric";
 
 const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
   backgroundColor:
@@ -75,13 +80,14 @@ function ColorlibStepIcon(props) {
 export default function ProgressStatus({ listReport, user }) {
   const [openProgress, setOpenProgress] = useState(listReport || []);
   const [open, setOpen] = useState(false);
+  const [activeModal, setActiveModal] = useState("");
   const [scannerResult, setScannerResult] = useState("Machine-2");
 
   const steps = [
     {
       label: "Sản xuất",
       description: "Quét mã và gửi yêu cầu cho cơ điện.",
-      performAction: function (status) {
+      performAction: function (status, lean) {
         // Hành động cần thực hiện trong bước này
         console.log("Thực hiện hành động trong bước Sản xuất");
       },
@@ -89,8 +95,9 @@ export default function ProgressStatus({ listReport, user }) {
     {
       label: "Thợ sửa",
       description: "Tiếp nhận yêu cầu từ sản xuất.",
-      performAction: function (status) {
-        if (status === 1) {
+      performAction: function (status, lean) {
+        if (status === 1 && (lean === "TD" || lean === "TM")) {
+          setActiveModal("scanner");
           setOpen(true);
         }
       },
@@ -98,9 +105,11 @@ export default function ProgressStatus({ listReport, user }) {
     {
       label: "Thợ sửa",
       description: "Sửa chữa và ghi chú máy bị hư.",
-      performAction: function (status) {
-        // Hành động cần thực hiện trong bước này
-        console.log("Thực hiện hành động trong bước Cơ điện");
+      performAction: function (status, lean) {
+        if (status === 2 && (lean === "TD" || lean === "TM")) {
+          setActiveModal("finish");
+          setOpen(true);
+        }
       },
     },
   ];
@@ -113,6 +122,33 @@ export default function ProgressStatus({ listReport, user }) {
       setOpenProgress([...openProgress, index]);
     }
   };
+
+  const dispatch = useDispatch();
+  const electric = useSelector((state) => state.electric);
+
+  useEffect(() => {
+    if (electric.errorCode === 0) {
+      Toast.fire({
+        icon: "success",
+        title: electric.errorMessage,
+      });
+      setOpen(false);
+    }
+
+    if (
+      electric.errorCode === 10001 ||
+      electric.errorCode === 10002 ||
+      electric.errorCode === 10003 ||
+      electric.errorCode === 10004 ||
+      electric.errorCode === 10005
+    ) {
+      Toast.fire({
+        icon: "error",
+        title: electric.errorMessage,
+      });
+    }
+    dispatch(setErrorCode(null, ""));
+  }, [electric, dispatch]);
 
   return (
     <Stack sx={{ width: "100%" }} spacing={2}>
@@ -168,7 +204,9 @@ export default function ProgressStatus({ listReport, user }) {
                       {steps.map((step, index) => (
                         <Step
                           key={index}
-                          onClick={() => step.performAction(product.status)}
+                          onClick={() =>
+                            step.performAction(product.status, user.lean)
+                          }
                         >
                           <StepLabel StepIconComponent={ColorlibStepIcon}>
                             {step.label} - {step.description}
@@ -180,37 +218,58 @@ export default function ProgressStatus({ listReport, user }) {
                 </ListItem>
               </List>
             </Collapse>
+
+            {/* Trạng thái 2: Quét mã scanner */}
+            {activeModal === "scanner" && (
+              <ScannerElectric
+                idMachine={product.id_machine}
+                open={open}
+                setOpen={setOpen}
+                scannerResult={scannerResult}
+                setScannerResult={setScannerResult}
+                user={user}
+              />
+            )}
+
+            {/* Trạng 3: Hoàn thành việc sửa chửa  */}
+            {activeModal === "finish" && (
+              <FinishTaskElectric
+                idMachine={product.id_machine}
+                open={open}
+                setOpen={setOpen}
+                user={user}
+              />
+            )}
           </List>
         ))}
-
-      {/* Alert Dialog */}
-      <ScannerElectric
-        open={open}
-        setOpen={setOpen}
-        scannerResult={scannerResult}
-        setScannerResult={setScannerResult}
-        user={user}
-      />
     </Stack>
   );
 }
 
 export const ScannerElectric = (props) => {
   const dispatch = useDispatch();
-  const { open, setOpen, scannerResult, setScannerResult, user } = props;
-
+  const { idMachine, open, setOpen, scannerResult, setScannerResult, user } =
+    props;
   const onReScanner = () => {
     setScannerResult("");
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    const id_machine = idMachine;
     const { user_name, factory } = user;
     const id_user_mechanic = user_name;
-    const id_machine = scannerResult;
-    dispatch(scanner_fix_mechanic({ id_user_mechanic, id_machine, factory }));
+
+    if (id_machine === scannerResult) {
+      await dispatch(
+        scanner_fix_mechanic({ id_user_mechanic, id_machine, factory })
+      );
+      await dispatch(
+        get_work_list_report_employee({ id_user_mechanic, factory })
+      );
+    } else {
+      dispatch(setErrorCode(10001, "Mã QRCode/BarCode không trùng khớp!"));
+    }
   };
-
-
 
   return (
     <AlertDialog
@@ -253,6 +312,7 @@ export const ScannerElectric = (props) => {
           </Box>
         ) : (
           <Scanner
+            idMachine={idMachine}
             scanner="Quét mã Bar/QR Code:"
             scannerResult={scannerResult}
             setScannerResult={setScannerResult}
@@ -260,5 +320,17 @@ export const ScannerElectric = (props) => {
         )}
       </Box>
     </AlertDialog>
+  );
+};
+
+export const FinishTaskElectric = (props) => {
+  const { open, setOpen, user } = props;
+  // console.log(open, user);
+  return (
+    <AlertDialog
+      open={open}
+      setOpen={setOpen}
+      headerModal={"Thợ sửa - Tiếp nhận từ yêu cầu sản xuất"}
+    ></AlertDialog>
   );
 };
