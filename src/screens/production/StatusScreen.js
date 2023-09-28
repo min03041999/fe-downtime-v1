@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Tabs, Tab } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { get_report_damage } from "../../redux/features/product";
+import { get_report_damage, get_history_product } from "../../redux/features/product";
 import BreadCrumb from "../../components/BreadCrumb";
 import ProgressStatus from "../../components/ProgressStatus";
+import History from "../../components/History";
+import socketIOClient from "socket.io-client";
+import { BASE_URL } from "../../utils/env";
+
+const host = BASE_URL;
 
 function a11yProps(index) {
     return {
@@ -32,15 +37,35 @@ function CustomTabPanel(props) {
 }
 
 const StatusScreen = () => {
+    const [socket, setSocket] = useState("");
+    const socketRef = useRef();
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
-    const { data } = useSelector((state) => state.product);
+    const { requestListReportProduct, historyListReportProduct } = useSelector((state) => state.product);
 
     useEffect(() => {
-        const { user_name, factory } = user;
-        const id_user_request = user_name;
-        dispatch(get_report_damage({ id_user_request, factory }))
-    }, [user, dispatch]);
+
+        const fetchData = async () => {
+            const { user_name, factory } = user;
+            const id_user_request = user_name;
+
+            await dispatch(get_report_damage({ id_user_request, factory }));
+            await dispatch(get_history_product({ id_user_request, factory }));
+        };
+
+        fetchData();
+
+        socketRef.current = socketIOClient.connect(host);
+        socketRef.current.on("message", (data) => {
+            console.log(data);
+        });
+        socketRef.current.on(`${user.user_name}`, (data) => {
+            setSocket(data);
+        });
+
+    }, [user, dispatch, socket]);
+
+
 
     const [value, setValue] = useState(0);
 
@@ -72,10 +97,10 @@ const StatusScreen = () => {
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
-                    <ProgressStatus listReport={data} user={user} />
+                    <ProgressStatus listReport={requestListReportProduct} user={user} />
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    History is empty
+                    <History historyListReport={historyListReportProduct} />
                 </CustomTabPanel>
             </Box>
         </Box>

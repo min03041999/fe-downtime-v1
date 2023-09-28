@@ -33,9 +33,18 @@ export const get_work_list_report_employee = createAsyncThunk("/task/getTaskmech
     }
 })
 
-export const scanner_fix_mechanic = createAsyncThunk("/task/mechanicAccept", async ({ id_user_mechanic, id_machine, factory }) => {
+export const scanner_fix_mechanic = createAsyncThunk("/task/mechanicAccept", async ({ id_user_mechanic, id_machine, factory, lean }) => {
     try {
-        const data = await ElectricServices.scanner_fix_mechanic(id_user_mechanic, id_machine, factory);
+        const data = await ElectricServices.scanner_fix_mechanic(id_user_mechanic, id_machine, factory, lean);
+        return data;
+    } catch (error) {
+        return error.message;
+    }
+})
+
+export const finish_mechanic = createAsyncThunk("/task/machineCfmfinish", async ({ id_user_mechanic, status, id_machine, remark_mechanic, lean, factory }) => {
+    try {
+        const data = await ElectricServices.finish_mechanic(id_user_mechanic, status, id_machine, remark_mechanic, lean, factory);
         return data;
     } catch (error) {
         return error.message;
@@ -64,6 +73,18 @@ export const electricSlice = createSlice({
             state.workListReportEmployee = action.payload.data;
         });
         builder.addCase(scanner_fix_mechanic.fulfilled, (state, action) => {
+            state.errorCode = action.payload.error_code;
+            state.errorMessage = action.payload.error_message;
+        });
+        builder.addCase(scanner_fix_mechanic.rejected, (state, action) => {
+            state.errorCode = action.payload.error_code;
+            state.errorMessage = action.payload.error_message;
+        });
+        builder.addCase(finish_mechanic.fulfilled, (state, action) => {
+            state.errorCode = action.payload.error_code;
+            state.errorMessage = action.payload.error_message;
+        });
+        builder.addCase(finish_mechanic.rejected, (state, action) => {
             state.errorCode = action.payload.error_code;
             state.errorMessage = action.payload.error_message;
         });

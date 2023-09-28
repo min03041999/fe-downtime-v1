@@ -40,9 +40,13 @@ const StatusScreen = () => {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    const { user_name, factory } = user;
-    const id_user_mechanic = user_name;
-    dispatch(get_work_list_report_employee({ id_user_mechanic, factory }))
+    const fetchData = async () => {
+      const { user_name, factory } = user;
+      const id_user_mechanic = user_name;
+      await dispatch(get_work_list_report_employee({ id_user_mechanic, factory }))
+    }
+
+    fetchData();
   }, [user, dispatch])
 
 
