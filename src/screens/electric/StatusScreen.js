@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Box, Tabs, Tab } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { get_work_list_report_employee } from "../../redux/features/electric";
+import { get_work_list_report_employee, get_history_mechanic } from "../../redux/features/electric";
 import BreadCrumb from "../../components/BreadCrumb";
 import ProgressStatus from "../../components/ProgressStatus";
-// import History from "../../components/History";
+import History from "../../components/History";
 
 function a11yProps(index) {
   return {
@@ -35,7 +35,7 @@ function CustomTabPanel(props) {
 const StatusScreen = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const { workListReportEmployee } = useSelector((state) => state.electric);
+  const { workListReportEmployee, historyListReportMechanic } = useSelector((state) => state.electric);
 
   const [value, setValue] = useState(0);
 
@@ -43,7 +43,8 @@ const StatusScreen = () => {
     const fetchData = async () => {
       const { user_name, factory } = user;
       const id_user_mechanic = user_name;
-      await dispatch(get_work_list_report_employee({ id_user_mechanic, factory }))
+      await dispatch(get_work_list_report_employee({ id_user_mechanic, factory }));
+      await dispatch(get_history_mechanic({ id_user_mechanic, factory }));
     }
 
     fetchData();
@@ -83,7 +84,7 @@ const StatusScreen = () => {
           <ProgressStatus listReport={workListReportEmployee} user={user} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          {/* <History /> */}
+          <History historyListReport={historyListReportMechanic} />
         </CustomTabPanel>
       </Box>
     </Box>

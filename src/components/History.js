@@ -59,6 +59,7 @@ export default function History({ historyListReport }) {
             }}
             component="nav"
             aria-labelledby="nested-list-subheader"
+            key={index}
           >
             <ListItemButton onClick={() => handleClick(index)}>
               <ListItemText>

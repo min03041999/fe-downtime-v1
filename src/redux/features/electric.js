@@ -51,6 +51,24 @@ export const finish_mechanic = createAsyncThunk("/task/machineCfmfinish", async 
     }
 })
 
+export const get_history_mechanic = createAsyncThunk("/task/getHistoryMechanic", async ({ id_user_mechanic, factory }) => {
+    try {
+        const data = await ElectricServices.get_history_mechanic(id_user_mechanic, factory);
+        return data;
+    } catch (error) {
+        return error.message;
+    }
+})
+
+export const get_info_calculate = createAsyncThunk("/task/getInfoCalculate", async ({ date_from, date_to, user_name, factory }) => {
+    try {
+        const data = await ElectricServices.get_info_calculate(date_from, date_to, user_name, factory);
+        return data;
+    } catch (error) {
+        return error.message;
+    }
+})
+
 export const electricSlice = createSlice({
     name: "electric",
     initialState: {
@@ -58,6 +76,8 @@ export const electricSlice = createSlice({
         errorMessage: "",
         dataTaskReportDamageList: [], //Manager
         workListReportEmployee: [], // Mechanic Employee
+        historyListReportMechanic: [],
+        infoCalculate: [],
     },
     reducers: {
         setErrorCode: (state, action) => {
@@ -87,6 +107,12 @@ export const electricSlice = createSlice({
         builder.addCase(finish_mechanic.rejected, (state, action) => {
             state.errorCode = action.payload.error_code;
             state.errorMessage = action.payload.error_message;
+        });
+        builder.addCase(get_history_mechanic.fulfilled, (state, action) => {
+            state.historyListReportMechanic = action.payload.data;
+        });
+        builder.addCase(get_info_calculate.fulfilled, (state, action) => {
+            state.infoCalculate = action.payload.data;
         });
     }
 })
