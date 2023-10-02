@@ -4,9 +4,9 @@ import authHeader from "./auth_header";
 
 
 //List Task => Manager
-const get_task_damage = (factory, floor) => {
-    return axios.post(BASE_URL + "/task/getMehalist", {
-        factory, floor
+const get_task_damage = (factory, floor, user_name) => {
+    return axios.post(BASE_URL + "/task/getMechalist", {
+        factory, floor, user_name
     }, {
         headers: {
             "Content-Type": "application/json",

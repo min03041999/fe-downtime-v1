@@ -10,7 +10,7 @@ import {
     TableBody,
     Button,
 } from "@mui/material";
-import { DataGrid } from '@mui/x-data-grid';
+// import { DataGrid } from '@mui/x-data-grid';
 import BreadCrumb from "../../components/BreadCrumb";
 import Title from "../../components/Title";
 import { useDispatch, useSelector } from "react-redux";
@@ -61,12 +61,13 @@ const TableList = (props) => {
             sx={{
                 height: 300,
                 width: '100%',
-                '& .super-app-theme--header': {
-                    backgroundColor: '#1565c0', color: "#fff"
-                },
             }}
         >
-            <DataGrid rows={rows} columns={columns} checkboxSelection />
+            <TableContainer sx={{ maxHeight: 440 }}
+            >
+                <Table stickyHeader aria-label="sticky table"></Table>
+
+            </TableContainer>
         </Box>
     )
 }
@@ -74,14 +75,14 @@ const TableList = (props) => {
 const WorkListScreen = () => {
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
-    const { factory, floor } = useSelector((state) => state.auth.user);
+    const { factory, floor, user_name } = useSelector((state) => state.auth.user);
     const listTask = useSelector(
         (state) => state.electric.dataTaskReportDamageList
     );
 
     useEffect(() => {
-        dispatch(get_task_damage({ factory, floor }));
-    }, [factory, floor]);
+        dispatch(get_task_damage({ factory, floor, user_name }));
+    }, [factory, floor, user_name, dispatch]);
 
     const handleClickOpen = () => {
         setOpen(true);
