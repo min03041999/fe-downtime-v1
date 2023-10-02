@@ -99,6 +99,7 @@ const ProgressStatus = ({ listReport, user }) => {
                 title: electric.errorMessage,
             });
         }
+
         dispatch(setErrorCode(null, ""));
     }, [electric, dispatch]);
 

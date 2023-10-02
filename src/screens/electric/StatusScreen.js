@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Tabs, Tab } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { get_work_list_report_employee, get_history_mechanic } from "../../redux/features/electric";
 import BreadCrumb from "../../components/BreadCrumb";
 import ProgressStatus from "../../components/ProgressStatus";
 import History from "../../components/History";
+import socketIOClient from "socket.io-client";
+import { BASE_URL } from "../../utils/env";
+
+const host = BASE_URL;
 
 function a11yProps(index) {
   return {
@@ -33,6 +37,8 @@ function CustomTabPanel(props) {
 }
 
 const StatusScreen = () => {
+  const [socket, setSocket] = useState("");
+  const socketRef = useRef();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { workListReportEmployee, historyListReportMechanic } = useSelector((state) => state.electric);
@@ -47,8 +53,16 @@ const StatusScreen = () => {
       await dispatch(get_history_mechanic({ id_user_mechanic, factory }));
     }
 
+    socketRef.current = socketIOClient.connect(host);
+    socketRef.current.on("message", (data) => {
+      console.log(data);
+    });
+    socketRef.current.on(`${user.user_name}`, (data) => {
+      setSocket(data);
+    });
+
     fetchData();
-  }, [user, dispatch])
+  }, [user, dispatch, socket])
 
 
   const handleChange = (event, newValue) => {

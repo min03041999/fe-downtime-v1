@@ -5,7 +5,7 @@ import Title from './Title';
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch } from 'react-redux';
-import { finish_mechanic, get_work_list_report_employee } from "../redux/features/electric";
+import { finish_mechanic, get_work_list_report_employee, get_history_mechanic } from "../redux/features/electric";
 
 import { Typography, MenuItem, Grid, TextField, Box, Button, Stack } from "@mui/material";
 
@@ -36,7 +36,13 @@ const FinishTaskElectric = (props) => {
             const id_user_mechanic = user_name;
 
             await dispatch(finish_mechanic({ id_user_mechanic, status, id_machine, remark_mechanic, lean, factory }));
-            await dispatch(get_work_list_report_employee({ id_user_mechanic, factory }));
+
+            const fetchData = async () => {
+                await dispatch(get_work_list_report_employee({ id_user_mechanic, factory }));
+                await dispatch(get_history_mechanic({ id_user_mechanic, factory }));
+
+            }
+            fetchData();
             setOpen(false);
         }
     })
