@@ -15,7 +15,7 @@ const Banner = (props) => {
                     backgroundColor: "primary.dark",
                     borderRadius: "10px",
                     color: "#fff",
-                    zIndex: 0,
+                    zIndex: "9",
                     boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
                 }}
             />
@@ -31,6 +31,7 @@ const Banner = (props) => {
                         boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
                         padding: "15px",
                         fontSize: "14px",
+                        zIndex: "10",
                     }}
                 >
                     <Typography variant="div" fontWeight={600} sx={{ fontSize: "14px" }}>

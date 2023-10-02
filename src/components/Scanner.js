@@ -26,7 +26,7 @@ const Scanner = (props) => {
     return () => {
       scanner.clear();
     };
-  }, [scannerResult, setScannerResult]);
+  }, [scannerResult, setScannerResult, idMachine]);
 
   return (
     <>

@@ -35,9 +35,9 @@ const get_work_list_report_employee = (id_user_mechanic, factory) => {
     });
 }
 
-const scanner_fix_mechanic = (id_user_mechanic, id_machine, factory) => {
+const scanner_fix_mechanic = (id_user_mechanic, id_machine, factory, lean) => {
     return axios.post(BASE_URL + "/task/mechanicAccept", {
-        id_user_mechanic, id_machine, factory
+        id_user_mechanic, id_machine, factory, lean
     }, {
         headers: {
             "Content-Type": "application/json",
@@ -51,12 +51,59 @@ const scanner_fix_mechanic = (id_user_mechanic, id_machine, factory) => {
 }
 
 
+const finish_mechanic = (id_user_mechanic, status, id_machine, remark_mechanic, lean, factory) => {
+    return axios.post(BASE_URL + "/task/machineCfmfinish", {
+        id_user_mechanic, status, id_machine, remark_mechanic, lean, factory
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+        }
+    }).then((response) => {
+        return response.data;
+    }).catch((error) => {
+        return error.response.data;
+    })
+}
+
+const get_history_mechanic = (id_user_mechanic, factory) => {
+    return axios.post(BASE_URL + "/task/getHistoryMechanic", {
+        id_user_mechanic, factory
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+        }
+    }).then((response) => {
+        return response.data;
+    }).catch((error) => {
+        return error.response.data;
+    })
+}
+
+const get_info_calculate = (date_from, date_to, user_name, factory) => {
+    return axios.post(BASE_URL + "/task/getInfoCalculate", {
+        date_from, date_to, user_name, factory
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+        }
+    }).then((response) => {
+        return response.data;
+    }).catch((error) => {
+        return error.response.data;
+    })
+}
 
 
 const ElectricServices = {
     get_work_list_report_employee,
     get_task_damage,
     scanner_fix_mechanic,
+    finish_mechanic,
+    get_history_mechanic,
+    get_info_calculate
 }
 
 export default ElectricServices;

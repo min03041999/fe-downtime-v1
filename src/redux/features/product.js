@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import ProductServices from "../services/product.services";
 
 export const setErrorCode = (errorCode) => {
-    console.log(errorCode);
     return {
         type: 'product/setErrorCode',
         payload: errorCode,
@@ -31,12 +30,25 @@ export const report_damage = createAsyncThunk(
     }
 );
 
+export const get_history_product = createAsyncThunk(
+    "/damage_report/getHistoryTaskProduct",
+    async ({ id_user_request, factory }) => {
+        try {
+            const data = await ProductServices.get_history_product(id_user_request, factory);
+            return data;
+        } catch (error) {
+            return error.message;
+        }
+    }
+);
+
 export const productSlice = createSlice({
     name: "product",
     initialState: {
         errorCode: null,
         errorMessage: "",
-        data: null,
+        requestListReportProduct: [],
+        historyListReportProduct: [],
     },
     reducers: {
         setErrorCode: (state, action) => {
@@ -45,7 +57,7 @@ export const productSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(get_report_damage.fulfilled, (state, action) => {
-            state.data = action.payload.data;
+            state.requestListReportProduct = action.payload.data;
         });
         builder.addCase(report_damage.rejected, (state, action) => {
             state.errorCode = action.payload.error_code;
@@ -54,6 +66,10 @@ export const productSlice = createSlice({
         builder.addCase(report_damage.fulfilled, (state, action) => {
             state.errorCode = action.payload.error_code;
             state.errorMessage = action.payload.error_message;
+        });
+        builder.addCase(get_history_product.fulfilled, (state, action) => {
+            console.log(action.payload.data);
+            state.historyListReportProduct = action.payload.data;
         });
     },
 });

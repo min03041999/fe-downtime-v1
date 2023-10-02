@@ -8,9 +8,9 @@ const titleStyle = {
 }
 
 const Title = (props) => {
-    const { titleText } = props;
+    const { titleText, color } = props;
     return (
-        <Typography sx={titleStyle}>{titleText}</Typography>
+        <Typography sx={titleStyle} color={color}>{titleText}</Typography>
     )
 }
 

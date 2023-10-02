@@ -36,10 +36,26 @@ const report_damage = (id_machine, id_user_request, remark, factory, fixer) => {
     });
 };
 
+const get_history_product = (id_user_request, factory) => {
+    return axios.post(BASE_URL + "/damage_report/getHistoryTaskProduct", {
+        id_user_request, factory
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+        }
+    }).then((response) => {
+        return response.data;
+    }).catch((error) => {
+        return error.response.data;
+    });
+}
+
 
 const ProductServices = {
     get_report_damage,
     report_damage,
+    get_history_product
 };
 
 export default ProductServices;

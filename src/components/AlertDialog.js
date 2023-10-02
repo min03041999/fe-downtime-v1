@@ -24,7 +24,7 @@ const AlertDialog = (props) => {
             fullWidth
             maxWidth="sm"
         >
-            <DialogTitle >
+            <DialogTitle sx={{ padding: "16px 10px" }}>
                 <Typography sx={{ fontWeight: "600", fontSize: "14px" }}>
                     {headerModal}
                 </Typography>
