@@ -15,8 +15,9 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Popup from "./Popup";
+import { Toast } from "../utils/toast";
 import { useDispatch, useSelector } from "react-redux";
-import { report_damage, setErrorCode } from "../redux/features/product";
+import { report_damage, setErrorCode, cancel_report_damage } from "../redux/features/product";
 
 const Form = (props) => {
     const navigate = useNavigate();
@@ -26,18 +27,29 @@ const Form = (props) => {
         props;
     const [statusForm, setStatusForm] = useState(false);
     const [statusPopup, setstatusPopup] = useState(false);
+    const [removeTask, setRemoveTask] = useState(false);
 
-    const onCancel = () => {
+    const onBack = () => {
         setScannerResult("");
+        dispatch(setErrorCode(null));
         setStatusSubmit(false);
     };
 
     const onNextPage = () => {
         setScannerResult("");
         dispatch(setErrorCode(null));
-        setStatusForm(false);;
+        setStatusForm(false);
         navigate("/product/status");
     };
+
+    const onCancel = async () => {
+        const id_machine = scannerResult;
+        const { user_name, factory } = user;
+
+        await dispatch(cancel_report_damage({ user_name, id_machine, factory }));
+        setRemoveTask(true);
+    }
+
 
     const validationSchema = Yup.object().shape({
         FullName: Yup.string().required("Vui lòng nhập họ và tên!"),
@@ -62,15 +74,18 @@ const Form = (props) => {
             remark: "",
         },
         validationSchema,
-        onSubmit: (data) => {
+        onSubmit: async (data) => {
             const { id_machine, id_user_request, remark, factory, fixer } = data;
-            dispatch(
+            await dispatch(
                 report_damage({ id_machine, id_user_request, remark, factory, fixer })
             );
+
+            await dispatch(setErrorCode(null));
         },
     });
 
     useEffect(() => {
+        console.log(product.errorCode, removeTask);
         if (product.errorCode === 0) {
             setStatusForm(true);
             setstatusPopup(true);
@@ -84,7 +99,19 @@ const Form = (props) => {
         ) {
             setStatusForm(true);
         }
-    }, [product]);
+
+        if (product.errorCode === 0 && removeTask === true) {
+            setScannerResult("");
+            setStatusForm(false);
+
+            Toast.fire({
+                icon: 'success',
+                title: product.errorMessage,
+            })
+
+            dispatch(setErrorCode(null));
+        }
+    }, [product, removeTask, dispatch, setScannerResult]);
 
     return (
         <Box component="div">
@@ -112,20 +139,29 @@ const Form = (props) => {
                             variant="contained"
                             color="primary"
                             size="small"
+                            onClick={onBack}
+                        >
+                            Trở về
+                        </Button>
+                        <Button
+                            type="button"
+                            variant="contained"
+                            color="success"
+                            sx={{ backgroundColor: "#11a52c" }}
+                            size="small"
                             onClick={onNextPage}
                         >
                             Theo dõi trạng thái
                         </Button>
-
-                        <Button
+                        {statusPopup && <Button
                             type="button"
                             variant="contained"
                             color="error"
                             size="small"
                             onClick={onCancel}
                         >
-                            Trở về trang chủ
-                        </Button>
+                            Hủy
+                        </Button>}
                     </Stack>
                 </Box>
             ) : (

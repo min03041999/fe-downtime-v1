@@ -53,6 +53,8 @@ const StatusScreen = () => {
       await dispatch(get_history_mechanic({ id_user_mechanic, factory }));
     }
 
+    console.log(socket);
+
     socketRef.current = socketIOClient.connect(host);
     socketRef.current.on("message", (data) => {
       console.log(data);
