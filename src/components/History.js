@@ -25,6 +25,10 @@ const steps = [
     description: `Quét mã và gửi yêu cầu cho cơ điện.`,
   },
   {
+    label: "Thợ sửa",
+    description: "Xác nhận yêu cầu được gửi từ sản xuất.",
+  },
+  {
     label: "Cơ điện",
     description: "Tiếp nhận yêu cầu từ sản xuất.",
   },

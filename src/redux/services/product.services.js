@@ -51,11 +51,27 @@ const get_history_product = (id_user_request, factory) => {
     });
 }
 
+const cancel_report_damage = (user_name, id_machine, factory) => {
+    return axios.post(BASE_URL + "/damage_report/deleteTask", {
+        user_name, id_machine, factory
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+        }
+    }).then((response) => {
+        return response.data;
+    }).catch((error) => {
+        return error.response.data;
+    });
+}
+
 
 const ProductServices = {
     get_report_damage,
     report_damage,
-    get_history_product
+    get_history_product,
+    cancel_report_damage
 };
 
 export default ProductServices;

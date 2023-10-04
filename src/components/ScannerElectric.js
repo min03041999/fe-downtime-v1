@@ -1,54 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Scanner from "./Scanner";
-import ScannerInfo from "./ScannerInfo";
 import AlertDialog from "./AlertDialog";
-import {
-    Box,
-    Button,
-    Stack,
-} from "@mui/material";
-
+import { Box } from "@mui/material";
 import { useDispatch } from "react-redux";
-import {
-    scanner_fix_mechanic,
-    get_work_list_report_employee,
-    setErrorCode,
-} from "../redux/features/electric";
+import { scanner_fix_mechanic, setErrorCode } from "../redux/features/electric";
 
 const ScannerElectric = (props) => {
     const dispatch = useDispatch();
     const { isCheck, idMachine, open, setOpen, scannerResult, setScannerResult, user } =
         props;
 
-    const onReScanner = () => {
-        setScannerResult("");
-    };
-
-    const onSubmit = async () => {
+    useEffect(() => {
         const id_machine = idMachine;
         const { user_name, factory, lean } = user;
         const id_user_mechanic = user_name;
+        const status = 3;
 
         if (id_machine === scannerResult) {
-            await dispatch(
-                scanner_fix_mechanic({ id_user_mechanic, id_machine, factory, lean })
+            dispatch(
+                scanner_fix_mechanic({ id_user_mechanic, id_machine, factory, lean, status })
             );
-            await dispatch(
-                get_work_list_report_employee({ id_user_mechanic, factory })
-            );
+
             setScannerResult("");
             setOpen(false);
-        } else {
-            dispatch(setErrorCode(10001, "Mã QRCode/BarCode không trùng khớp!"));
         }
-    };
+
+        if (scannerResult !== "" && id_machine !== scannerResult) {
+            dispatch(setErrorCode(10001, "Mã QRCode/BarCode không trùng khớp!"));
+            setScannerResult("");
+        }
+
+    }, [idMachine, dispatch, setScannerResult, scannerResult, setOpen, user])
 
 
 
     return (
         <>
             {
-                isCheck &&
+                isCheck && scannerResult === "" &&
                 <AlertDialog
                     open={open}
                     setOpen={setOpen}
@@ -58,46 +47,16 @@ const ScannerElectric = (props) => {
                         component="div"
                         sx={{ display: "block", margin: "0 auto", maxWidth: "500px" }}
                     >
-                        {scannerResult !== "" ? (
-                            <Box component="div">
-                                <ScannerInfo
-                                    scanner="Quét mã Bar/QR Code:"
-                                    scannerResult={scannerResult}
-                                />
-                                <Stack
-                                    direction="row"
-                                    spacing={2}
-                                    sx={{ marginTop: "10px", justifyContent: "center" }}
-                                >
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        size="small"
-                                        onClick={onSubmit}
-                                    >
-                                        Xác nhận
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        color="error"
-                                        size="small"
-                                        onClick={onReScanner}
-                                    >
-                                        Quét lại
-                                    </Button>
-                                </Stack>
-                            </Box>
-                        ) : (
-                            <Scanner
-                                idMachine={idMachine}
-                                scanner="Quét mã Bar/QR Code:"
-                                scannerResult={scannerResult}
-                                setScannerResult={setScannerResult}
-                            />
-                        )}
+                        <Scanner
+                            idMachine={idMachine}
+                            scanner="Quét mã Bar/QR Code:"
+                            scannerResult={scannerResult}
+                            setScannerResult={setScannerResult}
+                        />
                     </Box>
                 </AlertDialog>
-            }</>
+            }
+        </>
 
     );
 }

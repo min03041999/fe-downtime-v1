@@ -42,6 +42,17 @@ export const get_history_product = createAsyncThunk(
     }
 );
 
+export const cancel_report_damage = createAsyncThunk(
+    "/damage_report/deleteTask",
+    async ({ user_name, id_machine, factory }) => {
+        try {
+            const data = await ProductServices.cancel_report_damage(user_name, id_machine, factory);
+            return data;
+        } catch (error) {
+            return error.message;
+        }
+    })
+
 export const productSlice = createSlice({
     name: "product",
     initialState: {
@@ -68,8 +79,11 @@ export const productSlice = createSlice({
             state.errorMessage = action.payload.error_message;
         });
         builder.addCase(get_history_product.fulfilled, (state, action) => {
-            console.log(action.payload.data);
             state.historyListReportProduct = action.payload.data;
+        });
+        builder.addCase(cancel_report_damage.fulfilled, (state, action) => {
+            state.errorCode = action.payload.error_code;
+            state.errorMessage = action.payload.error_message;
         });
     },
 });
