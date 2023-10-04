@@ -20,6 +20,7 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { get_info_calculate } from "../../redux/features/electric";
+import TaskEmployee from "../../components/TaskEmployee";
 
 const FilterStyle = {
   padding: "15px 30px 15px 30px",
@@ -175,6 +176,8 @@ export default function InfoUserScreen() {
         transition: "ease 0.5s", transform: `translate(0%, 0%)`, margin: "0 -5px",
       }}>
         <CalculateJob infoCalculate={infoCalculate} />
+
+        <TaskEmployee />
 
         <SkillEmployee />
 

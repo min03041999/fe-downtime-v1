@@ -33,9 +33,10 @@ export const get_work_list_report_employee = createAsyncThunk("/task/getTaskmech
     }
 })
 
-export const scanner_fix_mechanic = createAsyncThunk("/task/mechanicAccept", async ({ id_user_mechanic, id_machine, factory, lean }) => {
+// Confirm and Scanner
+export const scanner_fix_mechanic = createAsyncThunk("/task/mechanicAccept", async ({ id_user_mechanic, id_machine, factory, lean, status }) => {
     try {
-        const data = await ElectricServices.scanner_fix_mechanic(id_user_mechanic, id_machine, factory, lean);
+        const data = await ElectricServices.scanner_fix_mechanic(id_user_mechanic, id_machine, factory, lean, status);
         return data;
     } catch (error) {
         return error.message;

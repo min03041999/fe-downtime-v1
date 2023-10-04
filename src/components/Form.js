@@ -23,7 +23,7 @@ const Form = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const product = useSelector((state) => state.product);
-    const { formText, setStatusSubmit, scannerResult, setScannerResult, user } =
+    const { formText, scannerResult, setScannerResult, user } =
         props;
     const [statusForm, setStatusForm] = useState(false);
     const [statusPopup, setstatusPopup] = useState(false);
@@ -32,7 +32,6 @@ const Form = (props) => {
     const onBack = () => {
         setScannerResult("");
         dispatch(setErrorCode(null));
-        setStatusSubmit(false);
     };
 
     const onNextPage = () => {
@@ -385,7 +384,7 @@ const Form = (props) => {
                             variant="contained"
                             color="error"
                             size="small"
-                            onClick={onCancel}
+                            onClick={onBack}
                         >
                             Hủy
                         </Button>

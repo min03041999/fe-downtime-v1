@@ -35,9 +35,9 @@ const get_work_list_report_employee = (id_user_mechanic, factory) => {
     });
 }
 
-const scanner_fix_mechanic = (id_user_mechanic, id_machine, factory, lean) => {
+const scanner_fix_mechanic = (id_user_mechanic, id_machine, factory, lean, status) => {
     return axios.post(BASE_URL + "/task/mechanicAccept", {
-        id_user_mechanic, id_machine, factory, lean
+        id_user_mechanic, id_machine, factory, lean, status
     }, {
         headers: {
             "Content-Type": "application/json",
