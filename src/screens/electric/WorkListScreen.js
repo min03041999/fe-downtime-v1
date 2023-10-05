@@ -9,6 +9,7 @@ import {
     TableCell,
     TableBody,
     Button,
+    Stack,
 } from "@mui/material";
 // import { DataGrid } from '@mui/x-data-grid';
 import BreadCrumb from "../../components/BreadCrumb";
@@ -23,65 +24,92 @@ const PaperStyle = {
     padding: "10px",
 };
 
-const TableList = (props) => {
-    const columns = [
-        {
-            field: 'first',
-            // headerClassName: 'super-app-theme--header',
-            headerAlign: 'center',
-            width: 140,
-        },
-        {
-            field: 'last',
-            // headerClassName: 'super-app-theme--header',
-            headerAlign: 'center',
-            width: 140,
-        },
-    ];
+const TableList = () => {
 
-    const rows = [
-        {
-            id: 1,
-            first: 'Jane',
-            last: 'Carter',
-        },
-        {
-            id: 2,
-            first: 'Jack',
-            last: 'Smith',
-        },
-        {
-            id: 3,
-            first: 'Gill',
-            last: 'Martin',
-        },
-    ];
     return (
-        <Box
-            sx={{
-                height: 300,
-                width: '100%',
-            }}
-        >
-            <TableContainer sx={{ maxHeight: 440 }}
-            >
-                <Table stickyHeader aria-label="sticky table"></Table>
+        <Box sx={{ maxHeight: "400px", width: "100%" }}>
+            <TableContainer>
+                <Table stickyHeader aria-label="sticky table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell style={{ fontWeight: "bold", whiteSpace: "nowrap", backgroundColor: "#1976d2", color: "#fff" }}>
+                                Họ và tên
+                            </TableCell>
+                            <TableCell style={{ fontWeight: "bold", whiteSpace: "nowrap", backgroundColor: "#1976d2", color: "#fff" }}>
+                                Số điện thoại
+                            </TableCell>
+                            <TableCell style={{ fontWeight: "bold", whiteSpace: "nowrap", backgroundColor: "#1976d2", color: "#fff" }}>
+                                Đơn vị
+                            </TableCell>
+                            <TableCell style={{ fontWeight: "bold", whiteSpace: "nowrap", backgroundColor: "#1976d2", color: "#fff" }}>
+                                Tầng
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>
+                                fdsfds
+                            </TableCell>
+                            <TableCell>
+                                fdsfds
+                            </TableCell>
+                            <TableCell>
+                                fdsfds
+                            </TableCell>
+                            <TableCell>
+                                fdsfds
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
 
             </TableContainer>
+
+
+            <Stack direction="row"
+                spacing={2}
+                sx={{
+                    marginTop: "10px",
+                    justifyContent: "center",
+                }}>
+                <Button
+                    type="button"
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                >
+                    Giao việc
+                </Button>
+                <Button
+                    type="button"
+                    variant="contained"
+                    color="error"
+                    size="small"
+                >
+                    Đóng
+                </Button>
+            </Stack>
         </Box>
     )
 }
 
 const WorkListScreen = () => {
     const dispatch = useDispatch();
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
     const { factory, floor, user_name } = useSelector((state) => state.auth.user);
     const listTask = useSelector(
         (state) => state.electric.dataTaskReportDamageList
     );
 
+    console.log(listTask);
+
     useEffect(() => {
-        dispatch(get_task_damage({ factory, floor, user_name }));
+        const fetchData = async () => {
+            await dispatch(get_task_damage({ factory, floor, user_name }));
+        }
+
+        fetchData();
     }, [factory, floor, user_name, dispatch]);
 
     const handleClickOpen = () => {

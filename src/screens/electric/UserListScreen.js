@@ -1,42 +1,22 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Avatar from "@mui/material/Avatar";
-import Chip from "@mui/material/Chip";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import React, { useEffect } from "react";
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Chip } from "@mui/material";
 import Title from "../../components/Title";
 import BreadCrumb from "../../components/BreadCrumb";
-
-function createData(avatar, name, line, status, minute) {
-  return { avatar, name, line, status, minute };
-}
+import { useDispatch, useSelector } from "react-redux";
+import { get_list_status_mechanic } from "../../redux/features/electric";
 
 function statusCurrent(status) {
   switch (status) {
-    case "Fixing":
-      return <Chip label="Fixing" color="error" />;
-    case "Onway":
-      return <Chip label="On way" color="primary" />;
-    case "Availabel":
-      return <Chip label="Availabel" color="success" />;
-    default:
+    case 1:
+      return <Chip label="Availabel" color="success" sx={{ backgroundColor: "#11a52c" }} />;
+    case 2:
       return <Chip label="Task" color="warning" />;
+    case 3:
+      return <Chip label="Fixing" color="error" />;
+    default:
+      return;
   }
 }
-
-const rows = [
-  createData("Img Dien", "Điện", "3F-1", "Fixing", "18 phút trước"),
-  createData("Img Viet", "Việt", "3F-2", "Onway", "5 phút trước"),
-  createData("Img Trong", "Trọng", "3F-3", "Availabel", "20 phút trước"),
-  createData("Img Nguyen", "Nguyên", "3F-4", "Task", "1 tiếng trước"),
-  createData("Img Tam", "Tâm", "3F-5", "Fixing", "30 phút trước"),
-];
 
 const PaperStyle = {
   position: "relative",
@@ -45,6 +25,19 @@ const PaperStyle = {
 };
 
 const UserlistScreen = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const { getListStatusMechanic } = useSelector((state) => state.electric);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { position, factory, floor, lean } = user;
+      await dispatch(get_list_status_mechanic({ position, factory, floor, lean }));
+    }
+    fetchData();
+  }, [dispatch, user]);
+
+
   return (
     <Box component="div">
       <BreadCrumb breadCrumb={"Danh sách cơ điện"} />
@@ -62,46 +55,37 @@ const UserlistScreen = () => {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell style={{ fontWeight: "bold" }} align="center">
-                    Hình đại diện
+                  <TableCell style={{ fontWeight: "bold", whiteSpace: "nowrap", backgroundColor: "#1976d2", color: "#fff" }} align="center">
+                    Họ và tên
                   </TableCell>
-                  <TableCell style={{ fontWeight: "bold" }} align="center">
-                    Tên
+                  <TableCell style={{ fontWeight: "bold", whiteSpace: "nowrap", backgroundColor: "#1976d2", color: "#fff" }} align="center">
+                    Đơn vị
                   </TableCell>
-                  <TableCell style={{ fontWeight: "bold" }} align="center">
-                    Chuyền
+                  <TableCell style={{ fontWeight: "bold", whiteSpace: "nowrap", backgroundColor: "#1976d2", color: "#fff" }} align="center">
+                    Tầng
                   </TableCell>
-                  <TableCell style={{ fontWeight: "bold" }} align="center">
+                  <TableCell style={{ fontWeight: "bold", whiteSpace: "nowrap", backgroundColor: "#1976d2", color: "#fff" }} align="center">
                     Trạng thái hoạt động
-                  </TableCell>
-                  <TableCell style={{ fontWeight: "bold" }} align="center">
-                    Lịch sử hoạt động
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => (
+                {getListStatusMechanic.map((row, index) => (
                   <TableRow
-                    key={row.avatar}
+                    key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
-                      <Box width="100%" display="flex" justifyContent="center">
-                        <Avatar alt={row.name} src={row.avatar} />
-                      </Box>
-                    </TableCell>
-                    <TableCell style={{ fontWeight: "bold" }} align="center">
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="center">{row.line}</TableCell>
                     <TableCell align="center">
-                      {statusCurrent(row.status)}
+                      {row.user_name} - {row.name}
                     </TableCell>
                     <TableCell align="center">
-                      <Box>
-                        <AccessTimeIcon style={{ opacity: 0.5 }} />
-                      </Box>
-                      <Box style={{ opacity: 0.5 }}>{row.minute}</Box>
+                      {row.lean}
+                    </TableCell>
+                    <TableCell align="center">
+                      {row.floor} - {row.floors}
+                    </TableCell>
+                    <TableCell align="center">
+                      {statusCurrent(row.STS)}
                     </TableCell>
                   </TableRow>
                 ))}
