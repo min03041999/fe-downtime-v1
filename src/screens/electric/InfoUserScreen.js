@@ -48,6 +48,7 @@ export default function InfoUserScreen() {
   const dispatch = useDispatch();
   const { user_name, factory } = useSelector((state) => state.auth.user);
   const { infoCalculate } = useSelector((state) => state.electric);
+  const { totalFix, avgTime, arrPercentfn, arrResult } = infoCalculate;
 
   const [open, setOpen] = useState(false);
   const onShowFilter = () => {
@@ -60,7 +61,6 @@ export default function InfoUserScreen() {
   });
 
   useEffect(() => {
-
     const date_from = format(dayjs(new Date()).$d, "yyyy-MM-dd");
     const date_to = format(dayjs(new Date()).$d, "yyyy-MM-dd");
 
@@ -175,13 +175,13 @@ export default function InfoUserScreen() {
       } : {
         transition: "ease 0.5s", transform: `translate(0%, 0%)`, margin: "0 -5px",
       }}>
-        <CalculateJob infoCalculate={infoCalculate} />
+        <CalculateJob totalFix={totalFix} avgTime={avgTime} />
 
-        <TaskEmployee />
+        <TaskEmployee arrResult={arrResult} />
 
         <SkillEmployee />
 
-        <ChartEmployee />
+        <ChartEmployee arrPercentfn={arrPercentfn} />
       </Box>
     </Box>
   );

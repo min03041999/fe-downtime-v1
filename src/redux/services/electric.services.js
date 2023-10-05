@@ -19,6 +19,21 @@ const get_task_damage = (factory, floor, user_name) => {
     });
 }
 
+const get_list_status_mechanic = (position, factory, floor, lean) => {
+    return axios.post(BASE_URL + "/task/getListStatusMechanic", {
+        position, factory, floor, lean
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+        }
+    }).then((response) => {
+        return response.data;
+    }).catch((error) => {
+        return error.response.data;
+    });
+}
+
 //Get Status => Employee
 const get_work_list_report_employee = (id_user_mechanic, factory) => {
     return axios.post(BASE_URL + "/task/getTaskmechaInfo", {
@@ -51,9 +66,9 @@ const scanner_fix_mechanic = (id_user_mechanic, id_machine, factory, lean, statu
 }
 
 
-const finish_mechanic = (id_user_mechanic, status, id_machine, remark_mechanic, lean, factory) => {
+const finish_mechanic = (id_user_mechanic, skill, id_machine, remark_mechanic, lean, factory) => {
     return axios.post(BASE_URL + "/task/machineCfmfinish", {
-        id_user_mechanic, status, id_machine, remark_mechanic, lean, factory
+        id_user_mechanic, skill, id_machine, remark_mechanic, lean, factory
     }, {
         headers: {
             "Content-Type": "application/json",
@@ -96,6 +111,20 @@ const get_info_calculate = (date_from, date_to, user_name, factory) => {
     })
 }
 
+const get_info_skill = () => {
+    return axios.get(BASE_URL + "/task/getInforSkill", {
+        headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+        }
+    }).then((response) => {
+        return response.data;
+    }).catch((error) => {
+        return error.response.data;
+    })
+}
+
+
 
 const ElectricServices = {
     get_work_list_report_employee,
@@ -103,7 +132,9 @@ const ElectricServices = {
     scanner_fix_mechanic,
     finish_mechanic,
     get_history_mechanic,
-    get_info_calculate
+    get_info_calculate,
+    get_info_skill,
+    get_list_status_mechanic,
 }
 
 export default ElectricServices;

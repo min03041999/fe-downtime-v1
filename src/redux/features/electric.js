@@ -23,6 +23,15 @@ export const get_task_damage = createAsyncThunk("/task/getMechalist", async ({ f
     }
 })
 
+export const get_list_status_mechanic = createAsyncThunk("/task/getListStatusMechanic", async ({ position, factory, floor, lean }) => {
+    try {
+        const data = await ElectricServices.get_list_status_mechanic(position, factory, floor, lean);
+        return data;
+    } catch (error) {
+        return error.message;
+    }
+})
+
 //List Status => Employee
 export const get_work_list_report_employee = createAsyncThunk("/task/getTaskmechaInfo", async ({ id_user_mechanic, factory }) => {
     try {
@@ -43,9 +52,9 @@ export const scanner_fix_mechanic = createAsyncThunk("/task/mechanicAccept", asy
     }
 })
 
-export const finish_mechanic = createAsyncThunk("/task/machineCfmfinish", async ({ id_user_mechanic, status, id_machine, remark_mechanic, lean, factory }) => {
+export const finish_mechanic = createAsyncThunk("/task/machineCfmfinish", async ({ id_user_mechanic, skill, id_machine, remark_mechanic, lean, factory }) => {
     try {
-        const data = await ElectricServices.finish_mechanic(id_user_mechanic, status, id_machine, remark_mechanic, lean, factory);
+        const data = await ElectricServices.finish_mechanic(id_user_mechanic, skill, id_machine, remark_mechanic, lean, factory);
         return data;
     } catch (error) {
         return error.message;
@@ -70,6 +79,15 @@ export const get_info_calculate = createAsyncThunk("/task/getInfoCalculate", asy
     }
 })
 
+export const get_info_skill = createAsyncThunk("/task/getInforSkill", async () => {
+    try {
+        const data = await ElectricServices.get_info_skill();
+        return data;
+    } catch (error) {
+        return error.message;
+    }
+})
+
 export const electricSlice = createSlice({
     name: "electric",
     initialState: {
@@ -79,6 +97,8 @@ export const electricSlice = createSlice({
         workListReportEmployee: [], // Mechanic Employee
         historyListReportMechanic: [],
         infoCalculate: [],
+        infoSkill: [],
+        getListStatusMechanic: [],
     },
     reducers: {
         setErrorCode: (state, action) => {
@@ -89,6 +109,9 @@ export const electricSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(get_task_damage.fulfilled, (state, action) => {
             state.dataTaskReportDamageList = action.payload.data;
+        });
+        builder.addCase(get_list_status_mechanic.fulfilled, (state, action) => {
+            state.getListStatusMechanic = action.payload.data;
         });
         builder.addCase(get_work_list_report_employee.fulfilled, (state, action) => {
             state.workListReportEmployee = action.payload.data;
@@ -114,6 +137,9 @@ export const electricSlice = createSlice({
         });
         builder.addCase(get_info_calculate.fulfilled, (state, action) => {
             state.infoCalculate = action.payload.data;
+        });
+        builder.addCase(get_info_skill.fulfilled, (state, action) => {
+            state.infoSkill = action.payload.data;
         });
     }
 })

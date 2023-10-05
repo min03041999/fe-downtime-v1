@@ -34,17 +34,17 @@ const ContentStyle = {
     alignItems: "center",
 }
 
-const CalculateJob = ({ infoCalculate }) => {
+const CalculateJob = ({ totalFix, avgTime }) => {
 
     return (
         <Box component="div" sx={CalculateJobStyle}>
             <Box sx={CalculateJobsStyle}>
                 <Typography variant="h6" component="h6" sx={TitleStyle}>
-                    Số lần sửa
+                    TS lần sửa
                 </Typography>
                 <Box sx={ContentStyle}>
                     <Typography variant="h3" component="h3" color="white">
-                        {infoCalculate?.totalFix}
+                        {totalFix}
                     </Typography>
                 </Box>
             </Box>
@@ -54,7 +54,7 @@ const CalculateJob = ({ infoCalculate }) => {
                 </Typography>
                 <Box sx={ContentStyle}>
                     <Typography variant="h3" component="h3" color="white">
-                        {infoCalculate?.avgTime}
+                        {avgTime}
                     </Typography>
                 </Box>
             </Box>
