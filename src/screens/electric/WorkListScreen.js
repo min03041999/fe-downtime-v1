@@ -150,21 +150,28 @@ const TableEmployeeList = ({ open, setOpen, headerModal, getListAsignMechanic, t
                                         key={index}
                                         onClick={() => handleRowClick(row)}
                                         style={{
-                                            backgroundColor: isSelected ? "#83ace7" : "transparent", // Blacken the background if the row is selected
-
+                                            backgroundColor: isSelected ? "#83ace7" : "transparent",
                                         }}
                                     >
-                                        <TableCell sx={{ whiteSpace: "nowrap" }}>
+                                        <TableCell sx={{ whiteSpace: "nowrap" }} style={{
+                                            color: isSelected ? "#fff" : "#000",
+                                        }}>
                                             {row.user_name} - {row.name}
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell style={{
+                                            color: isSelected ? "#fff" : "#000",
+                                        }}>
                                             {row.phone_number}
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell style={{
+                                            color: isSelected ? "#fff" : "#000",
+                                        }}>
                                             {row.lean}
                                         </TableCell>
-                                        <TableCell sx={{ whiteSpace: "nowrap" }}>
-                                            {row.floor} - {row.floors}
+                                        <TableCell sx={{ whiteSpace: "nowrap" }} style={{
+                                            color: isSelected ? "#fff" : "#000",
+                                        }}>
+                                            {row.floor} {row.floors ? ("- " + row.floors) : ("")}
                                         </TableCell>
                                     </TableRow>
                                 );
