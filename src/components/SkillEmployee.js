@@ -25,7 +25,7 @@ const SkillEmployee = () => {
     return (
         <Box component="div" sx={SkillEmployeeStyle}>
             <Typography sx={TitleStyle} variant="h4" component="div">
-                Passed machine tests
+                Loại máy sửa chữa
             </Typography>
 
             <Grid container spacing={1} style={{ fontSize: 14, padding: "10px 15px 0" }}>

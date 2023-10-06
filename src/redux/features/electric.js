@@ -32,6 +32,24 @@ export const get_list_status_mechanic = createAsyncThunk("/task/getListStatusMec
     }
 })
 
+export const get_list_asign_mechanic = createAsyncThunk("/task/getListAsignMechanic", async ({ floor, factory, position, lean }) => {
+    try {
+        const data = await ElectricServices.get_list_asign_mechanic(floor, factory, position, lean);
+        return data;
+    } catch (error) {
+        return error.message;
+    }
+})
+
+export const owner_asign_task = createAsyncThunk("/task/ownerAsignTask", async ({ user_name, id_machine, id_owner_mechanic, factory, lean }) => {
+    try {
+        const data = await ElectricServices.owner_asign_task(user_name, id_machine, id_owner_mechanic, factory, lean);
+        return data;
+    } catch (error) {
+        return error.message;
+    }
+})
+
 //List Status => Employee
 export const get_work_list_report_employee = createAsyncThunk("/task/getTaskmechaInfo", async ({ id_user_mechanic, factory }) => {
     try {
@@ -99,6 +117,7 @@ export const electricSlice = createSlice({
         infoCalculate: [],
         infoSkill: [],
         getListStatusMechanic: [],
+        getListAsignMechanic: [],
     },
     reducers: {
         setErrorCode: (state, action) => {
@@ -113,8 +132,15 @@ export const electricSlice = createSlice({
         builder.addCase(get_list_status_mechanic.fulfilled, (state, action) => {
             state.getListStatusMechanic = action.payload.data;
         });
+        builder.addCase(get_list_asign_mechanic.fulfilled, (state, action) => {
+            state.getListAsignMechanic = action.payload.data;
+        });
         builder.addCase(get_work_list_report_employee.fulfilled, (state, action) => {
             state.workListReportEmployee = action.payload.data;
+        });
+        builder.addCase(owner_asign_task.fulfilled, (state, action) => {
+            state.errorCode = action.payload.error_code;
+            state.errorMessage = action.payload.error_message;
         });
         builder.addCase(scanner_fix_mechanic.fulfilled, (state, action) => {
             state.errorCode = action.payload.error_code;

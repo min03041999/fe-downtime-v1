@@ -83,7 +83,7 @@ const ChartEmployee = ({ arrPercentfn }) => {
     return (
         <Box sx={ChartEmployeeStyle}>
             <Typography sx={TitleStyle} variant="h4" component="div">
-                avg fix time by category
+                Phương pháp sửa chữa
             </Typography>
             <Box sx={ContentStyle}>
                 <Pie data={chart} options={chart.options} plugins={[ChartDataLabels]} />
