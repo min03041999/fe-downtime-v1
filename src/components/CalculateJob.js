@@ -22,6 +22,8 @@ const TitleStyle = {
     color: "#000",
     fontWeight: "bold",
     textTransform: "uppercase",
+    fontSize: "19px",
+    textAlign: "center",
 }
 
 const ContentStyle = {
@@ -40,7 +42,7 @@ const CalculateJob = ({ totalFix, avgTime }) => {
         <Box component="div" sx={CalculateJobStyle}>
             <Box sx={CalculateJobsStyle}>
                 <Typography variant="h6" component="h6" sx={TitleStyle}>
-                    TS lần sửa
+                    Tổng số <br /> phiếu  đã sửa
                 </Typography>
                 <Box sx={ContentStyle}>
                     <Typography variant="h3" component="h3" color="white">
@@ -50,7 +52,7 @@ const CalculateJob = ({ totalFix, avgTime }) => {
             </Box>
             <Box sx={CalculateJobsStyle}>
                 <Typography variant="h6" component="h6" sx={TitleStyle}>
-                    TB thời gian
+                    Thời gian <br /> sửa trung bình
                 </Typography>
                 <Box sx={ContentStyle}>
                     <Typography variant="h3" component="h3" color="white">

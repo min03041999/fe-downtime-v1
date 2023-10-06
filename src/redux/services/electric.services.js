@@ -34,6 +34,36 @@ const get_list_status_mechanic = (position, factory, floor, lean) => {
     });
 }
 
+const get_list_asign_mechanic = (floor, factory, position, lean) => {
+    return axios.post(BASE_URL + "/task/getListAsignMechanic", {
+        floor, factory, position, lean
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+        }
+    }).then((response) => {
+        return response.data;
+    }).catch((error) => {
+        return error.response.data;
+    })
+}
+
+const owner_asign_task = (user_name, id_machine, id_owner_mechanic, factory, lean) => {
+    return axios.post(BASE_URL + "/task/ownerAsignTask", {
+        user_name, id_machine, id_owner_mechanic, factory, lean
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+        }
+    }).then((response) => {
+        return response.data;
+    }).catch((error) => {
+        return error.response.data;
+    })
+}
+
 //Get Status => Employee
 const get_work_list_report_employee = (id_user_mechanic, factory) => {
     return axios.post(BASE_URL + "/task/getTaskmechaInfo", {
@@ -135,6 +165,8 @@ const ElectricServices = {
     get_info_calculate,
     get_info_skill,
     get_list_status_mechanic,
+    get_list_asign_mechanic,
+    owner_asign_task,
 }
 
 export default ElectricServices;

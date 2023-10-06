@@ -84,7 +84,6 @@ const Form = (props) => {
     });
 
     useEffect(() => {
-        console.log(product.errorCode, removeTask);
         if (product.errorCode === 0) {
             setStatusForm(true);
             setstatusPopup(true);
