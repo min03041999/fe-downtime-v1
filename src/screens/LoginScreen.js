@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Button,
     TextField,
@@ -13,6 +13,8 @@ import { login, setErrorCode } from "../redux/features/auth";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Toast } from "../utils/toast";
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken } from "firebase/messaging";
 
 const ContainerStyle = {
     position: "relative",
@@ -36,10 +38,52 @@ const validationSchema = Yup.object().shape({
     factory: Yup.string().required("Vui lòng không để trống!"),
 });
 
+var firebaseConfig = {
+    apiKey: "AIzaSyCJ_YIzbq2PDVB1SvAwcflvN4bnqN00vy4",
+    authDomain: "tesstts.firebaseapp.com",
+    projectId: "tesstts",
+    storageBucket: "tesstts.appspot.com",
+    messagingSenderId: "130388392879",
+    appId: "1:130388392879:web:9dacb10254ab240c910d5a",
+    measurementId: "G-D1PLR86NEY",
+};
+
+initializeApp(firebaseConfig);
+
+const messaging = getMessaging();
+
 export default function LoginScreen() {
     const auth = useSelector((state) => state.auth);
+    const [tokens, setToken] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    getToken(messaging, {
+        vapidKey:
+            "BNiYast8NllLtbCmjB7tEy1Ja95lcKdr0_Unmz41P96-c5OHtqq1L60fhrlOGY2hW3RQDNdoVoF5MwLHUg2UlnQ",
+    })
+        .then((currentToken) => {
+            if (currentToken) {
+                // console.log("current token for client: ", currentToken);
+                // Perform any other neccessary action with the token
+                // Toast.fire({
+                //   icon: "success",
+                //   title: "Accepted for notification",
+                // });
+                setToken(currentToken);
+                return currentToken;
+            } else {
+                // Show permission request UI
+                Toast.fire({
+                    icon: "error",
+                    title:
+                        "No registration token available. Request permission to generate one.",
+                });
+            }
+        })
+        .catch((err) => {
+            console.log("An error occurred while retrieving token. ", err);
+        });
 
     const formik = useFormik({
         initialValues: {
@@ -50,7 +94,7 @@ export default function LoginScreen() {
         validationSchema,
         onSubmit: (data) => {
             const { username, password, factory } = data;
-            dispatch(login({ username, password, factory }));
+            dispatch(login({ username, password, factory, token: tokens }));
 
 
         },
