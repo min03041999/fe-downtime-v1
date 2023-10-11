@@ -100,20 +100,10 @@ export default function LoginScreen() {
         },
     });
 
-    const permissionFireBase = async () => {
-        let permission = await Notification.requestPermission();
-        if (permission === "granted") {
-            // Get the FCM token (see below)
-            alert("123");
-        } else {
-            // Handle denied permission
-            alert("321");
-        }
-        alert("test");
-    }
+
 
     useEffect(() => {
-        permissionFireBase();
+
         if (auth.errorCode !== 0 && auth.errorCode !== null) {
             Toast.fire({
                 icon: 'error',
