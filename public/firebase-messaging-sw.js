@@ -6,6 +6,17 @@ importScripts('https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js');
 
 
+if ('serviceWorker' in navigator) {
+    console.log(navigator);
+    navigator.serviceWorker.register('public/firebase-messaging-sw.js')
+        .then(function (registration) {
+            console.log('Registration successful, scope is:', registration.scope);
+        }).catch(function (err) {
+            console.log('Service worker registration failed, error:', err);
+        });
+}
+
+
 // Initialize the Firebase app in the service worker by passing the generated config
 const firebaseConfig = {
     apiKey: `REPLACE_WITH_YOUR_FIREBASE_MESSAGING_API_KEY`,
@@ -24,14 +35,14 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 // Handle incoming messages while the app is not in focus (i.e in the background, hidden behind other tabs, or completely closed).
-messaging.onBackgroundMessage(function (payload) {
-    console.log('Received background message ', payload);
+// messaging.onBackgroundMessage(function (payload) {
+//     console.log('Received background message ', payload);
 
-    const notificationTitle = payload.notification.title;
-    const notificationOptions = {
-        body: payload.notification.body,
-    };
+//     const notificationTitle = payload.notification.title;
+//     const notificationOptions = {
+//         body: payload.notification.body,
+//     };
 
-    self.registration.showNotification(notificationTitle,
-        notificationOptions);
-});
+//     self.registration.showNotification(notificationTitle,
+//         notificationOptions);
+// });

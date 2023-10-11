@@ -23,7 +23,6 @@ const Notification = () => {
     requestForToken();
     onMessageListener()
         .then((payload) => {
-            console.log(payload?.notification?.title);
             setNotification({
                 title: payload?.notification?.title,
                 body: payload?.notification?.body,
