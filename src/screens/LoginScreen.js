@@ -110,9 +110,11 @@ export default function LoginScreen() {
                     vapidKey: "BNiYast8NllLtbCmjB7tEy1Ja95lcKdr0_Unmz41P96-c5OHtqq1L60fhrlOGY2hW3RQDNdoVoF5MwLHUg2UlnQ",
                 });
                 // do something with the FCM token
+                alert(token);
             } else {
                 console.log("Notification permission denied");
                 // Handle denied permission
+                alert("Coyen");
             }
         });
     }
