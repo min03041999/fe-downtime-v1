@@ -103,6 +103,7 @@ export default function LoginScreen() {
     });
 
     const permissionFireBase = async () => {
+        alert("Tao quá mệt");
         let permission = await Notification.requestPermission();
         if (permission === "granted") {
             // Get the FCM token (see below)
@@ -115,7 +116,6 @@ export default function LoginScreen() {
 
     useEffect(() => {
         permissionFireBase();
-
         if (auth.errorCode !== 0 && auth.errorCode !== null) {
             Toast.fire({
                 icon: 'error',
