@@ -7,6 +7,7 @@ import RecentActorsOutlinedIcon from "@mui/icons-material/RecentActorsOutlined";
 import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import { useSelector } from "react-redux";
+import Notification from "../../firebaseNotifications/Notification";
 
 const ElectricScreen = () => {
     const auth = useSelector((state) => state.auth);
@@ -62,6 +63,7 @@ const ElectricScreen = () => {
             ) : (
                 <LoginScreen />
             )}
+            <Notification />
         </React.Fragment>
     );
 };

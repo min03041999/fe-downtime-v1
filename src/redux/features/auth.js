@@ -10,9 +10,9 @@ export const setErrorCode = (errorCode) => {
 
 export const login = createAsyncThunk(
     "auth/login",
-    async ({ username, password, factory }) => {
+    async ({ username, password, factory, token }) => {
         try {
-            const data = await AuthService.login(username, password, factory);
+            const data = await AuthService.login(username, password, factory, token);
             return data;
         } catch (error) {
             return error.message;

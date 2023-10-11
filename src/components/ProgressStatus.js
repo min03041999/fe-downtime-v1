@@ -31,7 +31,7 @@ const ProgressStatus = ({ listReport, user }) => {
   const [openProgress, setOpenProgress] = useState(listReport || []);
   const [open, setOpen] = useState(false);
   const [activeModal, setActiveModal] = useState("");
-  const [scannerResult, setScannerResult] = useState("test");
+  const [scannerResult, setScannerResult] = useState("");
   const [idMachine, setIdMachine] = useState("");
 
   const steps = [
