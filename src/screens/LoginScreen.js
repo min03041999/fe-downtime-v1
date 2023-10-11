@@ -106,10 +106,10 @@ export default function LoginScreen() {
         let permission = await Notification.requestPermission();
         if (permission === "granted") {
             // Get the FCM token (see below)
-            console.log("123");
+            alert("123");
         } else {
             // Handle denied permission
-            console.log("321");
+            alert("321");
         }
     }
 
