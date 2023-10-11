@@ -97,21 +97,24 @@ export default function LoginScreen() {
         onSubmit: (data) => {
             const { username, password, factory } = data;
             dispatch(login({ username, password, factory, token: tokens }));
-
-
         },
     });
 
     const permissionFireBase = async () => {
-        alert("Tao quá mệt");
-        let permission = await Notification.requestPermission();
-        if (permission === "granted") {
-            // Get the FCM token (see below)
-            alert("123");
-        } else {
-            // Handle denied permission
-            alert("321");
-        }
+        const myButton = document.querySelector("button");
+        myButton.addEventListener("click", async () => {
+            let permission = await Notification.requestPermission();
+            if (permission === "granted") {
+                console.log("Notification permission granted. Requesting for token.");
+                let token = await messaging.getToken({
+                    vapidKey: "BNiYast8NllLtbCmjB7tEy1Ja95lcKdr0_Unmz41P96-c5OHtqq1L60fhrlOGY2hW3RQDNdoVoF5MwLHUg2UlnQ",
+                });
+                // do something with the FCM token
+            } else {
+                console.log("Notification permission denied");
+                // Handle denied permission
+            }
+        });
     }
 
     useEffect(() => {
@@ -241,6 +244,7 @@ export default function LoginScreen() {
                         </TextField>
 
                         <Button
+                            id="button"
                             type="submit"
                             fullWidth
                             variant="contained"
