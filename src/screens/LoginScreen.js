@@ -58,6 +58,8 @@ export default function LoginScreen() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+
+
     getToken(messaging, {
         vapidKey:
             "BNiYast8NllLtbCmjB7tEy1Ja95lcKdr0_Unmz41P96-c5OHtqq1L60fhrlOGY2hW3RQDNdoVoF5MwLHUg2UlnQ",
@@ -100,7 +102,19 @@ export default function LoginScreen() {
         },
     });
 
+    const permissionFireBase = async () => {
+        let permission = await Notification.requestPermission();
+        if (permission === "granted") {
+            // Get the FCM token (see below)
+            console.log("123");
+        } else {
+            // Handle denied permission
+            console.log("321");
+        }
+    }
+
     useEffect(() => {
+        permissionFireBase();
 
         if (auth.errorCode !== 0 && auth.errorCode !== null) {
             Toast.fire({

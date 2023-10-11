@@ -13,7 +13,7 @@ const PaperStyle = {
 
 const InfoMachineScreen = () => {
     const auth = useSelector((state) => state.auth);
-    const [scannerResult, setScannerResult] = useState("");
+    const [scannerResult, setScannerResult] = useState("IT-PC12");
 
     return (
         <Box component="div">
