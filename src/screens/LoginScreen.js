@@ -101,14 +101,14 @@ export default function LoginScreen() {
     });
 
     const permissionFireBase = async () => {
-        let permission = await Notification.requestPermission();
-        if (permission === "granted") {
-            // Get the FCM token (see below)
-            alert("123");
-        } else {
-            // Handle denied permission
-            alert("321");
-        }
+        // let permission = await Notification.requestPermission();
+        // if (permission === "granted") {
+        //     // Get the FCM token (see below)
+        //     alert("123");
+        // } else {
+        //     // Handle denied permission
+        //     alert("321");
+        // }
 
         let token = await messaging.getToken({
             vapidKey: "BNiYast8NllLtbCmjB7tEy1Ja95lcKdr0_Unmz41P96-c5OHtqq1L60fhrlOGY2hW3RQDNdoVoF5MwLHUg2UlnQ",
