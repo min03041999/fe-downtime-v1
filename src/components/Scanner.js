@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Html5QrcodeScanner, Html5QrcodeScanType } from "html5-qrcode";
 import { Box, Typography } from "@mui/material";
 
 const Scanner = (props) => {
   const { idMachine, scanner, scannerResult, setScannerResult } = props;
+  const scannerRef = useRef(null);
+
   useEffect(() => {
-    const scanner = new Html5QrcodeScanner(`render-${idMachine}`, {
+    const scannerInstance = new Html5QrcodeScanner(scannerRef.current, {
       qrbox: {
         width: 250,
         height: 250,
@@ -14,17 +16,20 @@ const Scanner = (props) => {
       rememberLastUsedCamera: true,
       supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
     });
-    scanner.render(success, error);
+    scannerInstance.render(success, error);
+
     function success(result) {
-      scanner.clear();
+      scannerInstance.clear();
       setScannerResult(result);
     }
+
     function error(err) {
       console.log(err);
     }
+
     // Clean up function
     return () => {
-      scanner.clear();
+      scannerInstance.clear();
     };
   }, [scannerResult, setScannerResult, idMachine]);
 
@@ -36,7 +41,11 @@ const Scanner = (props) => {
         {scanner}
       </Typography>
       <Box component="div">
-        {scannerResult ? <></> : <Box component="div" id={`render-${idMachine}`}></Box>}
+        {scannerResult ? (
+          <></>
+        ) : (
+          <Box component="div" ref={scannerRef}></Box>
+        )}
       </Box>
     </>
   );
