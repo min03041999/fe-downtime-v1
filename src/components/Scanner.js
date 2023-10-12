@@ -12,7 +12,7 @@ const Scanner = (props) => {
       },
       fps: 10,
       rememberLastUsedCamera: true,
-      supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_BACK_CAMERA],
+      supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
     });
     scanner.render(success, error);
     function success(result) {
