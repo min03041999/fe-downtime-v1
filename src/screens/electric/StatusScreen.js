@@ -45,6 +45,14 @@ const StatusScreen = () => {
 
   const [value, setValue] = useState(0);
 
+  socketRef.current = socketIOClient.connect(host);
+  socketRef.current.on("message", (data) => {
+    console.log(data);
+  });
+  socketRef.current.on(`${user.user_name}`, (data) => {
+    setSocket(data);
+  });
+
   useEffect(() => {
     const fetchData = async () => {
       const { user_name, factory } = user;
@@ -52,14 +60,6 @@ const StatusScreen = () => {
       await dispatch(get_work_list_report_employee({ id_user_mechanic, factory }));
       await dispatch(get_history_mechanic({ id_user_mechanic, factory }));
     }
-
-    socketRef.current = socketIOClient.connect(host);
-    socketRef.current.on("message", (data) => {
-      console.log(data);
-    });
-    socketRef.current.on(`${user.user_name}`, (data) => {
-      setSocket(data);
-    });
 
     fetchData();
   }, [user, dispatch, socket])
