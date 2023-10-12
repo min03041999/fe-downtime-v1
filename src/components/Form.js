@@ -31,6 +31,7 @@ const Form = (props) => {
 
     const onBack = () => {
         setScannerResult("");
+        setStatusForm(false);
         dispatch(setErrorCode(null, ""));
     };
 
