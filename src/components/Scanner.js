@@ -1,10 +1,42 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Html5QrcodeScanner, Html5QrcodeScanType } from "html5-qrcode";
 import { Box, Typography } from "@mui/material";
 
 const Scanner = (props) => {
-  const { idMachine, scanner, scannerResult, setScannerResult } = props;
+  const { scanner, idMachine, scannerResult, setScannerResult } = props;
+  const scannerRef = useRef(null);
+
   useEffect(() => {
+    const startScanning = async () => {
+      try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const videoDevices = devices.filter(
+          (device) => device.kind === "videoinput"
+        );
+
+        let rearCameraId = null;
+        for (const device of videoDevices) {
+          if (device.label.toLowerCase().includes("back")) {
+            rearCameraId = device.deviceId;
+            break;
+          }
+        }
+
+        const selectedCameraId = rearCameraId || videoDevices[0]?.deviceId;
+
+        if (selectedCameraId) {
+          scannerRef.current?.start(selectedCameraId, {
+            facingMode: "environment",
+          }, (result) => {
+            scannerRef.current?.clear();
+            setScannerResult(result);
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     const scanner = new Html5QrcodeScanner(`render-${idMachine}`, {
       qrbox: {
         width: 250,
@@ -14,17 +46,25 @@ const Scanner = (props) => {
       rememberLastUsedCamera: true,
       supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
     });
+
+    scannerRef.current = scanner;
+
     scanner.render(success, error);
+
     function success(result) {
       scanner.clear();
       setScannerResult(result);
     }
+
     function error(err) {
       console.log(err);
     }
+
+    startScanning();
+
     // Clean up function
     return () => {
-      scanner.clear();
+      scannerRef.current?.clear();
     };
   }, [scannerResult, setScannerResult, idMachine]);
 
@@ -36,7 +76,11 @@ const Scanner = (props) => {
         {scanner}
       </Typography>
       <Box component="div">
-        {scannerResult ? <></> : <Box component="div" id={`render-${idMachine}`}></Box>}
+        {scannerResult ? (
+          <></>
+        ) : (
+          <Box component="div" id={`render-${idMachine}`}></Box>
+        )}
       </Box>
     </>
   );

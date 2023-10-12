@@ -75,11 +75,10 @@ const Form = (props) => {
         validationSchema,
         onSubmit: async (data) => {
             const { id_machine, id_user_request, remark, factory, fixer } = data;
+            await dispatch(setErrorCode(null, ""));
             await dispatch(
                 report_damage({ id_machine, id_user_request, remark, factory, fixer })
             );
-
-            // await dispatch(setErrorCode(null, ""));
         },
     });
 
@@ -106,9 +105,10 @@ const Form = (props) => {
                 icon: 'success',
                 title: product.errorMessage,
             })
+
+            dispatch(setErrorCode(null, ""));
         }
 
-        dispatch(setErrorCode(null, ""));
     }, [product, removeTask, dispatch, setScannerResult]);
 
     return (
