@@ -75,7 +75,7 @@ const Form = (props) => {
         validationSchema,
         onSubmit: async (data) => {
             const { id_machine, id_user_request, remark, factory, fixer } = data;
-            await dispatch(setErrorCode(null, ""));
+            // await dispatch(setErrorCode(null, ""));
             await dispatch(
                 report_damage({ id_machine, id_user_request, remark, factory, fixer })
             );
