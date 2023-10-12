@@ -235,14 +235,6 @@ const WorkListScreen = () => {
     const [socket, setSocket] = useState("");
     const socketRef = useRef();
 
-    socketRef.current = socketIOClient.connect(host);
-    socketRef.current.on("message", (data) => {
-        console.log(data);
-    });
-    socketRef.current.on(`${user_name}`, (data) => {
-        setSocket(data);
-    });
-
     useEffect(() => {
         const fetchData = async () => {
             await dispatch(get_task_damage({ factory, floor, user_name }));
@@ -251,6 +243,18 @@ const WorkListScreen = () => {
             );
         };
         fetchData();
+
+        socketRef.current = socketIOClient.connect(host);
+        socketRef.current.on("message", (data) => {
+            console.log(data);
+        });
+        socketRef.current.on(`${user_name}`, (data) => {
+            setSocket(data);
+        });
+
+        return () => {
+            socketRef.current.disconnect();
+        };
     }, [factory, floor, user_name, position, lean, dispatch, socket]);
 
     const handleClickOpen = (row) => {

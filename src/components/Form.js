@@ -79,7 +79,7 @@ const Form = (props) => {
                 report_damage({ id_machine, id_user_request, remark, factory, fixer })
             );
 
-            await dispatch(setErrorCode(null, ""));
+            // await dispatch(setErrorCode(null, ""));
         },
     });
 

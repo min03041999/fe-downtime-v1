@@ -37,13 +37,7 @@ const UserlistScreen = () => {
   const [socket, setSocket] = useState("");
   const socketRef = useRef();
 
-  socketRef.current = socketIOClient.connect(host);
-  socketRef.current.on("message", (data) => {
-    console.log(data);
-  });
-  socketRef.current.on(`${user.user_name}`, (data) => {
-    setSocket(data);
-  });
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,6 +45,20 @@ const UserlistScreen = () => {
       await dispatch(get_list_status_mechanic({ position, factory, floor, lean }));
     }
     fetchData();
+
+    socketRef.current = socketIOClient.connect(host);
+
+    socketRef.current.on("message", (data) => {
+      console.log(data);
+    });
+
+    socketRef.current.on(`${user.user_name}`, (data) => {
+      setSocket(data);
+    });
+
+    return () => {
+      socketRef.current.disconnect();
+    };
   }, [dispatch, user, socket]);
 
 
