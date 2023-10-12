@@ -35,6 +35,7 @@ const InfoMachineScreen = () => {
                             scanner="Quét mã Bar/QR Code:"
                             scannerResult={scannerResult}
                             setScannerResult={setScannerResult}
+                            idMachine={"scanner-product"}
                         />
                     )}
                 </Paper>
