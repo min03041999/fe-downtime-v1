@@ -13,9 +13,19 @@ const Scanner = (props) => {
         const videoDevices = devices.filter(
           (device) => device.kind === "videoinput"
         );
-        if (videoDevices.length > 0) {
-          const cameraId = videoDevices[0].deviceId;
-          scannerRef.current?.start(cameraId, {
+
+        let rearCameraId = null;
+        for (const device of videoDevices) {
+          if (device.label.toLowerCase().includes("back")) {
+            rearCameraId = device.deviceId;
+            break;
+          }
+        }
+
+        const selectedCameraId = rearCameraId || videoDevices[0]?.deviceId;
+
+        if (selectedCameraId) {
+          scannerRef.current?.start(selectedCameraId, {
             facingMode: "environment",
           }, (result) => {
             scannerRef.current?.clear();
