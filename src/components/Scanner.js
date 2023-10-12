@@ -13,13 +13,18 @@ const Scanner = (props) => {
       fps: 10,
       rememberLastUsedCamera: false,
       supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
-      facingMode: { exact: "environment" },
     });
-    scanner.render(success, error);
+
+
+    const qrCodeSuccessCallback = scanner.render(success, error);
+
+    scanner.start({ facingMode: "environment" }, qrCodeSuccessCallback);
+
     function success(result) {
       scanner.clear();
       setScannerResult(result);
     }
+
     function error(err) {
       console.log(err);
     }
