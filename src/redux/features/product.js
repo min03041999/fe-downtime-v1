@@ -1,10 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import ProductServices from "../services/product.services";
 
-export const setErrorCode = (errorCode) => {
+export const setErrorCode = (errorCode, errorMessage) => {
     return {
         type: 'product/setErrorCode',
-        payload: errorCode,
+        payload: {
+            errorCode,
+            errorMessage,
+        },
     };
 };
 
@@ -63,7 +66,8 @@ export const productSlice = createSlice({
     },
     reducers: {
         setErrorCode: (state, action) => {
-            state.errorCode = action.payload;
+            state.errorCode = action.payload.errorCode;
+            state.errorMessage = action.payload.errorMessage;
         },
     },
     extraReducers: (builder) => {

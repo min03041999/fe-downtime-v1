@@ -31,12 +31,12 @@ const Form = (props) => {
 
     const onBack = () => {
         setScannerResult("");
-        dispatch(setErrorCode(null));
+        dispatch(setErrorCode(null, ""));
     };
 
     const onNextPage = () => {
         setScannerResult("");
-        dispatch(setErrorCode(null));
+        dispatch(setErrorCode(null, ""));
         setStatusForm(false);
         navigate("/product/status");
     };
@@ -79,7 +79,7 @@ const Form = (props) => {
                 report_damage({ id_machine, id_user_request, remark, factory, fixer })
             );
 
-            await dispatch(setErrorCode(null));
+            await dispatch(setErrorCode(null, ""));
         },
     });
 
@@ -107,7 +107,7 @@ const Form = (props) => {
                 title: product.errorMessage,
             })
 
-            dispatch(setErrorCode(null));
+            dispatch(setErrorCode(null, ""));
         }
     }, [product, removeTask, dispatch, setScannerResult]);
 
