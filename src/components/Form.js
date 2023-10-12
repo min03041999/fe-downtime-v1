@@ -106,9 +106,9 @@ const Form = (props) => {
                 icon: 'success',
                 title: product.errorMessage,
             })
-
-            dispatch(setErrorCode(null, ""));
         }
+
+        dispatch(setErrorCode(null, ""));
     }, [product, removeTask, dispatch, setScannerResult]);
 
     return (
