@@ -1,10 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Html5QrcodeScanner, Html5QrcodeScanType } from "html5-qrcode";
 import { Box, Typography } from "@mui/material";
 
 const Scanner = (props) => {
-  const { idMachine, scanner, scannerResult, setScannerResult } = props;
+  const { scanner, idMachine, scannerResult, setScannerResult } = props;
+  const scannerRef = useRef(null);
+
   useEffect(() => {
+    const startScanning = async () => {
+      try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const videoDevices = devices.filter(
+          (device) => device.kind === "videoinput"
+        );
+        if (videoDevices.length > 0) {
+          const cameraId = videoDevices[0].deviceId;
+          scannerRef.current?.start(cameraId, {
+            facingMode: "environment",
+          }, (result) => {
+            scannerRef.current?.clear();
+            setScannerResult(result);
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     const scanner = new Html5QrcodeScanner(`render-${idMachine}`, {
       qrbox: {
         width: 250,
@@ -15,10 +37,9 @@ const Scanner = (props) => {
       supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
     });
 
+    scannerRef.current = scanner;
 
-    const qrCodeSuccessCallback = scanner.render(success, error);
-
-    scanner.start({ facingMode: "environment" }, qrCodeSuccessCallback);
+    scanner.render(success, error);
 
     function success(result) {
       scanner.clear();
@@ -28,9 +49,12 @@ const Scanner = (props) => {
     function error(err) {
       console.log(err);
     }
+
+    startScanning();
+
     // Clean up function
     return () => {
-      scanner.clear();
+      scannerRef.current?.clear();
     };
   }, [scannerResult, setScannerResult, idMachine]);
 
@@ -42,7 +66,11 @@ const Scanner = (props) => {
         {scanner}
       </Typography>
       <Box component="div">
-        {scannerResult ? <></> : <Box component="div" id={`render-${idMachine}`}></Box>}
+        {scannerResult ? (
+          <></>
+        ) : (
+          <Box component="div" id={`render-${idMachine}`}></Box>
+        )}
       </Box>
     </>
   );
