@@ -45,13 +45,7 @@ const StatusScreen = () => {
 
   const [value, setValue] = useState(0);
 
-  socketRef.current = socketIOClient.connect(host);
-  socketRef.current.on("message", (data) => {
-    console.log(data);
-  });
-  socketRef.current.on(`${user.user_name}`, (data) => {
-    setSocket(data);
-  });
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,6 +56,20 @@ const StatusScreen = () => {
     }
 
     fetchData();
+
+    socketRef.current = socketIOClient.connect(host);
+
+    socketRef.current.on("message", (data) => {
+      console.log(data);
+    });
+
+    socketRef.current.on(`${user.user_name}`, (data) => {
+      setSocket(data);
+    });
+
+    return () => {
+      socketRef.current.disconnect();
+    };
   }, [user, dispatch, socket])
 
 

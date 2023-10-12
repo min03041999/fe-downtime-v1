@@ -37,22 +37,15 @@ function CustomTabPanel(props) {
 }
 
 const StatusScreen = () => {
-    const [socket, setSocket] = useState("");
+    const [socket, setSocket] = useState(null);
     const socketRef = useRef();
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
     const { requestListReportProduct, historyListReportProduct } = useSelector((state) => state.product);
 
-    socketRef.current = socketIOClient.connect(host);
-    socketRef.current.on("message", (data) => {
-        console.log(data);
-    });
-    socketRef.current.on(`${user.user_name}`, (data) => {
-        setSocket(data);
-    });
+
 
     useEffect(() => {
-
         const fetchData = async () => {
             const { user_name, factory } = user;
             const id_user_request = user_name;
@@ -60,8 +53,19 @@ const StatusScreen = () => {
             await dispatch(get_report_damage({ id_user_request, factory }));
             await dispatch(get_history_product({ id_user_request, factory }));
         };
-
         fetchData();
+
+        socketRef.current = socketIOClient.connect(host);
+        socketRef.current.on("message", (data) => {
+            console.log(data);
+        });
+        socketRef.current.on(`${user.user_name}`, (data) => {
+            setSocket(data);
+        });
+
+        return () => {
+            socketRef.current.disconnect();
+        };
     }, [user, dispatch, socket]);
 
 
