@@ -43,6 +43,14 @@ const StatusScreen = () => {
     const { user } = useSelector((state) => state.auth);
     const { requestListReportProduct, historyListReportProduct } = useSelector((state) => state.product);
 
+    socketRef.current = socketIOClient.connect(host);
+    socketRef.current.on("message", (data) => {
+        console.log(data);
+    });
+    socketRef.current.on(`${user.user_name}`, (data) => {
+        setSocket(data);
+    });
+
     useEffect(() => {
 
         const fetchData = async () => {
@@ -54,17 +62,7 @@ const StatusScreen = () => {
         };
 
         fetchData();
-
-        socketRef.current = socketIOClient.connect(host);
-        socketRef.current.on("message", (data) => {
-            console.log(data);
-        });
-        socketRef.current.on(`${user.user_name}`, (data) => {
-            setSocket(data);
-        });
-
     }, [user, dispatch, socket]);
-
 
 
     const [value, setValue] = useState(0);
