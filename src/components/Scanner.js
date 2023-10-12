@@ -11,8 +11,9 @@ const Scanner = (props) => {
         height: 250,
       },
       fps: 10,
-      rememberLastUsedCamera: true,
+      rememberLastUsedCamera: false,
       supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+      facingMode: 'user',
     });
     scanner.render(success, error);
     function success(result) {
