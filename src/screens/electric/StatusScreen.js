@@ -52,7 +52,13 @@ const StatusScreen = () => {
       const { user_name, factory } = user;
       const id_user_mechanic = user_name;
       await dispatch(get_work_list_report_employee({ id_user_mechanic, factory }));
-      await dispatch(get_history_mechanic({ id_user_mechanic, factory }));
+      // await dispatch(get_history_mechanic({ id_user_mechanic, factory }));
+    }
+
+    if (value === 1) {
+      const { user_name, factory } = user;
+      const id_user_mechanic = user_name;
+      dispatch(get_history_mechanic({ id_user_mechanic, factory }));
     }
 
     fetchData();
@@ -70,7 +76,7 @@ const StatusScreen = () => {
     return () => {
       socketRef.current.disconnect();
     };
-  }, [user, dispatch, socket])
+  }, [user, dispatch, socket, value])
 
 
   const handleChange = (event, newValue) => {
