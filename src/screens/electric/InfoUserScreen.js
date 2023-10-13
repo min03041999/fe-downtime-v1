@@ -77,10 +77,10 @@ export default function InfoUserScreen() {
       DateTo: dayjs(new Date()),
     },
     validationSchema,
-    onSubmit: (data) => {
+    onSubmit: async (data) => {
       const date_from = format(data.DateFrom.$d, "yyyy-MM-dd");
       const date_to = format(data.DateTo.$d, "yyyy-MM-dd");
-      dispatch(get_info_calculate({ date_from, date_to, user_name, factory }));
+      await dispatch(get_info_calculate({ date_from, date_to, user_name, factory }));
     }
   })
 
