@@ -65,6 +65,7 @@ const Scanner = (props) => {
     // Clean up function
     return () => {
       scannerRef.current?.clear();
+      scanner.clear();
     };
   }, [scannerResult, setScannerResult, idMachine]);
 

@@ -143,7 +143,7 @@ const TableEmployeeList = ({ open, setOpen, headerModal, getListAsignMechanic, t
                     <TableBody>
                         {getListAsignMechanic
                             ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row, index) => {
+                            ?.map((row, index) => {
                                 const isSelected = selectedRow === row;
                                 return (
                                     <TableRow
@@ -326,7 +326,7 @@ const WorkListScreen = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {dataTaskReportDamageList.map((row, index) => (
+                                {dataTaskReportDamageList?.map((row, index) => (
                                     <TableRow
                                         key={index}
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
