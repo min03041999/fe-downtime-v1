@@ -94,7 +94,7 @@ const UserlistScreen = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {getListStatusMechanic.map((row, index) => (
+                {getListStatusMechanic?.map((row, index) => (
                   <TableRow
                     key={index}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
