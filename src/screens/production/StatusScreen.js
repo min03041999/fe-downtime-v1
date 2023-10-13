@@ -43,15 +43,16 @@ const StatusScreen = () => {
     const { user } = useSelector((state) => state.auth);
     const { requestListReportProduct, historyListReportProduct } = useSelector((state) => state.product);
 
-
-
     useEffect(() => {
         const fetchData = async () => {
             const { user_name, factory } = user;
             const id_user_request = user_name;
 
-            await dispatch(get_report_damage({ id_user_request, factory }));
-            await dispatch(get_history_product({ id_user_request, factory }));
+            if (value === 1) {
+                await dispatch(get_history_product({ id_user_request, factory }));
+            } else {
+                await dispatch(get_report_damage({ id_user_request, factory }));
+            }
         };
         fetchData();
 
