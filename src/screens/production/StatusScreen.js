@@ -42,6 +42,7 @@ const StatusScreen = () => {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
     const { requestListReportProduct, historyListReportProduct } = useSelector((state) => state.product);
+    const [value, setValue] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -67,10 +68,7 @@ const StatusScreen = () => {
         return () => {
             socketRef.current.disconnect();
         };
-    }, [user, dispatch, socket]);
-
-
-    const [value, setValue] = useState(0);
+    }, [user, dispatch, socket, value]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
