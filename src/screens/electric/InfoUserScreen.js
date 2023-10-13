@@ -61,10 +61,14 @@ export default function InfoUserScreen() {
   });
 
   useEffect(() => {
-    const date_from = format(dayjs(new Date()).$d, "yyyy-MM-dd");
-    const date_to = format(dayjs(new Date()).$d, "yyyy-MM-dd");
+    const fetchData = async () => {
+      const date_from = format(dayjs(new Date()).$d, "yyyy-MM-dd");
+      const date_to = format(dayjs(new Date()).$d, "yyyy-MM-dd");
 
-    dispatch(get_info_calculate({ date_from, date_to, user_name, factory }));
+      await dispatch(get_info_calculate({ date_from, date_to, user_name, factory }));
+    }
+
+    fetchData();
   }, [dispatch, user_name, factory])
 
   const formik = useFormik({
