@@ -157,7 +157,7 @@ export default function LoginScreen() {
                             display="block"
                             textAlign="center"
                         >
-                            Please log in to contiue!
+                            Please log in to continue!
                         </Typography>
 
                         <TextField

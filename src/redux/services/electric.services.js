@@ -141,6 +141,20 @@ const get_info_calculate = (date_from, date_to, user_name, factory) => {
     })
 }
 
+const get_info_task = (date_from, date_to, user_name, factory) => {
+    return axios.post(BASE_URL + "/task/getInfoTask", {
+        date_from, date_to, user_name, factory
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+            ...authHeader(),
+        }
+    }).then((response) => {
+        return response.data;
+    }).catch((error) => {
+        return error.response.data;
+    })
+}
 const get_info_skill = () => {
     return axios.get(BASE_URL + "/task/getInforSkill", {
         headers: {
@@ -167,6 +181,7 @@ const ElectricServices = {
     get_list_status_mechanic,
     get_list_asign_mechanic,
     owner_asign_task,
+    get_info_task
 }
 
 export default ElectricServices;
