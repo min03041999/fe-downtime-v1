@@ -34,9 +34,9 @@ const get_list_status_mechanic = (position, factory, floor, lean) => {
     });
 }
 
-const get_list_asign_mechanic = (floor, factory, position, lean) => {
+const get_list_asign_mechanic = (id_machine, floor, factory, position, lean) => {
     return axios.post(BASE_URL + "/task/getListAsignMechanic", {
-        floor, factory, position, lean
+        id_machine, floor, factory, position, lean
     }, {
         headers: {
             "Content-Type": "application/json",

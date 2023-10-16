@@ -32,9 +32,9 @@ export const get_list_status_mechanic = createAsyncThunk("/task/getListStatusMec
     }
 })
 
-export const get_list_asign_mechanic = createAsyncThunk("/task/getListAsignMechanic", async ({ floor, factory, position, lean }) => {
+export const get_list_asign_mechanic = createAsyncThunk("/task/getListAsignMechanic", async ({ id_machine, floor, factory, position, lean }) => {
     try {
-        const data = await ElectricServices.get_list_asign_mechanic(floor, factory, position, lean);
+        const data = await ElectricServices.get_list_asign_mechanic(id_machine, floor, factory, position, lean);
         return data;
     } catch (error) {
         return error.message;

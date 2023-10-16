@@ -238,9 +238,6 @@ const WorkListScreen = () => {
     useEffect(() => {
         const fetchData = async () => {
             await dispatch(get_task_damage({ factory, floor, user_name }));
-            await dispatch(
-                get_list_asign_mechanic({ floor, factory, position, lean })
-            );
         };
         fetchData();
 
@@ -257,7 +254,11 @@ const WorkListScreen = () => {
         };
     }, [factory, floor, user_name, position, lean, dispatch, socket]);
 
-    const handleClickOpen = (row) => {
+    const handleClickOpen = async (row) => {
+        const { id_machine } = row;
+        await dispatch(
+            get_list_asign_mechanic({ id_machine, floor, factory, position, lean })
+        );
         setTask(row);
         setOpen(true);
     };
@@ -267,7 +268,7 @@ const WorkListScreen = () => {
             <BreadCrumb breadCrumb={"Danh sách công việc"} />
             <Box
                 component="div"
-                sx={{ display: "block", margin: "0 auto", maxWidth: "500px" }}
+                sx={{ display: "block", margin: "0 auto" }}
             >
                 <Paper sx={PaperStyle} elevation={5}>
                     <Title titleText={"Danh sách công việc"} />
@@ -275,6 +276,16 @@ const WorkListScreen = () => {
                         <Table stickyHeader aria-label="sticky table">
                             <TableHead>
                                 <TableRow>
+                                    <TableCell
+                                        style={{
+                                            fontWeight: "bold",
+                                            minWidth: "120px",
+                                            backgroundColor: "#1976d2",
+                                            color: "#fff",
+                                        }}
+                                    >
+                                        Ngày
+                                    </TableCell>
                                     <TableCell
                                         style={{
                                             fontWeight: "bold",
@@ -331,6 +342,9 @@ const WorkListScreen = () => {
                                         key={index}
                                         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                     >
+                                        <TableCell component="th" scope="row">
+                                            {row.date_user_request.split("T")[0]}
+                                        </TableCell>
                                         <TableCell component="th" scope="row">
                                             {row.id_machine}
                                         </TableCell>
