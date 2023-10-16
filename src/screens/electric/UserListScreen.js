@@ -67,7 +67,7 @@ const UserlistScreen = () => {
       <BreadCrumb breadCrumb={"Danh sách cơ điện"} />
       <Box
         component="div"
-        sx={{ display: "block", margin: "0 auto", maxWidth: "500px" }}
+        sx={{ display: "block", margin: "0 auto" }}
       >
         <Paper sx={PaperStyle} elevation={5}>
           <Title titleText={"Danh sách cơ điện"} />
