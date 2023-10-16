@@ -97,6 +97,15 @@ export const get_info_calculate = createAsyncThunk("/task/getInfoCalculate", asy
     }
 })
 
+export const get_info_task = createAsyncThunk("/task/getInfoTask", async ({ date_from, date_to, user_name, factory }) => {
+    try {
+        const data = await ElectricServices.get_info_task(date_from, date_to, user_name, factory);
+        return data;
+    } catch (error) {
+        return error.message;
+    }
+})
+
 export const get_info_skill = createAsyncThunk("/task/getInforSkill", async () => {
     try {
         const data = await ElectricServices.get_info_skill();
@@ -115,6 +124,7 @@ export const electricSlice = createSlice({
         workListReportEmployee: [], // Mechanic Employee
         historyListReportMechanic: [],
         infoCalculate: [],
+        infoTask: [],
         infoSkill: [],
         getListStatusMechanic: [],
         getListAsignMechanic: [],
@@ -163,6 +173,9 @@ export const electricSlice = createSlice({
         });
         builder.addCase(get_info_calculate.fulfilled, (state, action) => {
             state.infoCalculate = action.payload.data;
+        });
+        builder.addCase(get_info_task.fulfilled, (state, action) => {
+            state.infoTask = action.payload.data;
         });
         builder.addCase(get_info_skill.fulfilled, (state, action) => {
             state.infoSkill = action.payload.data;

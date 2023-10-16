@@ -19,7 +19,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { get_info_calculate } from "../../redux/features/electric";
+import { get_info_calculate, get_info_task } from "../../redux/features/electric";
 import TaskEmployee from "../../components/TaskEmployee";
 
 const FilterStyle = {
@@ -47,8 +47,9 @@ const ActiveNone = {
 export default function InfoUserScreen() {
   const dispatch = useDispatch();
   const { user_name, factory } = useSelector((state) => state.auth.user);
-  const { infoCalculate } = useSelector((state) => state.electric);
-  const { totalFix, avgTime, arrPercentfn, arrResult } = infoCalculate;
+  const { infoCalculate, infoTask } = useSelector((state) => state.electric);
+  const { totalFix, avgTime } = infoCalculate;
+  const { arrPercentfn, arrResult } = infoTask;
 
   const [open, setOpen] = useState(false);
   const onShowFilter = () => {
@@ -61,11 +62,12 @@ export default function InfoUserScreen() {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      const date_from = format(dayjs(new Date()).$d, "yyyy-MM-dd");
-      const date_to = format(dayjs(new Date()).$d, "yyyy-MM-dd");
+    const date_from = format(dayjs(new Date()).$d, "yyyy-MM-dd");
+    const date_to = format(dayjs(new Date()).$d, "yyyy-MM-dd");
 
+    const fetchData = async () => {
       await dispatch(get_info_calculate({ date_from, date_to, user_name, factory }));
+      await dispatch(get_info_task({ date_from, date_to, user_name, factory }));
     }
 
     fetchData();
@@ -81,6 +83,7 @@ export default function InfoUserScreen() {
       const date_from = format(data.DateFrom.$d, "yyyy-MM-dd");
       const date_to = format(data.DateTo.$d, "yyyy-MM-dd");
       await dispatch(get_info_calculate({ date_from, date_to, user_name, factory }));
+      await dispatch(get_info_task({ date_from, date_to, user_name, factory }));
     }
   })
 
