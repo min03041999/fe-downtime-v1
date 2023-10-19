@@ -56,6 +56,7 @@ const Form = (props) => {
         factory: Yup.string().required("Vui lòng nhập nhà máy!"),
         id_user_request: Yup.string().required("Vui lòng nhập số thẻ!"),
         Lean: Yup.string().required("Vui lòng nhập đơn vị!"),
+        Floor: Yup.string().required("Vui lòng nhập mặt lầu!"),
         DateReport: Yup.string().required("Vui lòng nhập ngày!"),
         id_machine: Yup.string().required("Vui lòng nhập mã máy!"),
         fixer: Yup.string().required("Vui lòng nhập người sửa!"),
@@ -68,6 +69,7 @@ const Form = (props) => {
             factory: user.factory,
             id_user_request: user.user_name,
             Lean: user.lean,
+            Floor: user.floor,
             DateReport: dayjs(new Date()),
             id_machine: scannerResult,
             fixer: "",
@@ -268,6 +270,27 @@ const Form = (props) => {
                             />
                         </Grid>
                         <Grid item xs={6} md={6}>
+                            <TextField
+                                label="Mặt lầu"
+                                name="Floor"
+                                variant="outlined"
+                                size="small"
+                                fullWidth
+                                className={
+                                    formik.errors.Floor && formik.touched.Floor ? "is-invalid" : ""
+                                }
+                                error={formik.errors.Floor && formik.touched.Floor === true}
+                                helperText={
+                                    formik.errors.Floor && formik.touched.Floor
+                                        ? formik.errors.Floor
+                                        : null
+                                }
+                                onChange={formik.handleChange}
+                                value={formik.values.Floor}
+                                inputProps={{ readOnly: true }}
+                            />
+                        </Grid>
+                        <Grid item xs={6} md={6}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
                                     label="Ngày"
@@ -339,7 +362,7 @@ const Form = (props) => {
                                 onChange={formik.handleChange}
                                 value={formik.values.fixer}
                             >
-                                <MenuItem value="TD">Thợ Điện</MenuItem>
+                                <MenuItem value="TĐ">Thợ Điện</MenuItem>
                                 <MenuItem value="TM">Thợ Máy</MenuItem>
                             </TextField>
                         </Grid>

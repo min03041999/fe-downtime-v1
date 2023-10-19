@@ -26,6 +26,7 @@ import { Toast } from "../utils/toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setErrorCode } from "../redux/features/electric";
 import ConfirmModal from "./ConfirmModal";
+import DetailInfo from "./DetailInfo";
 
 const ProgressStatus = ({ listReport, user }) => {
   const [openProgress, setOpenProgress] = useState(listReport || []);
@@ -39,15 +40,16 @@ const ProgressStatus = ({ listReport, user }) => {
       label: "Sản xuất",
       description: "Quét mã và gửi yêu cầu cho thợ sửa.",
       performAction: function (status, lean, id_machine) {
-        // Hành động cần thực hiện trong bước này
-        console.log("Thực hiện hành động trong bước Sản xuất");
+        setActiveModal("detailInfo");
+        setIdMachine(id_machine);
+        setOpen(true);
       },
     },
     {
       label: "Thợ sửa",
       description: "Xác nhận yêu cầu được gửi từ sản xuất.",
       performAction: function (status, lean, id_machine) {
-        if (status === 1 && (lean === "TD" || lean === "TM")) {
+        if (status === 1 && (lean === "TĐ" || lean === "TM")) {
           setActiveModal("confirm");
           setIdMachine(id_machine);
           setOpen(true);
@@ -58,7 +60,7 @@ const ProgressStatus = ({ listReport, user }) => {
       label: "Thợ sửa",
       description: "Tiến hành sửa chữa.",
       performAction: function (status, lean, id_machine) {
-        if (status === 2 && (lean === "TD" || lean === "TM")) {
+        if (status === 2 && (lean === "TĐ" || lean === "TM")) {
           setActiveModal("scanner");
           setIdMachine(id_machine);
           setOpen(true);
@@ -69,7 +71,7 @@ const ProgressStatus = ({ listReport, user }) => {
       label: "Thợ sửa",
       description: "Hoàn thành sửa chữa.",
       performAction: function (status, lean, id_machine) {
-        if (status === 3 && (lean === "TD" || lean === "TM")) {
+        if (status === 3 && (lean === "TĐ" || lean === "TM")) {
           setActiveModal("finish");
           setIdMachine(id_machine);
           setOpen(true);
@@ -187,6 +189,17 @@ const ProgressStatus = ({ listReport, user }) => {
                 </ListItem>
               </List>
             </Collapse>
+
+            {/* Trạng thái 1: Xem thông tin yêu cầu */}
+            {activeModal === "detailInfo" && (
+              <DetailInfo
+                isCheck={idMachine === product.id_machine}
+                machine={product}
+                open={open}
+                setOpen={setOpen}
+                user={user}
+              />
+            )}
 
             {/* Trạng thái 2: Xác nhận form */}
             {activeModal === "confirm" && (
