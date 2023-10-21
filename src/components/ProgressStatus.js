@@ -49,7 +49,7 @@ const ProgressStatus = ({ listReport, user }) => {
       label: "Thợ sửa",
       description: "Xác nhận yêu cầu được gửi từ sản xuất.",
       performAction: function (status, lean, id_machine) {
-        if (status === 1 && (lean === "TĐ" || lean === "TM")) {
+        if (status === 1 && (lean === "TD" || lean === "TM")) {
           setActiveModal("confirm");
           setIdMachine(id_machine);
           setOpen(true);
@@ -60,7 +60,7 @@ const ProgressStatus = ({ listReport, user }) => {
       label: "Thợ sửa",
       description: "Tiến hành sửa chữa.",
       performAction: function (status, lean, id_machine) {
-        if (status === 2 && (lean === "TĐ" || lean === "TM")) {
+        if (status === 2 && (lean === "TD" || lean === "TM")) {
           setActiveModal("scanner");
           setIdMachine(id_machine);
           setOpen(true);
@@ -71,7 +71,7 @@ const ProgressStatus = ({ listReport, user }) => {
       label: "Thợ sửa",
       description: "Hoàn thành sửa chữa.",
       performAction: function (status, lean, id_machine) {
-        if (status === 3 && (lean === "TĐ" || lean === "TM")) {
+        if (status === 3 && (lean === "TD" || lean === "TM")) {
           setActiveModal("finish");
           setIdMachine(id_machine);
           setOpen(true);
@@ -121,7 +121,7 @@ const ProgressStatus = ({ listReport, user }) => {
     <Stack sx={{ width: "100%" }} spacing={2}>
       {listReport === null
         ? []
-        : listReport.map((product, index) => (
+        : listReport?.map((product, index) => (
           <List
             sx={{
               width: "100%",
