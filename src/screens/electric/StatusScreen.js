@@ -110,7 +110,7 @@ const StatusScreen = () => {
           <ProgressStatus listReport={workListReportEmployee} user={user} />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <History historyListReport={historyListReportMechanic} />
+          <History historyListReport={historyListReportMechanic} user={user} />
         </CustomTabPanel>
       </Box>
     </Box>

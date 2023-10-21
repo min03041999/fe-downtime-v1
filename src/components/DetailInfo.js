@@ -3,7 +3,7 @@ import AlertDialog from "./AlertDialog";
 import { Grid, Typography, Box } from "@mui/material";
 
 const DetailInfo = ({ isCheck, open, setOpen, machine, user }) => {
-    console.log(user);
+    console.log(machine);
     return (
         <>
             {isCheck && (<AlertDialog
