@@ -237,7 +237,7 @@ const WorkListScreen = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            await dispatch(get_task_damage({ factory, floor, user_name }));
+            await dispatch(get_task_damage({ factory, floor, user_name, lean }));
         };
         fetchData();
 

@@ -362,7 +362,7 @@ const Form = (props) => {
                                 onChange={formik.handleChange}
                                 value={formik.values.fixer}
                             >
-                                <MenuItem value="TĐ">Thợ Điện</MenuItem>
+                                <MenuItem value="TD">Thợ Điện</MenuItem>
                                 <MenuItem value="TM">Thợ Máy</MenuItem>
                             </TextField>
                         </Grid>

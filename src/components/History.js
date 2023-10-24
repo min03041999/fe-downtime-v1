@@ -19,27 +19,46 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 
 import ColorlibStepIcon from "./ColorlibStepIcon";
 
-const steps = [
-  {
-    label: "Sản xuất",
-    description: `Quét mã và gửi yêu cầu cho cơ điện.`,
-  },
-  {
-    label: "Thợ sửa",
-    description: "Xác nhận yêu cầu được gửi từ sản xuất.",
-  },
-  {
-    label: "Cơ điện",
-    description: "Tiếp nhận yêu cầu từ sản xuất.",
-  },
-  {
-    label: "Cơ điện",
-    description: `Sửa chữa và ghi chú máy bị hư.`,
-  },
-];
+import DetailInfo from "./DetailInfo";
 
-export default function History({ historyListReport }) {
+export default function History({ historyListReport, user }) {
   const [historyList, setHistoryList] = useState(historyListReport || []);
+  const [open, setOpen] = useState(false);
+  const [activeModal, setActiveModal] = useState("");
+  const [idMachine, setIdMachine] = useState("");
+
+  const steps = [
+    {
+      label: "Sản xuất",
+      description: `Quét mã và gửi yêu cầu cho cơ điện.`,
+      performAction: function (status, lean, id_machine) {
+        setActiveModal("detailInfo");
+        setIdMachine(id_machine);
+        setOpen(true);
+      },
+    },
+    {
+      label: "Thợ sửa",
+      description: "Xác nhận yêu cầu được gửi từ sản xuất.",
+      performAction: function (status, lean, id_machine) {
+        return "";
+      }
+    },
+    {
+      label: "Cơ điện",
+      description: "Tiếp nhận yêu cầu từ sản xuất.",
+      performAction: function (status, lean, id_machine) {
+        return "";
+      }
+    },
+    {
+      label: "Cơ điện",
+      description: `Sửa chữa và ghi chú máy bị hư.`,
+      performAction: function (status, lean, id_machine) {
+        return "";
+      }
+    },
+  ];
 
   const handleClick = (index) => {
     const isOpen = historyList.includes(index);
@@ -96,7 +115,15 @@ export default function History({ historyListReport }) {
                   >
                     <Stepper activeStep={item["status"] - 1} orientation="vertical">
                       {steps.map((step, index) => (
-                        <Step key={index}>
+                        <Step key={index}
+                          onClick={() =>
+                            step.performAction(
+                              item.status,
+                              user.lean,
+                              item.id_machine
+                            )
+                          }
+                        >
                           <StepLabel StepIconComponent={ColorlibStepIcon}>
                             {step.label} - {step.description}
                           </StepLabel>
@@ -107,6 +134,17 @@ export default function History({ historyListReport }) {
                 </ListItem>
               </List>
             </Collapse>
+
+            {/* Trạng thái 1: Xem thông tin yêu cầu */}
+            {activeModal === "detailInfo" && (
+              <DetailInfo
+                isCheck={idMachine === item.id_machine}
+                machine={item}
+                open={open}
+                setOpen={setOpen}
+                user={user}
+              />
+            )}
           </List>
         ))}
     </Stack>
