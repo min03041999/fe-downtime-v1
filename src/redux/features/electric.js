@@ -14,9 +14,9 @@ export const setErrorCode = (errorCode, errorMessage) => {
 
 
 //Get Task => Manager
-export const get_task_damage = createAsyncThunk("/task/getMechalist", async ({ factory, floor, user_name }) => {
+export const get_task_damage = createAsyncThunk("/task/getMechalist", async ({ factory, floor, user_name, lean }) => {
     try {
-        const data = await ElectricServices.get_task_damage(factory, floor, user_name);
+        const data = await ElectricServices.get_task_damage(factory, floor, user_name, lean);
         return data;
     } catch (error) {
         return error.message;
