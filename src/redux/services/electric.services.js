@@ -156,7 +156,7 @@ const get_info_task = (date_from, date_to, user_name, factory) => {
     })
 }
 const get_info_skill = () => {
-    return axios.get(BASE_URL + "/task/getInforSkill", {
+    return axios.post(BASE_URL + "/task/getInforSkill", {}, {
         headers: {
             "Content-Type": "application/json",
             ...authHeader(),
