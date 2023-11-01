@@ -1,0 +1,70 @@
+{
+  "login": {
+    "header": "Login",
+    "title": "Please log in to continue!",
+    "account": "Account",
+    "password": "Password",
+    "factory": "Factory",
+    "login": "Login",
+    "language": "Language:"
+  },
+  "sidebar": {
+    "system": "System",
+    "info_machine_damage": "Report of a broken machine",
+    "process_status": "Processing status",
+    "support": "Support",
+    "logout": "Log Out"
+  },
+  "banner": {
+    "name": "Full Name:",
+    "lean": "Lean:"
+  },
+  "breadcrumb": {
+    "system": "System"
+  },
+  "info_machine_damage": {
+    "info_machine_damage": "Report of a broken machine",
+    "scan_qr_bar_code": "Scan Bar/QR Code:",
+    "form_request": "Request for reporting a broken machine",
+    "name": "Full Name",
+    "factory": "Factory",
+    "id_number": "ID Number",
+    "lean": "Lean",
+    "floor": "Floor",
+    "date": "Date",
+    "id_machine": "ID Machine",
+    "fixer": "Fixer",
+    "electrician": "Electrician",
+    "mechanic": "Mechanic",
+    "remark": "Remark",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "validate_fullname": "Please enter full name!",
+    "validate_factory": "Please choose factory!",
+    "validate_id_user_request": "Please enter id number!",
+    "validate_lean": "Please enter lean!",
+    "validate_floor": "Please enter floor!",
+    "validate_date_report": "Please enter date!",
+    "validate_id_machine": "Please enter id machine!",
+    "validate_fixer": "Please choose fixer!",
+    "validate_remark": "Please enter remark!",
+    "alert_success": "Success",
+    "alert_error": "Error",
+    "back": "Back",
+    "process_status": "Processing status"
+  },
+  "process_status": {
+    "process_status": "Processing status",
+    "history": "History",
+    "status_1": "Production - Scan the code and send a request to the repair technician.",
+    "status_1_header": "The repair technician's request information",
+    "status_1_user_request": "The requester",
+    "status_1_date": "Date",
+    "status_1_id_machine": "ID Machine",
+    "status_1_floor": "Floor",
+    "status_1_lean": "Remark",
+    "status_2": "The repair technician - Confirming the request sent from production.",
+    "status_3": "The repair technician - Proceed with the repair.",
+    "status_4": "The repair technician - Completed the repair."
+  }
+}

@@ -26,14 +26,16 @@ export default function History({ historyListReport, user }) {
   const [open, setOpen] = useState(false);
   const [activeModal, setActiveModal] = useState("");
   const [idMachine, setIdMachine] = useState("");
+  const [checkDate, setCheckDate] = useState("");
 
   const steps = [
     {
       label: "Sản xuất",
       description: `Quét mã và gửi yêu cầu cho cơ điện.`,
-      performAction: function (status, lean, id_machine) {
+      performAction: function (status, lean, id_machine, date_user_request) {
         setActiveModal("detailInfo");
         setIdMachine(id_machine);
+        setCheckDate(date_user_request);
         setOpen(true);
       },
     },
@@ -120,7 +122,8 @@ export default function History({ historyListReport, user }) {
                             step.performAction(
                               item.status,
                               user.lean,
-                              item.id_machine
+                              item.id_machine,
+                              item.date_user_request
                             )
                           }
                         >
@@ -138,7 +141,7 @@ export default function History({ historyListReport, user }) {
             {/* Trạng thái 1: Xem thông tin yêu cầu */}
             {activeModal === "detailInfo" && (
               <DetailInfo
-                isCheck={idMachine === item.id_machine}
+                isCheck={idMachine === item.id_machine && checkDate === item.date_user_request}
                 machine={item}
                 open={open}
                 setOpen={setOpen}

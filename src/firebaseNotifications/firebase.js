@@ -5,13 +5,12 @@ import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 var firebaseConfig = {
-    apiKey: "AIzaSyCJ_YIzbq2PDVB1SvAwcflvN4bnqN00vy4",
-    authDomain: "tesstts.firebaseapp.com",
-    projectId: "tesstts",
-    storageBucket: "tesstts.appspot.com",
-    messagingSenderId: "130388392879",
-    appId: "1:130388392879:web:9dacb10254ab240c910d5a",
-    measurementId: "G-D1PLR86NEY",
+    apiKey: "AIzaSyAk17G8hWfCK2y5zct66gitNEzCkT3c6i8",
+    authDomain: "downtime-1a6e1.firebaseapp.com",
+    projectId: "downtime-1a6e1",
+    storageBucket: "downtime-1a6e1.appspot.com",
+    messagingSenderId: "1092351827822",
+    appId: "1:1092351827822:web:6b597128a1c52f5b396b7f"
 };
 
 initializeApp(firebaseConfig);
@@ -21,7 +20,7 @@ const messaging = getMessaging();
 export const requestForToken = () => {
     return getToken(messaging, {
         vapidKey:
-            "BNiYast8NllLtbCmjB7tEy1Ja95lcKdr0_Unmz41P96-c5OHtqq1L60fhrlOGY2hW3RQDNdoVoF5MwLHUg2UlnQ",
+            "BAiv-wc-I-R6HuZjofMN1ucA0TLItWFBIASkS2-3bR-_7c53VhujU_WGVPQqI4gGufegd4ANVKvLqzDqzOAvpGc",
     })
         .then((currentToken) => {
             if (currentToken) {

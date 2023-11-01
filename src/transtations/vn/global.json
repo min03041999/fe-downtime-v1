@@ -1,0 +1,70 @@
+{
+  "login": {
+    "header": "Đăng nhập",
+    "title": "Vui lòng tiếp tục đăng nhập!",
+    "account": "Tài khoản",
+    "password": "Mật khẩu",
+    "factory": "Nhà máy",
+    "login": "Đăng nhập",
+    "language": "Ngôn ngữ:"
+  },
+  "sidebar": {
+    "system": "Hệ thống",
+    "info_machine_damage": "Thông báo máy hư",
+    "process_status": "Trạng thái xử lý",
+    "support": "Hỗ trợ",
+    "logout": "Đăng xuất"
+  },
+  "banner": {
+    "name": "Họ và tên:",
+    "lean": "Đơn vị:"
+  },
+  "breadcrumb": {
+    "system": "Hệ thống"
+  },
+  "info_machine_damage": {
+    "info_machine_damage": "Thông báo máy hư",
+    "scan_qr_bar_code": "Quét mã Bar/QR Code:",
+    "form_request": "Đơn đề nghị thông báo máy hư",
+    "name": "Họ và tên",
+    "factory": "Nhà máy",
+    "id_number": "Số thẻ",
+    "lean": "Đơn vị",
+    "floor": "Mặt lầu",
+    "date": "Ngày",
+    "id_machine": "Mã máy",
+    "fixer": "Thợ sửa",
+    "electrician": "Thợ điện",
+    "mechanic": "Thợ máy",
+    "remark": "Lý do hư máy",
+    "confirm": "Xác nhận",
+    "cancel": "Hủy",
+    "validate_fullname": "Vui lòng nhập họ và tên!",
+    "validate_factory": "Vui lòng nhập nhà máy!",
+    "validate_id_user_request": "Vui lòng nhập số thẻ!",
+    "validate_lean": "Vui lòng nhập đơn vị!",
+    "validate_floor": "Vui lòng nhập mặt lầu!",
+    "validate_date_report": "Vui lòng nhập ngày!",
+    "validate_id_machine": "Vui lòng nhập mã máy!",
+    "validate_fixer": "Vui lòng nhập người sửa!",
+    "validate_remark": "Vui lòng nhập lý do hư máy!",
+    "alert_success": "Hoàn thành",
+    "alert_error": "Lỗi dữ liệu",
+    "back": "Trở về",
+    "process_status": "Trạng thái xử lý"
+  },
+  "process_status": {
+    "process_status": "Trạng thái xử lý",
+    "history": "Lịch sử",
+    "status_1": "Sản xuất - Quét mã và gửi yêu cầu cho thợ sửa.",
+    "status_1_header": "Thông tin yêu cầu của thợ sửa",
+    "status_1_user_request": "Người gửi yêu cầu",
+    "status_1_date": "Ngày",
+    "status_1_id_machine": "Mã máy",
+    "status_1_floor": "Mặt lầu",
+    "status_1_lean": "Ghi chú",
+    "status_2": "Thợ sửa - Xác nhận yêu cầu được gửi từ sản xuất.",
+    "status_3": "Thợ sửa - Tiến hành sửa.",
+    "status_4": "Thợ sửa - Hoàn thành sửa chửa."
+  }
+}

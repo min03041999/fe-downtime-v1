@@ -1,8 +1,12 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
+import { useTranslation } from "react-i18next";
+
 const Banner = (props) => {
     const { user } = props;
+
+    const [t] = useTranslation("global");
 
     return (
         <React.Fragment>
@@ -35,14 +39,14 @@ const Banner = (props) => {
                     }}
                 >
                     <Typography variant="div" fontWeight={600} sx={{ fontSize: "14px" }}>
-                        Họ & tên: &nbsp;
+                        {t("banner.name")} &nbsp;
                     </Typography>
                     <Typography variant="div" fontWeight={400} sx={{ fontSize: "14px" }}>
                         {user.name}
                     </Typography>
                     <br />
                     <Typography variant="div" fontWeight={600} sx={{ fontSize: "14px" }}>
-                        Đơn vị: &nbsp;
+                        {t("banner.lean")} &nbsp;
                     </Typography>
                     <Typography variant="div" fontWeight={400} sx={{ fontSize: "14px" }}>
                         {user.lean}
