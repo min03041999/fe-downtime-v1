@@ -4,11 +4,16 @@ import AlertDialog from "./AlertDialog";
 import { Box } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { scanner_fix_mechanic, setErrorCode } from "../redux/features/electric";
+import { useTranslation } from "react-i18next";
+
 
 const ScannerElectric = (props) => {
     const dispatch = useDispatch();
     const { isCheck, idMachine, open, setOpen, scannerResult, setScannerResult, user } =
         props;
+
+    const [t] = useTranslation("global");
+
 
     useEffect(() => {
         const id_machine = idMachine;
@@ -26,13 +31,11 @@ const ScannerElectric = (props) => {
         }
 
         if (scannerResult !== "" && id_machine !== scannerResult) {
-            dispatch(setErrorCode(10001, "Mã QRCode/BarCode không trùng khớp!"));
+            dispatch(setErrorCode(10001, t("process_status.status_3_alert")));
             setScannerResult("");
         }
 
-    }, [idMachine, dispatch, setScannerResult, scannerResult, setOpen, user])
-
-
+    }, [idMachine, dispatch, setScannerResult, scannerResult, setOpen, user, t])
 
     return (
         <>
@@ -41,7 +44,7 @@ const ScannerElectric = (props) => {
                 <AlertDialog
                     open={open}
                     setOpen={setOpen}
-                    headerModal={"Thợ sửa - Tiếp nhận từ yêu cầu sản xuất"}
+                    headerModal={t("process_status.status_3_header")}
                 >
                     <Box
                         component="div"
@@ -49,7 +52,7 @@ const ScannerElectric = (props) => {
                     >
                         <Scanner
                             idMachine={idMachine}
-                            scanner="Quét mã Bar/QR Code:"
+                            scanner={t("process_status.status_3_scanner")}
                             scannerResult={scannerResult}
                             setScannerResult={setScannerResult}
                         />

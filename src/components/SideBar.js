@@ -18,6 +18,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../redux/features/auth";
 
+import { useTranslation } from "react-i18next";
+
 const menuSliderContainer = {
     minWidth: 250,
     height: "100%",
@@ -40,6 +42,8 @@ const SideBar = (props) => {
     const onLogOut = () => {
         dispatch(logout());
     }
+
+    const [t] = useTranslation("global");
 
     return (
         <React.Fragment>
@@ -99,7 +103,7 @@ const SideBar = (props) => {
                                         variant="div"
                                         sx={{ fontSize: "14px", fontWeight: "600" }}
                                     >
-                                        System
+                                        {t("sidebar.system")}
                                     </Typography>
 
                                     {/* List Menu */}
@@ -129,7 +133,7 @@ const SideBar = (props) => {
                                         variant="div"
                                         sx={{ fontSize: "14px", fontWeight: "600" }}
                                     >
-                                        Supports
+                                        {t("sidebar.support")}
                                     </Typography>
                                     <List component="nav">
                                         <ListItemButton onClick={onLogOut}>
@@ -143,7 +147,7 @@ const SideBar = (props) => {
                                                     fontWeight: "600",
                                                 }}
                                             >
-                                                Đăng xuất
+                                                {t("sidebar.logout")}
                                             </Typography>
                                         </ListItemButton>
                                     </List>

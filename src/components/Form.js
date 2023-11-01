@@ -19,6 +19,8 @@ import { Toast } from "../utils/toast";
 import { useDispatch, useSelector } from "react-redux";
 import { report_damage, setErrorCode, cancel_report_damage } from "../redux/features/product";
 
+import { useTranslation } from "react-i18next";
+
 const Form = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -28,6 +30,7 @@ const Form = (props) => {
     const [statusForm, setStatusForm] = useState(false);
     const [statusPopup, setstatusPopup] = useState(false);
     const [removeTask, setRemoveTask] = useState(false);
+    const [t] = useTranslation("global");
 
     const onBack = () => {
         setScannerResult("");
@@ -52,15 +55,15 @@ const Form = (props) => {
 
 
     const validationSchema = Yup.object().shape({
-        FullName: Yup.string().required("Vui lòng nhập họ và tên!"),
-        factory: Yup.string().required("Vui lòng nhập nhà máy!"),
-        id_user_request: Yup.string().required("Vui lòng nhập số thẻ!"),
-        Lean: Yup.string().required("Vui lòng nhập đơn vị!"),
-        Floor: Yup.string().required("Vui lòng nhập mặt lầu!"),
-        DateReport: Yup.string().required("Vui lòng nhập ngày!"),
-        id_machine: Yup.string().required("Vui lòng nhập mã máy!"),
-        fixer: Yup.string().required("Vui lòng nhập người sửa!"),
-        remark: Yup.string().required("Vui lòng nhập lý do hư máy"),
+        FullName: Yup.string().required(t("info_machine_damage.validate_fullname")),
+        factory: Yup.string().required(t("info_machine_damage.validate_factory")),
+        id_user_request: Yup.string().required(t("info_machine_damage.validate_id_user_request")),
+        Lean: Yup.string().required(t("info_machine_damage.validate_lean")),
+        Floor: Yup.string().required(t("info_machine_damage.validate_floor")),
+        DateReport: Yup.string().required(t("info_machine_damage.validate_date_report")),
+        id_machine: Yup.string().required(t("info_machine_damage.validate_id_machine")),
+        fixer: Yup.string().required(t("info_machine_damage.validate_fixer")),
+        remark: Yup.string().required(t("info_machine_damage.validate_remark")),
     });
 
     const formik = useFormik({
@@ -142,7 +145,7 @@ const Form = (props) => {
                             size="small"
                             onClick={onBack}
                         >
-                            Trở về
+                            {t("info_machine_damage.back")}
                         </Button>
                         <Button
                             type="button"
@@ -152,7 +155,7 @@ const Form = (props) => {
                             size="small"
                             onClick={onNextPage}
                         >
-                            Theo dõi trạng thái
+                            {t("info_machine_damage.process_status")}
                         </Button>
                         {statusPopup && <Button
                             type="button"
@@ -161,7 +164,7 @@ const Form = (props) => {
                             size="small"
                             onClick={onCancel}
                         >
-                            Hủy
+                            {t("info_machine_damage.cancel")}
                         </Button>}
                     </Stack>
                 </Box>
@@ -174,7 +177,7 @@ const Form = (props) => {
                     >
                         <Grid item xs={6} md={6}>
                             <TextField
-                                label="Họ và tên"
+                                label={t("info_machine_damage.name")}
                                 name="FullName"
                                 variant="outlined"
                                 size="small"
@@ -199,7 +202,7 @@ const Form = (props) => {
                         </Grid>
                         <Grid item xs={6} md={6}>
                             <TextField
-                                label="Nhà máy"
+                                label={t("info_machine_damage.factory")}
                                 name="factory"
                                 variant="outlined"
                                 size="small"
@@ -222,7 +225,7 @@ const Form = (props) => {
                         </Grid>
                         <Grid item xs={6} md={6}>
                             <TextField
-                                label="Số thẻ"
+                                label={t("info_machine_damage.id_number")}
                                 name="id_user_request"
                                 variant="outlined"
                                 size="small"
@@ -250,7 +253,7 @@ const Form = (props) => {
                         </Grid>
                         <Grid item xs={6} md={6}>
                             <TextField
-                                label="Đơn vị"
+                                label={t("info_machine_damage.lean")}
                                 name="Lean"
                                 variant="outlined"
                                 size="small"
@@ -271,7 +274,7 @@ const Form = (props) => {
                         </Grid>
                         <Grid item xs={6} md={6}>
                             <TextField
-                                label="Mặt lầu"
+                                label={t("info_machine_damage.floor")}
                                 name="Floor"
                                 variant="outlined"
                                 size="small"
@@ -293,7 +296,7 @@ const Form = (props) => {
                         <Grid item xs={6} md={6}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
-                                    label="Ngày"
+                                    label={t("info_machine_damage.date")}
                                     id="DateReport"
                                     name="DateReport"
                                     format="DD-MM-YYYY"
@@ -318,7 +321,7 @@ const Form = (props) => {
                         </Grid>
                         <Grid item xs={6} md={6}>
                             <TextField
-                                label="Mã máy"
+                                label={t("info_machine_damage.id_machine")}
                                 name="id_machine"
                                 variant="outlined"
                                 size="small"
@@ -346,7 +349,7 @@ const Form = (props) => {
                                 select
                                 name="fixer"
                                 fullWidth
-                                label="Thợ sửa"
+                                label={t("info_machine_damage.fixer")}
                                 size="small"
                                 className={
                                     formik.errors.fixer && formik.touched.fixer
@@ -362,14 +365,14 @@ const Form = (props) => {
                                 onChange={formik.handleChange}
                                 value={formik.values.fixer}
                             >
-                                <MenuItem value="TD">Thợ Điện</MenuItem>
-                                <MenuItem value="TM">Thợ Máy</MenuItem>
+                                <MenuItem value="TD">{t("info_machine_damage.electrician")}</MenuItem>
+                                <MenuItem value="TM">{t("info_machine_damage.mechanic")}</MenuItem>
                             </TextField>
                         </Grid>
                         <Grid item xs={12} md={12}>
                             <TextField
                                 name="remark"
-                                label="Lý do hư máy"
+                                label={t("info_machine_damage.remark")}
                                 multiline
                                 rows={4}
                                 fullWidth
@@ -400,7 +403,7 @@ const Form = (props) => {
                             color="primary"
                             size="small"
                         >
-                            Xác nhận
+                            {t("info_machine_damage.confirm")}
                         </Button>
                         <Button
                             type="button"
@@ -409,7 +412,7 @@ const Form = (props) => {
                             size="small"
                             onClick={onBack}
                         >
-                            Hủy
+                            {t("info_machine_damage.cancel")}
                         </Button>
                     </Stack>
                 </Box>

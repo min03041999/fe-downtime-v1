@@ -6,17 +6,21 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import { useSelector } from "react-redux";
 
+import { useTranslation } from "react-i18next";
+
 const ProductionScreen = () => {
     const auth = useSelector((state) => state.auth);
+    const [t] = useTranslation("global");
+
     const sideBarMenu = [
         {
             icon: <NotificationsNoneIcon />,
-            text: "Thông báo máy hư",
+            text: t("sidebar.info_machine_damage"),
             path: "/product",
         },
         {
             icon: <AutorenewIcon />,
-            text: "Trạng thái xử lý",
+            text: t("sidebar.process_status"),
             path: "/product/status",
         },
     ];

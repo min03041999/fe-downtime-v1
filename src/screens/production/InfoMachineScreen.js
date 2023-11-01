@@ -5,6 +5,8 @@ import Scanner from "../../components/Scanner";
 import Form from "../../components/Form";
 import { useSelector } from "react-redux";
 
+import { useTranslation } from "react-i18next";
+
 const PaperStyle = {
     position: "relative",
     marginTop: "10px",
@@ -14,10 +16,11 @@ const PaperStyle = {
 const InfoMachineScreen = () => {
     const auth = useSelector((state) => state.auth);
     const [scannerResult, setScannerResult] = useState("");
+    const [t] = useTranslation("global");
 
     return (
         <Box component="div">
-            <BreadCrumb breadCrumb={"Thông báo máy hư"} />
+            <BreadCrumb breadCrumb={t("info_machine_damage.info_machine_damage")} />
             <Box
                 component="div"
                 sx={{ display: "block", margin: "0 auto", maxWidth: "500px" }}
@@ -25,14 +28,14 @@ const InfoMachineScreen = () => {
                 <Paper sx={PaperStyle} elevation={5}>
                     {scannerResult !== "" ? (
                         <Form
-                            formText="Đơn đề nghị thông báo máy hư"
+                            formText={t("info_machine_damage.form_request")}
                             scannerResult={scannerResult}
                             setScannerResult={setScannerResult}
                             user={auth.user}
                         />
                     ) : (
                         <Scanner
-                            scanner="Quét mã Bar/QR Code:"
+                            scanner={t("info_machine_damage.scan_qr_bar_code")}
                             scannerResult={scannerResult}
                             setScannerResult={setScannerResult}
                             idMachine={"scanner-product"}

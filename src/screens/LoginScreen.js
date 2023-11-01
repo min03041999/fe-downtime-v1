@@ -16,6 +16,8 @@ import { Toast } from "../utils/toast";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
 
+import { useTranslation } from "react-i18next";
+
 const ContainerStyle = {
     position: "relative",
     width: "100%",
@@ -39,13 +41,12 @@ const validationSchema = Yup.object().shape({
 });
 
 var firebaseConfig = {
-    apiKey: "AIzaSyCJ_YIzbq2PDVB1SvAwcflvN4bnqN00vy4",
-    authDomain: "tesstts.firebaseapp.com",
-    projectId: "tesstts",
-    storageBucket: "tesstts.appspot.com",
-    messagingSenderId: "130388392879",
-    appId: "1:130388392879:web:9dacb10254ab240c910d5a",
-    measurementId: "G-D1PLR86NEY",
+    apiKey: "AIzaSyAk17G8hWfCK2y5zct66gitNEzCkT3c6i8",
+    authDomain: "downtime-1a6e1.firebaseapp.com",
+    projectId: "downtime-1a6e1",
+    storageBucket: "downtime-1a6e1.appspot.com",
+    messagingSenderId: "1092351827822",
+    appId: "1:1092351827822:web:6b597128a1c52f5b396b7f",
 };
 
 initializeApp(firebaseConfig);
@@ -58,11 +59,19 @@ export default function LoginScreen() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [t, i18n] = useTranslation("global");
+    const languages = JSON.parse(localStorage.getItem('languages'));
+    const [selectedLanguage, setSelectedLanguage] = useState(languages === null ? "EN" : languages);
 
+    const handleChange = (event) => {
+        setSelectedLanguage(event.target.value);
+        i18n.changeLanguage(event.target.value);
+        localStorage.setItem("languages", JSON.stringify(event.target.value));
+    };
 
     getToken(messaging, {
         vapidKey:
-            "BNiYast8NllLtbCmjB7tEy1Ja95lcKdr0_Unmz41P96-c5OHtqq1L60fhrlOGY2hW3RQDNdoVoF5MwLHUg2UlnQ",
+            "BAiv-wc-I-R6HuZjofMN1ucA0TLItWFBIASkS2-3bR-_7c53VhujU_WGVPQqI4gGufegd4ANVKvLqzDqzOAvpGc",
     })
         .then((currentToken) => {
             if (currentToken) {
@@ -149,7 +158,7 @@ export default function LoginScreen() {
                             style={{ color: "#1976d2", fontWeight: "600" }}
                             textAlign="center"
                         >
-                            Login
+                            {t("login.header")}
                         </Typography>
                         <Typography
                             variant="div"
@@ -157,14 +166,14 @@ export default function LoginScreen() {
                             display="block"
                             textAlign="center"
                         >
-                            Please log in to continue!
+                            {t("login.title")}
                         </Typography>
 
                         <TextField
                             type="text"
                             name="username"
                             fullWidth
-                            label="Tài khoản"
+                            label={t("login.account")}
                             margin="normal"
                             className={
                                 formik.errors.username && formik.touched.username
@@ -185,7 +194,7 @@ export default function LoginScreen() {
                             type="password"
                             name="password"
                             fullWidth
-                            label="Mật khẩu"
+                            label={t("login.password")}
                             margin="normal"
                             className={
                                 formik.errors.password && formik.touched.password
@@ -206,7 +215,7 @@ export default function LoginScreen() {
                             select
                             name="factory"
                             fullWidth
-                            label="Nhà máy"
+                            label={t("login.factory")}
                             margin="normal"
                             className={
                                 formik.errors.factory && formik.touched.factory
@@ -234,9 +243,26 @@ export default function LoginScreen() {
                             variant="contained"
                             sx={{ mt: 2, mb: 2 }}
                         >
-                            Đăng nhập
+                            {t("login.login")}
                         </Button>
                     </Box>
+
+                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "10px" }}>
+                        <Typography sx={{ fontSize: "14px", color: "#aeaeae" }}> {t("login.language")}</Typography>
+                        <TextField
+                            select
+                            name="languages"
+                            size="small"
+                            variant="standard"
+                            sx={{ width: "30%", textAlign: "center", fontSize: "14px" }}
+                            value={selectedLanguage}
+                            onChange={handleChange}
+                        >
+                            <MenuItem value="EN">EN</MenuItem>
+                            <MenuItem value="VN">VN</MenuItem>
+                        </TextField>
+                    </Box>
+
                 </Box>
             </Paper>
         </div>

@@ -3,6 +3,8 @@ import { Box, Avatar, Typography } from "@mui/material";
 import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 
+import { useTranslation } from "react-i18next";
+
 const Popup = (props) => {
     const { statusPopup, errorMessage } = props;
 
@@ -46,22 +48,24 @@ const contentStyle = {
 
 
 const PopupSuccess = (props) => {
+    const [t] = useTranslation("global");
     const { errorMessage } = props;
     return (
         <>
             <Avatar sx={avatarStyle}> <CheckCircleOutlineRoundedIcon sx={{ color: "#00860d", fontSize: "80px" }} /></Avatar>
-            <Typography variant="h6">Hoàn thành</Typography>
+            <Typography variant="h6">{t("info_machine_damage.alert_success")}</Typography>
             <Typography variant="div" style={contentStyle}>{errorMessage}</Typography>
         </>
     )
 }
 
 const PopupFail = (props) => {
+    const [t] = useTranslation("global");
     const { errorMessage } = props;
     return (
         <>
             <Avatar sx={avatarStyle}> <CancelOutlinedIcon sx={{ color: "#d32f2f", fontSize: "80px" }} /></Avatar>
-            <Typography variant="h6" sx={{ color: "#d32f2f" }}>Lỗi dữ liệu</Typography>
+            <Typography variant="h6" sx={{ color: "#d32f2f" }}>{t("info_machine_damage.alert_error")}</Typography>
             <Typography variant="div" style={contentStyle}>{errorMessage}</Typography>
         </>
     )
