@@ -12,6 +12,9 @@
     "system": "Hệ thống",
     "info_machine_damage": "Thông báo máy hư",
     "process_status": "Trạng thái xử lý",
+    "info_user": "Thông tin cá nhân",
+    "work_list": "Danh sách công việc",
+    "employee_list": "Danh sách nhân viên",
     "support": "Hỗ trợ",
     "logout": "Đăng xuất"
   },
@@ -79,5 +82,22 @@
     "status_3_alert": "Mã QRCode/BarCode không trùng khớp!",
     "status_4": "Thợ sửa",
     "status_4_": "Hoàn thành sửa chửa."
+  },
+  "personal_info": {
+    "search_info": "Tra cứu thông tin",
+    "date_to": "Ngày",
+    "date_from": "Đến ngày",
+    "btn_search": "Tìm kiếm",
+    "total_number_of_votes_fixed": "Tổng số",
+    "total_number_of_votes_fixed_": "phiếu đã sửa",
+    "avg_repair_time": "Thời gian",
+    "avg_repair_time_": "sửa trung bình",
+    "finished_job": "Công việc đã hoàn thành",
+    "date": "Ngày",
+    "id_machine": "Mã máy",
+    "method_machine": "Phương pháp sửa",
+    "time_fix": "Thời gian sửa",
+    "service_repair_machine": "Loại máy sửa chữa",
+    "repair_method": "Phương pháp sửa chữa"
   }
 }

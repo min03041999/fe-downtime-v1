@@ -1,6 +1,8 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 
+import { useTranslation } from "react-i18next";
+
 const CalculateJobStyle = {
     margin: "5px",
     borderRadius: "30px",
@@ -37,12 +39,13 @@ const ContentStyle = {
 }
 
 const CalculateJob = ({ totalFix, avgTime }) => {
+    const [t] = useTranslation("global");
 
     return (
         <Box component="div" sx={CalculateJobStyle}>
             <Box sx={CalculateJobsStyle}>
                 <Typography variant="h6" component="h6" sx={TitleStyle}>
-                    Tổng số <br /> phiếu  đã sửa
+                    {t("personal_info.total_number_of_votes_fixed")}<br />{t("personal_info.total_number_of_votes_fixed_")}
                 </Typography>
                 <Box sx={ContentStyle}>
                     <Typography variant="h3" component="h3" color="white">
@@ -52,7 +55,7 @@ const CalculateJob = ({ totalFix, avgTime }) => {
             </Box>
             <Box sx={CalculateJobsStyle}>
                 <Typography variant="h6" component="h6" sx={TitleStyle}>
-                    Thời gian <br /> sửa trung bình
+                    {t("personal_info.avg_repair_time")}<br />{t("personal_info.avg_repair_time_")}
                 </Typography>
                 <Box sx={ContentStyle}>
                     <Typography variant="h3" component="h3" color="white">

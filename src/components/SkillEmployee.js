@@ -3,6 +3,8 @@ import { Box, Typography, Grid } from '@mui/material';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import IconButton from '@mui/material/IconButton';
 
+import { useTranslation } from "react-i18next";
+
 const SkillEmployeeStyle = {
     padding: "15px 30px 15px 30px",
     margin: "5px",
@@ -22,10 +24,12 @@ const ItemSkillStyle = {
 }
 
 const SkillEmployee = () => {
+    const [t] = useTranslation("global");
+
     return (
         <Box component="div" sx={SkillEmployeeStyle}>
             <Typography sx={TitleStyle} variant="h4" component="div">
-                Loại máy sửa chữa
+                {t("personal_info.service_repair_machine")}
             </Typography>
 
             <Grid container spacing={1} style={{ fontSize: 14, padding: "10px 15px 0" }}>

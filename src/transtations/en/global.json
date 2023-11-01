@@ -12,6 +12,9 @@
     "system": "System",
     "info_machine_damage": "Report of a broken machine",
     "process_status": "Processing status",
+    "info_user": "Personal information",
+    "work_list": "Work List",
+    "employee_list": "Employee List",
     "support": "Support",
     "logout": "Log Out"
   },
@@ -79,5 +82,22 @@
     "status_3_alert": "The QR Code/Barcode does not match!",
     "status_4": "The repair technician",
     "status_4_": "Completed the repair."
+  },
+  "personal_info": {
+    "search_info": "Look up information",
+    "date_to": "Date",
+    "date_from": "Date from",
+    "btn_search": "Search",
+    "total_number_of_votes_fixed": "Total number",
+    "total_number_of_votes_fixed_": "of votes fixed",
+    "avg_repair_time": "Average",
+    "avg_repair_time_": "repair time",
+    "finished_job": "The task has been completed",
+    "date": "Date",
+    "id_machine": "ID Machine",
+    "method_machine": "Repair method",
+    "time_fix": "Repair time",
+    "service_repair_machine": "Service and repair machine",
+    "repair_method": "Repair methods"
   }
 }
