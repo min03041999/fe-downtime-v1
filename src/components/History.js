@@ -21,17 +21,22 @@ import ColorlibStepIcon from "./ColorlibStepIcon";
 
 import DetailInfo from "./DetailInfo";
 
+import { useTranslation } from "react-i18next";
+
+
 export default function History({ historyListReport, user }) {
   const [historyList, setHistoryList] = useState(historyListReport || []);
   const [open, setOpen] = useState(false);
   const [activeModal, setActiveModal] = useState("");
   const [idMachine, setIdMachine] = useState("");
   const [checkDate, setCheckDate] = useState("");
+  const [t] = useTranslation("global");
+
 
   const steps = [
     {
-      label: "Sản xuất",
-      description: `Quét mã và gửi yêu cầu cho cơ điện.`,
+      label: t("process_status.status_1"),
+      description: t("process_status.status_1_"),
       performAction: function (status, lean, id_machine, date_user_request) {
         setActiveModal("detailInfo");
         setIdMachine(id_machine);
@@ -40,22 +45,22 @@ export default function History({ historyListReport, user }) {
       },
     },
     {
-      label: "Thợ sửa",
-      description: "Xác nhận yêu cầu được gửi từ sản xuất.",
+      label: t("process_status.status_2"),
+      description: t("process_status.status_2_"),
       performAction: function (status, lean, id_machine) {
         return "";
       }
     },
     {
-      label: "Cơ điện",
-      description: "Tiếp nhận yêu cầu từ sản xuất.",
+      label: t("process_status.status_3"),
+      description: t("process_status.status_3_"),
       performAction: function (status, lean, id_machine) {
         return "";
       }
     },
     {
-      label: "Cơ điện",
-      description: `Sửa chữa và ghi chú máy bị hư.`,
+      label: t("process_status.status_4"),
+      description: t("process_status.status_4_"),
       performAction: function (status, lean, id_machine) {
         return "";
       }

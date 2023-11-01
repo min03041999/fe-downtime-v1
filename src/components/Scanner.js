@@ -52,10 +52,7 @@ const Scanner = (props) => {
     scanner.render(success, error);
 
     function success(result) {
-      const scannerElement = document.getElementById(`render-${idMachine}`);
-      if (scannerElement && scannerElement.firstChild) {
-        scannerElement.removeChild(scannerElement.firstChild);
-      }
+      scanner.clear();
       setScannerResult(result);
     }
 
@@ -67,10 +64,8 @@ const Scanner = (props) => {
 
     // Clean up function
     return () => {
-      const scannerElement = document.getElementById(`render-${idMachine}`);
-      if (scannerElement && scannerElement.firstChild) {
-        scannerElement.removeChild(scannerElement.firstChild);
-      }
+      scannerRef.current?.clear();
+      scanner.clear();
     };
   }, [scannerResult, setScannerResult, idMachine]);
 

@@ -4,9 +4,13 @@ import { Box, Stack, Button, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { scanner_fix_mechanic } from "../redux/features/electric";
 
+import { useTranslation } from "react-i18next";
+
+
+
 const ConfirmModal = ({ isCheck, open, setOpen, idMachine, user }) => {
   const dispatch = useDispatch();
-
+  const [t] = useTranslation("global");
 
   const onSubmit = () => {
     const { user_name, factory, lean } = user;
@@ -34,7 +38,7 @@ const ConfirmModal = ({ isCheck, open, setOpen, idMachine, user }) => {
         <AlertDialog
           open={open}
           setOpen={setOpen}
-          headerModal={"Xác nhận yêu cầu được gửi từ sản xuất."}
+          headerModal={t("process_status.status_2_header")}
         >
           <Box
             component="div"
@@ -42,10 +46,10 @@ const ConfirmModal = ({ isCheck, open, setOpen, idMachine, user }) => {
           >
             <Box component="div" sx={{ marginTop: "10px" }}>
               <Typography variant="h6" textAlign="center" >
-                Xác nhận
+                {t("process_status.status_2_confirm")}
               </Typography>
               <Typography textAlign="center" sx={{ fontSize: "14px", color: "#aeaeae" }}>
-                Bạn có muốn tiếp nhận yêu cầu này không?
+                {t("process_status.status_2_content")}
               </Typography>
             </Box>
             <Box component="div">
@@ -61,7 +65,7 @@ const ConfirmModal = ({ isCheck, open, setOpen, idMachine, user }) => {
                   size="small"
                   onClick={onSubmit}
                 >
-                  Đồng ý
+                  {t("process_status.status_2_accept")}
                 </Button>
                 <Button
                   variant="contained"
@@ -69,7 +73,7 @@ const ConfirmModal = ({ isCheck, open, setOpen, idMachine, user }) => {
                   size="small"
                   onClick={onCancel}
                 >
-                  Từ chối
+                  {t("process_status.status_2_deny")}
                 </Button>
               </Stack>
             </Box>

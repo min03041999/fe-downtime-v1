@@ -28,6 +28,8 @@ import { setErrorCode } from "../redux/features/electric";
 import ConfirmModal from "./ConfirmModal";
 import DetailInfo from "./DetailInfo";
 
+import { useTranslation } from "react-i18next";
+
 const ProgressStatus = ({ listReport, user }) => {
   const [openProgress, setOpenProgress] = useState(listReport || []);
   const [open, setOpen] = useState(false);
@@ -35,10 +37,12 @@ const ProgressStatus = ({ listReport, user }) => {
   const [scannerResult, setScannerResult] = useState("");
   const [idMachine, setIdMachine] = useState("");
 
+  const [t] = useTranslation("global");
+
   const steps = [
     {
-      label: "Sản xuất",
-      description: "Quét mã và gửi yêu cầu cho thợ sửa.",
+      label: t("process_status.status_1"),
+      description: t("process_status.status_1_"),
       performAction: function (status, lean, id_machine) {
         setActiveModal("detailInfo");
         setIdMachine(id_machine);
@@ -46,8 +50,8 @@ const ProgressStatus = ({ listReport, user }) => {
       },
     },
     {
-      label: "Thợ sửa",
-      description: "Xác nhận yêu cầu được gửi từ sản xuất.",
+      label: t("process_status.status_2"),
+      description: t("process_status.status_2_"),
       performAction: function (status, lean, id_machine) {
         if (status === 1 && (lean === "TD" || lean === "TM")) {
           setActiveModal("confirm");
@@ -57,8 +61,8 @@ const ProgressStatus = ({ listReport, user }) => {
       },
     },
     {
-      label: "Thợ sửa",
-      description: "Tiến hành sửa chữa.",
+      label: t("process_status.status_3"),
+      description: t("process_status.status_3_"),
       performAction: function (status, lean, id_machine) {
         if (status === 2 && (lean === "TD" || lean === "TM")) {
           setActiveModal("scanner");
@@ -68,8 +72,8 @@ const ProgressStatus = ({ listReport, user }) => {
       },
     },
     {
-      label: "Thợ sửa",
-      description: "Hoàn thành sửa chữa.",
+      label: t("process_status.status_4"),
+      description: t("process_status.status_4_"),
       performAction: function (status, lean, id_machine) {
         if (status === 3 && (lean === "TD" || lean === "TM")) {
           setActiveModal("finish");

@@ -2,13 +2,18 @@ import React from 'react';
 import AlertDialog from "./AlertDialog";
 import { Grid, Typography, Box } from "@mui/material";
 
+import { useTranslation } from "react-i18next";
+
 const DetailInfo = ({ isCheck, open, setOpen, machine, user }) => {
+
+    const [t] = useTranslation("global");
+
     return (
         <>
             {isCheck && (<AlertDialog
                 open={open}
                 setOpen={setOpen}
-                headerModal={"Thông tin yêu cầu của thợ sửa"}
+                headerModal={t("process_status.status_1_header")}
             >
                 <Box component="div" sx={{ margin: "10px" }}>
                     <Grid
@@ -17,7 +22,7 @@ const DetailInfo = ({ isCheck, open, setOpen, machine, user }) => {
                         columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: "10px" }}>
                         <Grid item xs={12} md={12}>
                             <Typography variant="div" sx={{ fontSize: "14px", fontWeight: "500" }}>
-                                Người gửi yêu cầu: {" "}
+                                {t("process_status.status_1_user_request")} {" "}
                             </Typography>
                             <Typography variant="div" sx={{ fontSize: "14px", color: "gray" }}>
                                 {machine.name_user_req ? machine.name_user_req : user.name}
@@ -25,7 +30,7 @@ const DetailInfo = ({ isCheck, open, setOpen, machine, user }) => {
                         </Grid>
                         <Grid item xs={6} md={6}>
                             <Typography variant="div" sx={{ fontSize: "14px", fontWeight: "500" }}>
-                                Ngày: {" "}
+                                {t("process_status.status_1_date")} {" "}
                             </Typography>
                             <Typography variant="div" sx={{ fontSize: "14px", color: "gray" }}>
                                 {machine.date_user_request.split("T")[0]}
@@ -33,7 +38,7 @@ const DetailInfo = ({ isCheck, open, setOpen, machine, user }) => {
                         </Grid>
                         <Grid item xs={6} md={6}>
                             <Typography variant="div" sx={{ fontSize: "14px", fontWeight: "500" }}>
-                                Mã máy: {" "}
+                                {t("process_status.status_1_id_machine")} {" "}
                             </Typography>
                             <Typography variant="div" sx={{ fontSize: "14px", color: "gray" }}>
                                 {machine.id_machine}
@@ -41,7 +46,7 @@ const DetailInfo = ({ isCheck, open, setOpen, machine, user }) => {
                         </Grid>
                         <Grid item xs={6} md={6}>
                             <Typography variant="div" sx={{ fontSize: "14px", fontWeight: "500" }}>
-                                Mặt lầu: {" "}
+                                {t("process_status.status_1_floor")} {" "}
                             </Typography>
                             <Typography variant="span" sx={{ fontSize: "14px", color: "gray" }}>
                                 {machine.floor}
@@ -49,7 +54,7 @@ const DetailInfo = ({ isCheck, open, setOpen, machine, user }) => {
                         </Grid>
                         <Grid item xs={6} md={6}>
                             <Typography variant="div" sx={{ fontSize: "14px", fontWeight: "500" }}>
-                                Đơn vị: {" "}
+                                {t("process_status.status_1_lean")} {" "}
                             </Typography>
                             <Typography variant="span" sx={{ fontSize: "14px", color: "gray" }}>
                                 {machine.lean_req ? machine.lean_req : user.lean}
@@ -57,7 +62,7 @@ const DetailInfo = ({ isCheck, open, setOpen, machine, user }) => {
                         </Grid>
                         <Grid item xs={12} md={12}>
                             <Typography variant="div" sx={{ fontSize: "14px", fontWeight: "500" }}>
-                                Ghi chú: {" "}
+                                {t("process_status.status_1_remark")} {" "}
                             </Typography>
                             <Typography variant="div" sx={{ fontSize: "14px", color: "gray" }}>
                                 {machine.remark}

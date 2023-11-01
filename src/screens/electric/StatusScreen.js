@@ -8,6 +8,8 @@ import History from "../../components/History";
 import socketIOClient from "socket.io-client";
 import { BASE_URL } from "../../utils/env";
 
+import { useTranslation } from "react-i18next";
+
 const host = BASE_URL;
 
 function a11yProps(index) {
@@ -45,7 +47,7 @@ const StatusScreen = () => {
 
   const [value, setValue] = useState(0);
 
-
+  const [t] = useTranslation("global");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,7 +86,7 @@ const StatusScreen = () => {
 
   return (
     <Box component="div">
-      <BreadCrumb breadCrumb={"Trạng thái xử lý"} />
+      <BreadCrumb breadCrumb={t("process_status.process_status")} />
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
@@ -95,12 +97,12 @@ const StatusScreen = () => {
             centered
           >
             <Tab
-              label="Đang xử lý"
+              label={t("process_status.process_status")}
               {...a11yProps(0)}
               sx={{ fontSize: "14px", textTransform: "capitalize" }}
             />
             <Tab
-              label="Lịch sử"
+              label={t("process_status.history")}
               {...a11yProps(1)}
               sx={{ fontSize: "14px", textTransform: "capitalize" }}
             />
