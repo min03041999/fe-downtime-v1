@@ -4,6 +4,8 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
+import { useTranslation } from "react-i18next";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const ChartEmployeeStyle = {
@@ -27,6 +29,7 @@ const ContentStyle = {
 }
 
 const ChartEmployee = ({ arrPercentfn }) => {
+    const [t] = useTranslation("global");
     const [chart, setChart] = useState({
         labels: [],
         datasets: [
@@ -83,7 +86,7 @@ const ChartEmployee = ({ arrPercentfn }) => {
     return (
         <Box sx={ChartEmployeeStyle}>
             <Typography sx={TitleStyle} variant="h4" component="div">
-                Phương pháp sửa chữa
+                {t("personal_info.repair_method")}
             </Typography>
             <Box sx={ContentStyle}>
                 <Pie data={chart} options={chart.options} plugins={[ChartDataLabels]} />

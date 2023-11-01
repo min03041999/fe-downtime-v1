@@ -11,6 +11,8 @@ import {
   TablePagination,
 } from "@mui/material";
 
+import { useTranslation } from "react-i18next";
+
 const TaskEmployeeStyle = {
   padding: "15px 30px 15px 30px",
   margin: "5px",
@@ -38,17 +40,19 @@ const TaskEmployee = ({ arrResult }) => {
     setPage(0);
   };
 
+  const [t] = useTranslation("global");
+
   const columns = [
-    { id: "date_user_request", label: "Ngày", minWidth: 110 },
-    { id: "id_machine", label: "Mã Máy", minWidth: 100 },
-    { id: "skill_cfm", label: "Phương pháp sửa", minWidth: 100 },
-    { id: "avgTime", label: "Thời gian sửa", minWidth: 100 },
+    { id: "date_user_request", label: t("personal_info.date"), minWidth: 110 },
+    { id: "id_machine", label: t("personal_info.id_machine"), minWidth: 100 },
+    { id: "skill_cfm", label: t("personal_info.method_machine"), minWidth: 100 },
+    { id: "avgTime", label: t("personal_info.time_fix"), minWidth: 100 },
   ];
 
   return (
     <Box component="div" sx={TaskEmployeeStyle}>
       <Typography sx={TitleStyle} variant="h4" component="div">
-        Công việc đã hoàn thành
+        {t("personal_info.finished_job")}
       </Typography>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">

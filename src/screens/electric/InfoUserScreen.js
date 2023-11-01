@@ -22,6 +22,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { get_info_calculate, get_info_task } from "../../redux/features/electric";
 import TaskEmployee from "../../components/TaskEmployee";
 
+import { useTranslation } from "react-i18next";
+
 const FilterStyle = {
   padding: "15px 30px 15px 30px",
   borderRadius: "30px",
@@ -50,6 +52,8 @@ export default function InfoUserScreen() {
   const { infoCalculate, infoTask } = useSelector((state) => state.electric);
   const { totalFix, avgTime } = infoCalculate;
   const { arrPercentfn, arrResult } = infoTask;
+
+  const [t] = useTranslation("global");
 
   const [open, setOpen] = useState(false);
   const onShowFilter = () => {
@@ -97,7 +101,7 @@ export default function InfoUserScreen() {
       </Box>
 
       <Box component="div" sx={FilterStyle} style={open ? Active : ActiveNone}>
-        <Title titleText={"Tra cứu thông tin"} />
+        <Title titleText={t("personal_info.search_info")} />
         <Box component="form" onSubmit={formik.handleSubmit}>
           <Grid
             container
@@ -107,7 +111,7 @@ export default function InfoUserScreen() {
             <Grid item xs={5} md={5}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  label="Ngày"
+                  label={t("personal_info.date_to")}
                   id="DateFrom"
                   name="DateFrom"
                   format="DD-MM-YYYY"
@@ -135,7 +139,7 @@ export default function InfoUserScreen() {
             <Grid item xs={5} md={5}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  label="Đền ngày"
+                  label={t("personal_info.date_from")}
                   id="DateTo"
                   name="DateTo"
                   format="DD-MM-YYYY"
@@ -169,7 +173,7 @@ export default function InfoUserScreen() {
               color="primary"
               size="small"
             >
-              Tìm kiếm
+              {t("personal_info.btn_search")}
             </Button>
           </Stack>
         </Box>

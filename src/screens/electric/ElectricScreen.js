@@ -9,30 +9,34 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import { useSelector } from "react-redux";
 import Notification from "../../firebaseNotifications/Notification";
 
+import { useTranslation } from "react-i18next";
+
 const ElectricScreen = () => {
     const auth = useSelector((state) => state.auth);
+
+    const [t] = useTranslation("global");
 
     let sideBarMenu = [];
     if (auth.user?.permission === 1) {
         sideBarMenu = [
             {
                 icon: <WorkOutlineOutlinedIcon />,
-                text: "Danh sách công việc",
+                text: t("sidebar.work_list"),
                 path: "/electric",
             },
             {
                 icon: <RecentActorsOutlinedIcon />,
-                text: "Danh sách nhân viên",
+                text: t("sidebar.employee_list"),
                 path: "/electric/list-user",
             },
             {
                 icon: <BadgeOutlinedIcon />,
-                text: "Thông tin cá nhân",
+                text: t("sidebar.info_user"),
                 path: "/electric/user",
             },
             {
                 icon: <AutorenewIcon />,
-                text: "Trạng thái xử lý",
+                text: t("sidebar.process_status"),
                 path: "/electric/status",
             },
         ];
@@ -40,12 +44,12 @@ const ElectricScreen = () => {
         sideBarMenu = [
             {
                 icon: <BadgeOutlinedIcon />,
-                text: "Thông tin cá nhân",
+                text: t("sidebar.info_user"),
                 path: "/electric/user",
             },
             {
                 icon: <AutorenewIcon />,
-                text: "Trạng thái xử lý",
+                text: t("sidebar.process_status"),
                 path: "/electric/status",
             },
         ];
