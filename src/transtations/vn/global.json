@@ -99,5 +99,9 @@
     "time_fix": "Thời gian sửa",
     "service_repair_machine": "Loại máy sửa chữa",
     "repair_method": "Phương pháp sửa chữa"
+  },
+  "scanner": {
+    "btn_req_camera_permission": "Yêu cầu quyền sử dụng máy ảnh",
+    "alert_not_found": "Không tìm thấy thiết bị được yêu cầu!"
   }
 }

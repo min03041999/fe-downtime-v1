@@ -99,5 +99,9 @@
     "time_fix": "Repair time",
     "service_repair_machine": "Service and repair machine",
     "repair_method": "Repair methods"
+  },
+  "scanner": {
+    "btn_req_camera_permission": "Request Camera Permissions",
+    "alert_not_found": "Requested device not found!"
   }
 }
