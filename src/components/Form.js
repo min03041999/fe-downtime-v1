@@ -63,7 +63,7 @@ const Form = (props) => {
         DateReport: Yup.string().required(t("info_machine_damage.validate_date_report")),
         id_machine: Yup.string().required(t("info_machine_damage.validate_id_machine")),
         fixer: Yup.string().required(t("info_machine_damage.validate_fixer")),
-        remark: Yup.string().required(t("info_machine_damage.validate_remark")),
+        remark: Yup.string().required(t("info_machine_damage.validate_remark")).matches(/^\S*$/, t('info_machine_damage.validate_no_spaces'))
     });
 
     const formik = useFormik({

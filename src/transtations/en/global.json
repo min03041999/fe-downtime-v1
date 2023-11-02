@@ -51,6 +51,7 @@
     "validate_id_machine": "Please enter id machine!",
     "validate_fixer": "Please choose fixer!",
     "validate_remark": "Please enter remark!",
+    "validate_no_spaces": "Please do not enter spaces!",
     "alert_success": "Success",
     "alert_error": "Error",
     "back": "Back",
@@ -88,6 +89,7 @@
     "date_to": "Date",
     "date_from": "Date from",
     "btn_search": "Search",
+    "filter": "Filter",
     "total_number_of_votes_fixed": "Total number",
     "total_number_of_votes_fixed_": "of votes fixed",
     "avg_repair_time": "Average",
@@ -99,5 +101,9 @@
     "time_fix": "Repair time",
     "service_repair_machine": "Service and repair machine",
     "repair_method": "Repair methods"
+  },
+  "scanner": {
+    "btn_req_camera_permission": "Request Camera Permissions",
+    "alert_not_found": "Requested device not found!"
   }
 }

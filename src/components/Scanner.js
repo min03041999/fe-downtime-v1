@@ -2,11 +2,16 @@ import React, { useEffect, useRef } from "react";
 import { Html5QrcodeScanner, Html5QrcodeScanType } from "html5-qrcode";
 import { Box, Typography } from "@mui/material";
 
+import { useTranslation } from "react-i18next";
+
 const Scanner = (props) => {
   const { scanner, idMachine, scannerResult, setScannerResult } = props;
   const scannerRef = useRef(null);
+  const [t] = useTranslation("global");
 
   useEffect(() => {
+    localStorage.removeItem("ML5_QRCODE_DATA");
+
     const startScanning = async () => {
       try {
         const devices = await navigator.mediaDevices.enumerateDevices();
@@ -43,6 +48,9 @@ const Scanner = (props) => {
         height: 250,
       },
       fps: 10,
+      videoConstraints: {
+        facingMode: { exact: "environment" },
+      },
       rememberLastUsedCamera: true,
       supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
     });
@@ -62,12 +70,34 @@ const Scanner = (props) => {
 
     startScanning();
 
+    const buttonElement = document.getElementById("html5-qrcode-button-camera-permission");
+
+    if (buttonElement) {
+      buttonElement.textContent = t("scanner.btn_req_camera_permission");
+      buttonElement.addEventListener("click", handleCameraPermission);
+    }
+
     // Clean up function
     return () => {
       scannerRef.current?.clear();
       scanner.clear();
+
+      if (buttonElement) {
+        buttonElement.removeEventListener("click", handleCameraPermission);
+      }
     };
-  }, [scannerResult, setScannerResult, idMachine]);
+  }, [scannerResult, setScannerResult, idMachine, t]);
+
+  function handleCameraPermission() {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(() => {
+        console.log("Camera permission granted");
+      })
+      .catch((error) => {
+        const alertNotFound = document.getElementById(`render-${idMachine}__header_message`);
+        alertNotFound.textContent = t("scanner.alert_not_found");
+      });
+  }
 
   return (
     <>
