@@ -48,6 +48,9 @@ const Scanner = (props) => {
         height: 250,
       },
       fps: 10,
+      videoConstraints: {
+        facingMode: { exact: "environment" },
+      },
       rememberLastUsedCamera: true,
       supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
     });

@@ -96,7 +96,7 @@ export default function InfoUserScreen() {
       <Box sx={{ textAlign: "right", marginTop: "-15px" }}>
         <Button onClick={onShowFilter}>
           <FilterListIcon />
-          Filter
+          {t("personal_info.filter")}
         </Button>
       </Box>
 
