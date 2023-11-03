@@ -16,6 +16,9 @@
     "work_list": "Work List",
     "employee_list": "Employee List",
     "support": "Support",
+    "language": "Languages",
+    "en": "English",
+    "vn": "Vietnamese",
     "logout": "Log Out"
   },
   "banner": {
@@ -82,12 +85,24 @@
     "status_3_scanner": "Scan Bar/QR Code:",
     "status_3_alert": "The QR Code/Barcode does not match!",
     "status_4": "The repair technician",
-    "status_4_": "Completed the repair."
+    "status_4_": "Completed the repair.",
+    "status_4_header": "The repair technician - Repair completed",
+    "status_4_alert": "Please submit the request after completion!",
+    "status_4_info": "Information",
+    "status_4_id_machine": "ID Machine:",
+    "status_4_repair_method": "Repair method",
+    "status_4_remark": "Remark",
+    "status_4_confirm": "Confirm",
+    "status_4_close": "Close",
+    "status_4_validate_repair_method": "Please choose repair method!",
+    "status_4_validate_remark_repair_method": "Please enter the repair method!",
+    "status_4_validate_space": "Please do not enter spaces!"
   },
   "personal_info": {
     "search_info": "Look up information",
     "date_to": "Date",
     "date_from": "Date from",
+    "validate_date_from": "Date no less than from date!",
     "btn_search": "Search",
     "filter": "Filter",
     "total_number_of_votes_fixed": "Total number",
@@ -105,5 +120,27 @@
   "scanner": {
     "btn_req_camera_permission": "Request Camera Permissions",
     "alert_not_found": "Requested device not found!"
+  },
+  "work_list": {
+    "work_list": "Work list",
+    "date": "Date",
+    "id_machine": "ID Machine",
+    "remark": "Remark",
+    "requester": "Requester",
+    "floor": "Floor",
+    "assign": "Assign",
+    "employee_list": "Employee List",
+    "name": "Full Name",
+    "phone": "Phone Number",
+    "lean": "Lean",
+    "close": "Close",
+    "alert_table": "Please select a data row in the table!"
+  },
+  "employee_list": {
+    "employee_list": "Employee List",
+    "name": "Full Name",
+    "lean": "Lean",
+    "floor": "Floor",
+    "active_status": "Active Status"
   }
 }

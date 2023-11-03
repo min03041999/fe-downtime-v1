@@ -10,15 +10,14 @@ import { finish_mechanic, get_info_skill } from "../redux/features/electric";
 import { Typography, MenuItem, Grid, TextField, Box, Button, Stack, Autocomplete } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 
+import { useTranslation } from "react-i18next";
 
 const FinishTaskElectric = (props) => {
     const dispatch = useDispatch();
     const { infoSkill } = useSelector((state) => state.electric);
     const { isCheck, idMachine, open, setOpen, user } = props;
 
-    const onClose = () => {
-        setOpen(false);
-    }
+    const [t] = useTranslation("global");
 
     const validationSchema = Yup.object().shape({
         skill: Yup.array()
@@ -29,8 +28,8 @@ const FinishTaskElectric = (props) => {
                     info_skill_vn: Yup.string().required('Vietnamese skill name is required')
                 })
             )
-            .min(1, 'Vui lòng nhập phương pháp'),
-        remark_mechanic: Yup.string().required("Vui lòng nhập phương pháp sửa chữa!")
+            .min(1, t("process_status.status_4_validate_repair_method")),
+        remark_mechanic: Yup.string().required(t("process_status.status_4_validate_remark_repair_method")).matches(/^[^\s]+(\s+[^\s]+)*$/, t("process_status.status_4_validate_space"))
     })
 
     const handleAutocompleteChange = (event, values) => {
@@ -66,6 +65,13 @@ const FinishTaskElectric = (props) => {
         fetchData();
     }, [dispatch])
 
+    const onClose = () => {
+        formik.setTouched({});
+        formik.setErrors({});
+        setOpen(false);
+    }
+
+
     return (
         <>
             {
@@ -73,10 +79,11 @@ const FinishTaskElectric = (props) => {
                     <AlertDialog
                         open={open}
                         setOpen={setOpen}
-                        headerModal={"Thợ sửa - Hoàn thành sửa chữa"}
+                        headerModal={t("process_status.status_4_header")}
+                        formik={formik}
                     >
                         <Box component="div" sx={{ textAlign: "center" }}>
-                            <Title color="#1565c0" titleText={"Vui lòng gửi yêu cầu sau khi hoàn thành!"} />
+                            <Title color="#1565c0" titleText={t("process_status.status_4_alert")} />
                         </Box>
                         <Grid
                             container
@@ -88,10 +95,10 @@ const FinishTaskElectric = (props) => {
                                         fontWeight: "500",
                                     }}
                                 >
-                                    Thông tin
+                                    {t("process_status.status_4_info")}
                                 </Typography>
                                 <Typography variant="div" sx={{ fontWeight: "500", fontSize: "14px" }}>
-                                    Mã máy: &nbsp;
+                                    {t("process_status.status_4_id_machine")} &nbsp;
                                 </Typography>
                                 <Typography
                                     variant="div"
@@ -118,7 +125,7 @@ const FinishTaskElectric = (props) => {
                                             <TextField
                                                 {...params}
                                                 variant="outlined"
-                                                label="Phương pháp sửa chữa"
+                                                label={t("process_status.status_4_repair_method")}
                                                 fullWidth
                                                 sx={{ fontSize: '14px' }}
                                                 size="small"
@@ -139,7 +146,7 @@ const FinishTaskElectric = (props) => {
                                 <Grid item xs={12} md={12}>
                                     <TextField
                                         name="remark_mechanic"
-                                        label="Ghi chú"
+                                        label={t("process_status.status_4_remark")}
                                         multiline
                                         rows={4}
                                         fullWidth
@@ -173,7 +180,7 @@ const FinishTaskElectric = (props) => {
                                     color="primary"
                                     size="small"
                                 >
-                                    Xác nhận
+                                    {t("process_status.status_4_confirm")}
                                 </Button>
                                 <Button
                                     type="button"
@@ -182,7 +189,7 @@ const FinishTaskElectric = (props) => {
                                     size="small"
                                     onClick={onClose}
                                 >
-                                    Đóng
+                                    {t("process_status.status_4_close")}
                                 </Button>
                             </Stack>
                         </Box>

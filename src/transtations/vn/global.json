@@ -16,6 +16,9 @@
     "work_list": "Danh sách công việc",
     "employee_list": "Danh sách nhân viên",
     "support": "Hỗ trợ",
+    "language": "Ngôn ngữ",
+    "en": "Tiếng anh",
+    "vn": "Tiếng việt",
     "logout": "Đăng xuất"
   },
   "banner": {
@@ -82,12 +85,24 @@
     "status_3_scanner": "Quét mã Bar/QR Code:",
     "status_3_alert": "Mã QRCode/BarCode không trùng khớp!",
     "status_4": "Thợ sửa",
-    "status_4_": "Hoàn thành sửa chửa."
+    "status_4_": "Hoàn thành sửa chữa.",
+    "status_4_header": "Thợ sửa - Hoàn thành sửa chữa",
+    "status_4_alert": "Vui lòng gửi yêu cầu sau khi hoàn thành!",
+    "status_4_info": "Information",
+    "status_4_id_machine": "Mã máy:",
+    "status_4_repair_method": "Phương pháp sửa chữa",
+    "status_4_remark": "Ghi chú",
+    "status_4_confirm": "Xác nhận",
+    "status_4_close": "Đóng",
+    "status_4_validate_repair_method": "Vui lòng chọn phương pháp!",
+    "status_4_validate_remark_repair_method": "Vui lòng nhập phương pháp sửa chữa!",
+    "status_4_validate_space": "Vui lòng không nhập khoảng trắng!"
   },
   "personal_info": {
     "search_info": "Tra cứu thông tin",
     "date_to": "Ngày",
     "date_from": "Đến ngày",
+    "validate_date_from": "Đến ngày không được nhỏ hơn từ ngày!",
     "btn_search": "Tìm kiếm",
     "filter": "Lọc",
     "total_number_of_votes_fixed": "Tổng số",
@@ -105,5 +120,27 @@
   "scanner": {
     "btn_req_camera_permission": "Yêu cầu quyền sử dụng máy ảnh",
     "alert_not_found": "Không tìm thấy thiết bị được yêu cầu!"
+  },
+  "work_list": {
+    "work_list": "Danh sách công việc",
+    "date": "Ngày",
+    "id_machine": "Mã Máy",
+    "remark": "Ghi Chú",
+    "requester": "Người gửi yêu cầu",
+    "floor": "Mặt lầu",
+    "assign": "Giao phó",
+    "employee_list": "Danh sách nhân viên",
+    "name": "Họ và tên",
+    "phone": "Số điện thoại",
+    "lean": "Đơn vị",
+    "close": "Đóng",
+    "alert_table": "Vui lòng chọn dòng dữ liệu trong bảng!"
+  },
+  "employee_list": {
+    "employee_list": "Danh sách nhân viên",
+    "name": "Họ và tên",
+    "lean": "Đơn vị",
+    "floor": "Mặt lầu",
+    "active_status": "Trạng thái hoạt động"
   }
 }

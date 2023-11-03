@@ -247,14 +247,15 @@ export default function LoginScreen() {
                         </Button>
                     </Box>
 
-                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "10px" }}>
+                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "10px", marginTop: "10px" }}>
                         <Typography sx={{ fontSize: "14px", color: "#aeaeae" }}> {t("login.language")}</Typography>
                         <TextField
                             select
                             name="languages"
                             size="small"
                             variant="standard"
-                            sx={{ width: "30%", textAlign: "center", fontSize: "14px" }}
+                            sx={{ width: "20%", textAlign: "center" }}
+                            InputProps={{ style: { color: '#1565c0', fontSize: "14px" } }}
                             value={selectedLanguage}
                             onChange={handleChange}
                         >
