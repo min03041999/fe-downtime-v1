@@ -8,6 +8,8 @@ import { get_list_status_mechanic } from "../../redux/features/electric";
 import socketIOClient from "socket.io-client";
 import { BASE_URL } from "../../utils/env";
 
+import { useTranslation } from "react-i18next";
+
 function statusCurrent(status) {
   switch (status) {
     case 1:
@@ -30,6 +32,7 @@ const PaperStyle = {
 const host = BASE_URL;
 
 const UserlistScreen = () => {
+  const [t] = useTranslation("global");
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const { getListStatusMechanic } = useSelector((state) => state.electric);
@@ -64,13 +67,13 @@ const UserlistScreen = () => {
 
   return (
     <Box component="div">
-      <BreadCrumb breadCrumb={"Danh sách cơ điện"} />
+      <BreadCrumb breadCrumb={t("employee_list.employee_list")} />
       <Box
         component="div"
         sx={{ display: "block", margin: "0 auto" }}
       >
         <Paper sx={PaperStyle} elevation={5}>
-          <Title titleText={"Danh sách cơ điện"} />
+          <Title titleText={t("employee_list.employee_list")} />
           <TableContainer>
             <Table
               sx={{ minWidth: 650 }}
@@ -80,16 +83,16 @@ const UserlistScreen = () => {
               <TableHead>
                 <TableRow>
                   <TableCell style={{ fontWeight: "bold", whiteSpace: "nowrap", backgroundColor: "#1976d2", color: "#fff" }} align="center">
-                    Họ và tên
+                    {t("employee_list.name")}
                   </TableCell>
                   <TableCell style={{ fontWeight: "bold", whiteSpace: "nowrap", backgroundColor: "#1976d2", color: "#fff" }} align="center">
-                    Đơn vị
+                    {t("employee_list.lean")}
                   </TableCell>
                   <TableCell style={{ fontWeight: "bold", whiteSpace: "nowrap", backgroundColor: "#1976d2", color: "#fff" }} align="center">
-                    Tầng
+                    {t("employee_list.floor")}
                   </TableCell>
                   <TableCell style={{ fontWeight: "bold", whiteSpace: "nowrap", backgroundColor: "#1976d2", color: "#fff" }} align="center">
-                    Trạng thái hoạt động
+                    {t("employee_list.active_status")}
                   </TableCell>
                 </TableRow>
               </TableHead>

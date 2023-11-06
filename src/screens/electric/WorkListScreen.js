@@ -27,6 +27,8 @@ import AlertDialog from "../../components/AlertDialog";
 import socketIOClient from "socket.io-client";
 import { BASE_URL } from "../../utils/env";
 
+import { useTranslation } from "react-i18next";
+
 const PaperStyle = {
     position: "relative",
     marginTop: "10px",
@@ -36,6 +38,7 @@ const PaperStyle = {
 const host = BASE_URL;
 
 const TableEmployeeList = ({ open, setOpen, headerModal, getListAsignMechanic, task }) => {
+    const [t] = useTranslation("global");
     const dispatch = useDispatch();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -70,7 +73,7 @@ const TableEmployeeList = ({ open, setOpen, headerModal, getListAsignMechanic, t
         } else {
             Toast.fire({
                 icon: 'error',
-                title: "Vui lòng chọn dòng dữ liệu!",
+                title: t("work_list.alert_table"),
             })
         }
     }
@@ -106,7 +109,7 @@ const TableEmployeeList = ({ open, setOpen, headerModal, getListAsignMechanic, t
                                     color: "#fff",
                                 }}
                             >
-                                Họ và tên
+                                {t("work_list.name")}
                             </TableCell>
                             <TableCell
                                 style={{
@@ -116,7 +119,7 @@ const TableEmployeeList = ({ open, setOpen, headerModal, getListAsignMechanic, t
                                     color: "#fff",
                                 }}
                             >
-                                Số điện thoại
+                                {t("work_list.phone")}
                             </TableCell>
                             <TableCell
                                 style={{
@@ -126,7 +129,7 @@ const TableEmployeeList = ({ open, setOpen, headerModal, getListAsignMechanic, t
                                     color: "#fff",
                                 }}
                             >
-                                Đơn vị
+                                {t("work_list.lean")}
                             </TableCell>
                             <TableCell
                                 style={{
@@ -136,7 +139,7 @@ const TableEmployeeList = ({ open, setOpen, headerModal, getListAsignMechanic, t
                                     color: "#fff",
                                 }}
                             >
-                                Tầng
+                                {t("work_list.floor")}
                             </TableCell>
                         </TableRow>
                     </TableHead>
@@ -197,10 +200,10 @@ const TableEmployeeList = ({ open, setOpen, headerModal, getListAsignMechanic, t
                 }}
             >
                 <Button type="button" variant="contained" color="primary" size="small" onClick={onAsignTask}>
-                    Giao việc
+                    {t("work_list.assign")}
                 </Button>
                 <Button type="button" variant="contained" color="error" size="small" onClick={onClose}>
-                    Đóng
+                    {t("work_list.close")}
                 </Button>
             </Stack>
         </AlertDialog>
@@ -208,6 +211,7 @@ const TableEmployeeList = ({ open, setOpen, headerModal, getListAsignMechanic, t
 };
 
 const WorkListScreen = () => {
+    const [t] = useTranslation("global");
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
     const [task, setTask] = useState({});
@@ -265,13 +269,13 @@ const WorkListScreen = () => {
 
     return (
         <Box component="div">
-            <BreadCrumb breadCrumb={"Danh sách công việc"} />
+            <BreadCrumb breadCrumb={t("work_list.work_list")} />
             <Box
                 component="div"
                 sx={{ display: "block", margin: "0 auto" }}
             >
                 <Paper sx={PaperStyle} elevation={5}>
-                    <Title titleText={"Danh sách công việc"} />
+                    <Title titleText={t("work_list.work_list")} />
                     <TableContainer>
                         <Table stickyHeader aria-label="sticky table">
                             <TableHead>
@@ -284,7 +288,7 @@ const WorkListScreen = () => {
                                             color: "#fff",
                                         }}
                                     >
-                                        Ngày
+                                        {t("work_list.date")}
                                     </TableCell>
                                     <TableCell
                                         style={{
@@ -294,7 +298,7 @@ const WorkListScreen = () => {
                                             color: "#fff",
                                         }}
                                     >
-                                        Mã Máy
+                                        {t("work_list.id_machine")}
                                     </TableCell>
                                     <TableCell
                                         style={{
@@ -304,7 +308,7 @@ const WorkListScreen = () => {
                                             color: "#fff",
                                         }}
                                     >
-                                        Nội dung
+                                        {t("work_list.remark")}
                                     </TableCell>
                                     <TableCell
                                         style={{
@@ -314,7 +318,7 @@ const WorkListScreen = () => {
                                             color: "#fff",
                                         }}
                                     >
-                                        Người gửi yêu cầu
+                                        {t("work_list.requester")}
                                     </TableCell>
                                     <TableCell
                                         style={{
@@ -324,7 +328,7 @@ const WorkListScreen = () => {
                                             color: "#fff",
                                         }}
                                     >
-                                        Tầng
+                                        {t("work_list.floor")}
                                     </TableCell>
                                     <TableCell
                                         style={{
@@ -364,7 +368,7 @@ const WorkListScreen = () => {
                                                 }}
                                                 onClick={() => handleClickOpen(row)}
                                             >
-                                                Giao phó
+                                                {t("work_list.assign")}
                                             </Button>
                                         </TableCell>
                                     </TableRow>
@@ -387,7 +391,7 @@ const WorkListScreen = () => {
             <TableEmployeeList
                 open={open}
                 setOpen={setOpen}
-                headerModal={"Danh sách nhân viên"}
+                headerModal={t("work_list.employee_list")}
                 getListAsignMechanic={getListAsignMechanic}
                 task={task}
             />

@@ -9,10 +9,14 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
 const AlertDialog = (props) => {
-    const { open, setOpen, headerModal, children } = props;
+    const { open, setOpen, headerModal, children, formik } = props;
 
     const handleClose = () => {
         setOpen(false);
+        if (formik) {
+            formik.setTouched({});
+            formik.setErrors({});
+        }
     };
 
     return (

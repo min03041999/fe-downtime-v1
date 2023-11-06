@@ -24,6 +24,8 @@ import TaskEmployee from "../../components/TaskEmployee";
 
 import { useTranslation } from "react-i18next";
 
+import { Toast } from "../../utils/toast";
+
 const FilterStyle = {
   padding: "15px 30px 15px 30px",
   borderRadius: "30px",
@@ -31,8 +33,9 @@ const FilterStyle = {
 };
 
 const Active = {
-  position: "absolute",
+  // position: "absolute",
   width: "100%",
+  height: "150px",
   opacity: "1",
   transform: `translate(0%, 0%)`,
   transition: "ease 0.5s",
@@ -40,8 +43,9 @@ const Active = {
 }
 
 const ActiveNone = {
-  position: "absolute",
+  // position: "absolute",
   width: "100%",
+  height: "180px",
   opacity: "1",
   transform: `translate(0%, -300%)`,
 }
@@ -52,6 +56,8 @@ export default function InfoUserScreen() {
   const { infoCalculate, infoTask } = useSelector((state) => state.electric);
   const { totalFix, avgTime } = infoCalculate;
   const { arrPercentfn, arrResult } = infoTask;
+  const [alertValidate, setAlertValidate] = useState(false);
+  const [alertCount, setAlertCount] = useState(0);
 
   const [t] = useTranslation("global");
 
@@ -65,6 +71,21 @@ export default function InfoUserScreen() {
     DateTo: Yup.string().required("Vui lòng nhập đến ngày!"),
   });
 
+  const validate = (values) => {
+    const error = {};
+    const { DateFrom, DateTo } = values;
+
+    if (new Date(format(DateTo.$d, "yyyy-MM-dd")) < new Date(format(DateFrom.$d, "yyyy-MM-dd"))) {
+      error.DateFrom = " ";
+      error.DateTo = " ";
+
+      setAlertValidate(true);
+      setAlertCount(alertCount + 1);
+    }
+
+    return error;
+  }
+
   useEffect(() => {
     const date_from = format(dayjs(new Date()).$d, "yyyy-MM-dd");
     const date_to = format(dayjs(new Date()).$d, "yyyy-MM-dd");
@@ -75,7 +96,20 @@ export default function InfoUserScreen() {
     }
 
     fetchData();
+
+
   }, [dispatch, user_name, factory])
+
+  useEffect(() => {
+    if (alertValidate && alertCount >= 2) {
+      Toast.fire({
+        icon: "error",
+        title:
+          t("personal_info.validate_date_from"),
+      })
+    }
+    setAlertValidate(false);
+  }, [alertValidate, alertCount, t])
 
   const formik = useFormik({
     initialValues: {
@@ -83,6 +117,7 @@ export default function InfoUserScreen() {
       DateTo: dayjs(new Date()),
     },
     validationSchema,
+    validate,
     onSubmit: async (data) => {
       const date_from = format(data.DateFrom.$d, "yyyy-MM-dd");
       const date_to = format(data.DateTo.$d, "yyyy-MM-dd");
@@ -162,29 +197,32 @@ export default function InfoUserScreen() {
               </LocalizationProvider>
             </Grid>
           </Grid>
-          <Stack
-            direction="row"
-            spacing={2}
-            sx={{ marginTop: "10px", justifyContent: "center" }}
-          >
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              size="small"
+
+          <Box sx={{ position: "absolute", top: "90px", left: "50%", transform: "translate(-50%, 0)" }}>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{ marginTop: "10px", justifyContent: "center" }}
             >
-              {t("personal_info.btn_search")}
-            </Button>
-          </Stack>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                size="small"
+              >
+                {t("personal_info.btn_search")}
+              </Button>
+            </Stack>
+          </Box>
         </Box>
       </Box>
 
 
       {/* Content  */}
       <Box component="div" sx={open ? {
-        transition: "ease 0.5s", transform: `translate(0%, 155px)`, margin: "0 -5px",
-      } : {
         transition: "ease 0.5s", transform: `translate(0%, 0%)`, margin: "0 -5px",
+      } : {
+        transition: "ease 0.5s", transform: `translate(0%, -170px)`, margin: "0 -5px",
       }}>
         <CalculateJob totalFix={totalFix} avgTime={avgTime} />
 
@@ -194,6 +232,6 @@ export default function InfoUserScreen() {
 
         <ChartEmployee arrPercentfn={arrPercentfn} />
       </Box>
-    </Box>
+    </Box >
   );
 }
