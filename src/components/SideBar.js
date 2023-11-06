@@ -35,7 +35,7 @@ const menuSliderContainer = {
 };
 
 const LanguagesListStyle = {
-    padding: "0  73px",
+    padding: "0px 0px 0px 73px",
     fontSize: "14px",
     color: "gray"
 }
@@ -62,7 +62,7 @@ const SideBar = (props) => {
     const [t, i18n] = useTranslation("global");
 
     const languages = JSON.parse(localStorage.getItem('languages'));
-    const [selectedLanguage, setSelectedLanguage] = useState(languages);
+    const [selectedLanguage, setSelectedLanguage] = useState(languages === null ? "EN" : languages);
 
     const handleChange = (event) => {
         setSelectedLanguage(event.target.value);
