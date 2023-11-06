@@ -12,34 +12,73 @@ const Scanner = (props) => {
   useEffect(() => {
     localStorage.removeItem("ML5_QRCODE_DATA");
 
-    alert(window.navigator.platform);
     const startScanning = async () => {
-      try {
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const videoDevices = devices.filter(
-          (device) => device.kind === "videoinput"
-        );
+      let type_device = window.navigator.platform;
+      if (type_device === "iPhone") {
+        alert(type_device);
+        let cameraFailTimer;
+        let cameraStarting = true;
+        let cameraView = document.getElementById(`render-${idMachine}`); // Assuming you have an element with the ID 'cameraView'
 
-        let rearCameraId = null;
-        for (const device of videoDevices) {
-          if (device.label.toLowerCase().includes("back")) {
-            rearCameraId = device.deviceId;
-            break;
+        const constraints = {
+          audio: false,
+          video: {
+            facingMode: 'environment'
           }
-        }
+        };
 
-        const selectedCameraId = rearCameraId || videoDevices[0]?.deviceId;
-
-        if (selectedCameraId) {
-          scannerRef.current?.start(selectedCameraId, {
-            facingMode: "environment",
-          }, (result) => {
-            scannerRef.current?.clear();
-            setScannerResult(result);
+        navigator.mediaDevices.getUserMedia(constraints)
+          .then((mediaStream) => {
+            cameraView.srcObject = mediaStream;
+            clearTimeout(cameraFailTimer);
+            cameraFailTimer = setTimeout(function () {
+              // Camera isn't working - do something on screen
+              cameraStarting = false;
+            }, 5000);
+            cameraView.onloadedmetadata = () => {
+              cameraView.play().then(function () {
+                // Camera is working - continue as normal
+                clearTimeout(cameraFailTimer);
+                cameraStarting = false;
+                // callback(true);
+              });
+            };
+          })
+          .catch((err) => {
+            // Camera isn't working - do something on screen
+            cameraStarting = false;
+            // callback(false);
           });
+      } else {
+        alert(type_device);
+        try {
+          const devices = await navigator.mediaDevices.enumerateDevices();
+          const videoDevices = devices.filter(
+            (device) => device.kind === "videoinput"
+          );
+
+          let rearCameraId = null;
+          for (const device of videoDevices) {
+            if (device.label.toLowerCase().includes("back")) {
+              rearCameraId = device.deviceId;
+              break;
+            }
+          }
+
+          const selectedCameraId = rearCameraId || videoDevices[0]?.deviceId;
+
+          if (selectedCameraId) {
+            scannerRef.current?.start(selectedCameraId, {
+              facingMode: "environment",
+            }, (result) => {
+              scannerRef.current?.clear();
+              setScannerResult(result);
+            });
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
+
       }
     };
 
