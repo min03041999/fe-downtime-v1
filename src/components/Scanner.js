@@ -82,6 +82,43 @@ const Scanner = (props) => {
     //   }
     // };
 
+    const startScanning = async () => {
+      let cameraFailTimer;
+      let cameraStarting = true;
+      let cameraView = document.getElementById(`render-${idMachine}`); // Assuming you have an element with the ID 'cameraView'
+
+      const constraints = {
+        audio: false,
+        video: {
+          facingMode: 'environment'
+        }
+      };
+
+      navigator.mediaDevices.getUserMedia(constraints)
+        .then((mediaStream) => {
+          cameraView.srcObject = mediaStream;
+          clearTimeout(cameraFailTimer);
+          cameraFailTimer = setTimeout(function () {
+            // Camera isn't working - do something on screen
+            cameraStarting = false;
+          }, 5000);
+          cameraView.onloadedmetadata = () => {
+            cameraView.play().then(function () {
+              // Camera is working - continue as normal
+              clearTimeout(cameraFailTimer);
+              cameraStarting = false;
+              // callback(true);
+            });
+          };
+        })
+        .catch((err) => {
+          // Camera isn't working - do something on screen
+          cameraStarting = false;
+          // callback(false);
+        });
+    };
+
+
     const scanner = new Html5QrcodeScanner(`render-${idMachine}`, {
       qrbox: {
         width: 250,
@@ -108,7 +145,7 @@ const Scanner = (props) => {
       console.log(err);
     }
 
-    // startScanning();
+    startScanning();
 
     const buttonElement = document.getElementById("html5-qrcode-button-camera-permission");
 
