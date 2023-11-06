@@ -15,7 +15,7 @@ const Scanner = (props) => {
     const startScanning = async () => {
       let type_device = window.navigator.platform;
       if (type_device === "iPhone") {
-        alert(type_device);
+        // alert(type_device);
         let cameraFailTimer;
         let cameraStarting = true;
         let cameraView = document.getElementById(`render-${idMachine}`); // Assuming you have an element with the ID 'cameraView'
@@ -50,7 +50,7 @@ const Scanner = (props) => {
             // callback(false);
           });
       } else {
-        alert(type_device);
+        // alert(type_device);
         try {
           const devices = await navigator.mediaDevices.enumerateDevices();
           const videoDevices = devices.filter(
