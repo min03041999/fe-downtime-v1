@@ -6,7 +6,10 @@
     "password": "Password",
     "factory": "Factory",
     "login": "Login",
-    "language": "Language:"
+    "language": "Language:",
+    "validate_username": "Please do not leave it blank!",
+    "validate_password": "Please do not leave it blank!",
+    "validate_factory": "Please do not leave it blank!"
   },
   "sidebar": {
     "system": "System",
@@ -119,7 +122,8 @@
   },
   "scanner": {
     "btn_req_camera_permission": "Request Camera Permissions",
-    "alert_not_found": "Requested device not found!"
+    "alert_not_found": "Requested device not found!",
+    "alert_not_permisson": "Request Camera Permissions!"
   },
   "work_list": {
     "work_list": "Work list",

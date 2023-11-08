@@ -87,6 +87,8 @@ const Scanner = (props) => {
         buttonElement.removeEventListener("click", handleCameraPermission);
       }
     };
+
+
   }, [scannerResult, setScannerResult, idMachine, t]);
 
   function handleCameraPermission() {
@@ -98,8 +100,13 @@ const Scanner = (props) => {
         console.log("Camera permission granted");
       })
       .catch((error) => {
+        // alert(String(error));
         const alertNotFound = document.getElementById(`render-${idMachine}__header_message`);
-        alertNotFound.textContent = t("scanner.alert_not_found");
+        if (String(error) === "NotFoundError: Requested device not found") {
+          alertNotFound.textContent = t("scanner.alert_not_found");
+        } else {
+          alertNotFound.textContent = t("scanner.alert_not_permisson");
+        }
       });
   }
 

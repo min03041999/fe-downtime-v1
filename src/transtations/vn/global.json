@@ -6,7 +6,10 @@
     "password": "Mật khẩu",
     "factory": "Nhà máy",
     "login": "Đăng nhập",
-    "language": "Ngôn ngữ:"
+    "language": "Ngôn ngữ:",
+    "validate_username": "Vui lòng không để trống!",
+    "validate_password": "Vui lòng không để trống!",
+    "validate_factory": "Vui lòng không để trống!"
   },
   "sidebar": {
     "system": "Hệ thống",
@@ -119,7 +122,8 @@
   },
   "scanner": {
     "btn_req_camera_permission": "Yêu cầu quyền sử dụng máy ảnh",
-    "alert_not_found": "Không tìm thấy thiết bị được yêu cầu!"
+    "alert_not_found": "Không tìm thấy thiết bị được yêu cầu!",
+    "alert_not_permisson": "Yêu cấp quyền camera!"
   },
   "work_list": {
     "work_list": "Danh sách công việc",
