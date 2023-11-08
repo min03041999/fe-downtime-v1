@@ -34,12 +34,6 @@ const PaperStyle = {
     padding: 20,
 };
 
-const validationSchema = Yup.object().shape({
-    username: Yup.string().required("Vui lòng không để trống!"),
-    password: Yup.string().required("Vui lòng không để trống!"),
-    factory: Yup.string().required("Vui lòng không để trống!"),
-});
-
 var firebaseConfig = {
     apiKey: "AIzaSyAk17G8hWfCK2y5zct66gitNEzCkT3c6i8",
     authDomain: "downtime-1a6e1.firebaseapp.com",
@@ -96,6 +90,12 @@ export default function LoginScreen() {
             console.log("An error occurred while retrieving token. ", err);
         });
 
+    const validationSchema = Yup.object().shape({
+        username: Yup.string().required(t("login.validate_username")),
+        password: Yup.string().required(t("login.validate_password")),
+        factory: Yup.string().required(t("login.validate_factory")),
+    });
+
     const formik = useFormik({
         initialValues: {
             username: "",
@@ -105,7 +105,8 @@ export default function LoginScreen() {
         validationSchema,
         onSubmit: (data) => {
             const { username, password, factory } = data;
-            dispatch(login({ username, password, factory, token: tokens }));
+            const language = selectedLanguage;
+            dispatch(login({ username, password, factory, token: tokens, language }));
         },
     });
 
