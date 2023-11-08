@@ -75,7 +75,7 @@ export default function LoginScreen() {
     })
         .then((currentToken) => {
             if (currentToken) {
-                // console.log("current token for client: ", currentToken);
+                console.log("current token for client: ", currentToken);
                 // Perform any other neccessary action with the token
                 // Toast.fire({
                 //   icon: "success",
