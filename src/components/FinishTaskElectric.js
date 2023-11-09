@@ -19,6 +19,8 @@ const FinishTaskElectric = (props) => {
 
     const [t] = useTranslation("global");
 
+    const languages = JSON.parse(localStorage.getItem('languages'));
+
     const validationSchema = Yup.object().shape({
         skill: Yup.array()
             .of(
@@ -52,7 +54,9 @@ const FinishTaskElectric = (props) => {
             const id_machine = idMachine;
             const id_user_mechanic = user_name;
 
-            dispatch(finish_mechanic({ id_user_mechanic, skill, id_machine, remark_mechanic, lean, factory }));
+            const language = languages;
+
+            dispatch(finish_mechanic({ id_user_mechanic, skill, id_machine, remark_mechanic, lean, factory, language }));
 
             setOpen(false);
         }

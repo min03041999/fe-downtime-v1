@@ -44,6 +44,8 @@ const TableEmployeeList = ({ open, setOpen, headerModal, getListAsignMechanic, t
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [selectedRow, setSelectedRow] = useState(null);
 
+    const languages = JSON.parse(localStorage.getItem('languages'));
+
     const electric = useSelector((state) => state.electric);
 
     const handleChangePage = (event, newPage) => {
@@ -68,7 +70,9 @@ const TableEmployeeList = ({ open, setOpen, headerModal, getListAsignMechanic, t
         if (task && selectedRow) {
             const { id_machine, id_owner_mechanic } = task;
             const { user_name, factory, lean } = selectedRow;
-            await dispatch(owner_asign_task({ user_name, id_machine, id_owner_mechanic, factory, lean }));
+            const language = languages;
+
+            await dispatch(owner_asign_task({ user_name, id_machine, id_owner_mechanic, factory, lean, language }));
             setOpen(false);
         } else {
             Toast.fire({

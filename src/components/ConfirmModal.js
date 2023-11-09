@@ -11,14 +11,16 @@ import { useTranslation } from "react-i18next";
 const ConfirmModal = ({ isCheck, open, setOpen, idMachine, user }) => {
   const dispatch = useDispatch();
   const [t] = useTranslation("global");
+  const languages = JSON.parse(localStorage.getItem('languages'));
 
   const onSubmit = () => {
     const { user_name, factory, lean } = user;
     const id_machine = idMachine;
     const id_user_mechanic = user_name;
     const status = 2;
+    const language = languages;
 
-    dispatch(scanner_fix_mechanic({ id_user_mechanic, id_machine, factory, lean, status }));
+    dispatch(scanner_fix_mechanic({ id_user_mechanic, id_machine, factory, lean, status, language }));
     setOpen(false);
   };
 
@@ -27,8 +29,9 @@ const ConfirmModal = ({ isCheck, open, setOpen, idMachine, user }) => {
     const id_machine = idMachine;
     const id_user_mechanic = user_name;
     const status = 5;
+    const language = languages;
 
-    dispatch(scanner_fix_mechanic({ id_user_mechanic, id_machine, factory, lean, status }));
+    dispatch(scanner_fix_mechanic({ id_user_mechanic, id_machine, factory, lean, status, language }));
     setOpen(false);
   };
 

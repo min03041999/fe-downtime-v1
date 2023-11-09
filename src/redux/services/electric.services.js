@@ -49,9 +49,9 @@ const get_list_asign_mechanic = (id_machine, floor, factory, position, lean) => 
     })
 }
 
-const owner_asign_task = (user_name, id_machine, id_owner_mechanic, factory, lean) => {
+const owner_asign_task = (user_name, id_machine, id_owner_mechanic, factory, lean, language) => {
     return axios.post(BASE_URL + "/task/ownerAsignTask", {
-        user_name, id_machine, id_owner_mechanic, factory, lean
+        user_name, id_machine, id_owner_mechanic, factory, lean, language
     }, {
         headers: {
             "Content-Type": "application/json",
@@ -80,9 +80,9 @@ const get_work_list_report_employee = (id_user_mechanic, factory) => {
     });
 }
 
-const scanner_fix_mechanic = (id_user_mechanic, id_machine, factory, lean, status) => {
+const scanner_fix_mechanic = (id_user_mechanic, id_machine, factory, lean, status, language) => {
     return axios.post(BASE_URL + "/task/mechanicAccept", {
-        id_user_mechanic, id_machine, factory, lean, status
+        id_user_mechanic, id_machine, factory, lean, status, language
     }, {
         headers: {
             "Content-Type": "application/json",
@@ -96,9 +96,9 @@ const scanner_fix_mechanic = (id_user_mechanic, id_machine, factory, lean, statu
 }
 
 
-const finish_mechanic = (id_user_mechanic, skill, id_machine, remark_mechanic, lean, factory) => {
+const finish_mechanic = (id_user_mechanic, skill, id_machine, remark_mechanic, lean, factory, language) => {
     return axios.post(BASE_URL + "/task/machineCfmfinish", {
-        id_user_mechanic, skill, id_machine, remark_mechanic, lean, factory
+        id_user_mechanic, skill, id_machine, remark_mechanic, lean, factory, language
     }, {
         headers: {
             "Content-Type": "application/json",
