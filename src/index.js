@@ -12,7 +12,7 @@ import global_vn from "./transtations/vn/global.json";
 import i18next from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 
-const languages = JSON.parse(localStorage.getItem('languages'));
+const languages = localStorage.getItem('languages');
 
 i18next.init({
   interpolation: { escapeValue: false },

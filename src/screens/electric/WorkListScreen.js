@@ -44,7 +44,7 @@ const TableEmployeeList = ({ open, setOpen, headerModal, getListAsignMechanic, t
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [selectedRow, setSelectedRow] = useState(null);
 
-    const languages = JSON.parse(localStorage.getItem('languages'));
+    const languages = localStorage.getItem('languages');
 
     const electric = useSelector((state) => state.electric);
 

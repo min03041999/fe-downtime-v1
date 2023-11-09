@@ -14,7 +14,7 @@ const ScannerElectric = (props) => {
 
     const [t] = useTranslation("global");
 
-    const languages = JSON.parse(localStorage.getItem('languages'));
+    const languages = localStorage.getItem('languages');
 
     useEffect(() => {
         const id_machine = idMachine;

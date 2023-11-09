@@ -54,13 +54,18 @@ export default function LoginScreen() {
     const navigate = useNavigate();
 
     const [t, i18n] = useTranslation("global");
-    const languages = JSON.parse(localStorage.getItem('languages'));
+    const languages = localStorage.getItem('languages');
+
+    if (languages === null) {
+        localStorage.setItem("languages", "EN");
+    }
+
     const [selectedLanguage, setSelectedLanguage] = useState(languages === null ? "EN" : languages);
 
     const handleChange = (event) => {
         setSelectedLanguage(event.target.value);
         i18n.changeLanguage(event.target.value);
-        localStorage.setItem("languages", JSON.stringify(event.target.value));
+        localStorage.setItem("languages", event.target.value);
     };
 
     getToken(messaging, {

@@ -31,7 +31,7 @@ const Form = (props) => {
     const [statusPopup, setstatusPopup] = useState(false);
     const [removeTask, setRemoveTask] = useState(false);
     const [t] = useTranslation("global");
-    const languages = JSON.parse(localStorage.getItem('languages'));
+    const languages = localStorage.getItem('languages');
 
     const onBack = () => {
         setScannerResult("");

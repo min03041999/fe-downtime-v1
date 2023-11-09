@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 const ConfirmModal = ({ isCheck, open, setOpen, idMachine, user }) => {
   const dispatch = useDispatch();
   const [t] = useTranslation("global");
-  const languages = JSON.parse(localStorage.getItem('languages'));
+  const languages = localStorage.getItem('languages');
 
   const onSubmit = () => {
     const { user_name, factory, lean } = user;

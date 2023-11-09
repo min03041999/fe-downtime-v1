@@ -61,13 +61,13 @@ const SideBar = (props) => {
 
     const [t, i18n] = useTranslation("global");
 
-    const languages = JSON.parse(localStorage.getItem('languages'));
+    const languages = localStorage.getItem('languages');
     const [selectedLanguage, setSelectedLanguage] = useState(languages === null ? "EN" : languages);
 
     const handleChange = (event) => {
         setSelectedLanguage(event.target.value);
         i18n.changeLanguage(event.target.value);
-        localStorage.setItem("languages", JSON.stringify(event.target.value));
+        localStorage.setItem("languages", event.target.value);
     };
 
     return (
