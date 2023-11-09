@@ -31,6 +31,7 @@ const Form = (props) => {
     const [statusPopup, setstatusPopup] = useState(false);
     const [removeTask, setRemoveTask] = useState(false);
     const [t] = useTranslation("global");
+    const languages = JSON.parse(localStorage.getItem('languages'));
 
     const onBack = () => {
         setScannerResult("");
@@ -48,11 +49,11 @@ const Form = (props) => {
     const onCancel = async () => {
         const id_machine = scannerResult;
         const { user_name, factory } = user;
+        const language = languages;
 
-        await dispatch(cancel_report_damage({ user_name, id_machine, factory }));
+        await dispatch(cancel_report_damage({ user_name, id_machine, factory, language }));
         setRemoveTask(true);
     }
-
 
     const validationSchema = Yup.object().shape({
         FullName: Yup.string().required(t("info_machine_damage.validate_fullname")),
@@ -81,8 +82,10 @@ const Form = (props) => {
         validationSchema,
         onSubmit: async (data) => {
             const { id_machine, id_user_request, remark, factory, fixer } = data;
+            const language = languages;
+
             await dispatch(
-                report_damage({ id_machine, id_user_request, remark, factory, fixer })
+                report_damage({ id_machine, id_user_request, remark, factory, fixer, language })
             );
 
             // await dispatch(setErrorCode(null));

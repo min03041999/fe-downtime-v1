@@ -23,9 +23,9 @@ export const get_report_damage = createAsyncThunk("damage_report/getTaskInfo", a
 
 export const report_damage = createAsyncThunk(
     "/damage_report/callMechanic",
-    async ({ id_machine, id_user_request, remark, factory, fixer }) => {
+    async ({ id_machine, id_user_request, remark, factory, fixer, language }) => {
         try {
-            const data = await ProductServices.report_damage(id_machine, id_user_request, remark, factory, fixer);
+            const data = await ProductServices.report_damage(id_machine, id_user_request, remark, factory, fixer, language);
             return data;
         } catch (error) {
             return error.message;
@@ -47,9 +47,9 @@ export const get_history_product = createAsyncThunk(
 
 export const cancel_report_damage = createAsyncThunk(
     "/damage_report/deleteTask",
-    async ({ user_name, id_machine, factory }) => {
+    async ({ user_name, id_machine, factory, language }) => {
         try {
-            const data = await ProductServices.cancel_report_damage(user_name, id_machine, factory);
+            const data = await ProductServices.cancel_report_damage(user_name, id_machine, factory, language);
             return data;
         } catch (error) {
             return error.message;

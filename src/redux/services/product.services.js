@@ -17,13 +17,14 @@ const get_report_damage = (id_user_request, factory) => {
     });
 }
 
-const report_damage = (id_machine, id_user_request, remark, factory, fixer) => {
+const report_damage = (id_machine, id_user_request, remark, factory, fixer, language) => {
     return axios.post(BASE_URL + "/damage_report/callMechanic", {
         id_machine,
         id_user_request,
         remark,
         factory,
         fixer,
+        language
     }, {
         headers: {
             "Content-Type": "application/json",
@@ -51,9 +52,9 @@ const get_history_product = (id_user_request, factory) => {
     });
 }
 
-const cancel_report_damage = (user_name, id_machine, factory) => {
+const cancel_report_damage = (user_name, id_machine, factory, language) => {
     return axios.post(BASE_URL + "/damage_report/deleteTask", {
-        user_name, id_machine, factory
+        user_name, id_machine, factory, language
     }, {
         headers: {
             "Content-Type": "application/json",
