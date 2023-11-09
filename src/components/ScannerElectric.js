@@ -14,16 +14,18 @@ const ScannerElectric = (props) => {
 
     const [t] = useTranslation("global");
 
+    const languages = JSON.parse(localStorage.getItem('languages'));
 
     useEffect(() => {
         const id_machine = idMachine;
         const { user_name, factory, lean } = user;
         const id_user_mechanic = user_name;
         const status = 3;
+        const language = languages;
 
         if (id_machine === scannerResult) {
             dispatch(
-                scanner_fix_mechanic({ id_user_mechanic, id_machine, factory, lean, status })
+                scanner_fix_mechanic({ id_user_mechanic, id_machine, factory, lean, status, language })
             );
 
             setScannerResult("");
@@ -35,7 +37,7 @@ const ScannerElectric = (props) => {
             setScannerResult("");
         }
 
-    }, [idMachine, dispatch, setScannerResult, scannerResult, setOpen, user, t])
+    }, [idMachine, dispatch, setScannerResult, scannerResult, setOpen, user, t, languages])
 
     return (
         <>

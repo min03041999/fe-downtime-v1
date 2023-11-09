@@ -41,9 +41,9 @@ export const get_list_asign_mechanic = createAsyncThunk("/task/getListAsignMecha
     }
 })
 
-export const owner_asign_task = createAsyncThunk("/task/ownerAsignTask", async ({ user_name, id_machine, id_owner_mechanic, factory, lean }) => {
+export const owner_asign_task = createAsyncThunk("/task/ownerAsignTask", async ({ user_name, id_machine, id_owner_mechanic, factory, lean, language }) => {
     try {
-        const data = await ElectricServices.owner_asign_task(user_name, id_machine, id_owner_mechanic, factory, lean);
+        const data = await ElectricServices.owner_asign_task(user_name, id_machine, id_owner_mechanic, factory, lean, language);
         return data;
     } catch (error) {
         return error.message;
@@ -61,18 +61,18 @@ export const get_work_list_report_employee = createAsyncThunk("/task/getTaskmech
 })
 
 // Confirm and Scanner
-export const scanner_fix_mechanic = createAsyncThunk("/task/mechanicAccept", async ({ id_user_mechanic, id_machine, factory, lean, status }) => {
+export const scanner_fix_mechanic = createAsyncThunk("/task/mechanicAccept", async ({ id_user_mechanic, id_machine, factory, lean, status, language }) => {
     try {
-        const data = await ElectricServices.scanner_fix_mechanic(id_user_mechanic, id_machine, factory, lean, status);
+        const data = await ElectricServices.scanner_fix_mechanic(id_user_mechanic, id_machine, factory, lean, status, language);
         return data;
     } catch (error) {
         return error.message;
     }
 })
 
-export const finish_mechanic = createAsyncThunk("/task/machineCfmfinish", async ({ id_user_mechanic, skill, id_machine, remark_mechanic, lean, factory }) => {
+export const finish_mechanic = createAsyncThunk("/task/machineCfmfinish", async ({ id_user_mechanic, skill, id_machine, remark_mechanic, lean, factory, language }) => {
     try {
-        const data = await ElectricServices.finish_mechanic(id_user_mechanic, skill, id_machine, remark_mechanic, lean, factory);
+        const data = await ElectricServices.finish_mechanic(id_user_mechanic, skill, id_machine, remark_mechanic, lean, factory, language);
         return data;
     } catch (error) {
         return error.message;
