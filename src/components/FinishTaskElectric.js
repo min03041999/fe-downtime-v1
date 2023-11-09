@@ -19,7 +19,7 @@ const FinishTaskElectric = (props) => {
 
     const [t] = useTranslation("global");
 
-    const languages = JSON.parse(localStorage.getItem('languages'));
+    const languages = localStorage.getItem('languages');
 
     const validationSchema = Yup.object().shape({
         skill: Yup.array()
@@ -121,7 +121,7 @@ const FinishTaskElectric = (props) => {
                                         name="skill"
                                         multiple
                                         options={infoSkill}
-                                        getOptionLabel={(option) => option.info_skill_vn}
+                                        getOptionLabel={(option) => languages === "EN" ? option.info_skill_en : option.info_skill_vn}
                                         disableCloseOnSelect
                                         onChange={handleAutocompleteChange}
                                         value={formik.values.skill}
@@ -141,7 +141,7 @@ const FinishTaskElectric = (props) => {
                                         )}
                                         renderOption={(props, option, { selected }) => (
                                             <MenuItem {...props} key={option.id} value={option}>
-                                                {option.info_skill_vn}
+                                                {languages === "EN" ? option.info_skill_en : option.info_skill_vn}
                                                 {selected ? <CheckIcon color="info" /> : null}
                                             </MenuItem>
                                         )}
