@@ -30,7 +30,7 @@ const TaskEmployee = ({ arrResult }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   // const [selectedRow, setSelectedRow] = useState(null);
-
+  const languages = localStorage.getItem('languages');
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -83,7 +83,7 @@ const TaskEmployee = ({ arrResult }) => {
                       {row.id_machine}
                     </TableCell>
                     <TableCell sx={{ whiteSpace: "nowrap" }}>
-                      {row.skill_cfm_vn.join(", ")}
+                      {languages === "EN" ? row.skill_cfm.join(", ") : row.skill_cfm_vn.join(", ")}
                     </TableCell>
                     <TableCell>
                       {row.avgTime}
