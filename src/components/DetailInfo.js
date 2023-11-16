@@ -8,6 +8,8 @@ const DetailInfo = ({ isCheck, open, setOpen, machine, user }) => {
 
     const [t] = useTranslation("global");
 
+    // console.log(machine);
+
     return (
         <>
             {isCheck && (<AlertDialog
@@ -20,7 +22,7 @@ const DetailInfo = ({ isCheck, open, setOpen, machine, user }) => {
                         container
                         rowSpacing={2}
                         columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ marginBottom: "10px" }}>
-                        <Grid item xs={12} md={12}>
+                        <Grid item xs={6} md={6}>
                             <Typography variant="div" sx={{ fontSize: "14px", fontWeight: "500" }}>
                                 {t("process_status.status_1_user_request")} {" "}
                             </Typography>
@@ -58,6 +60,14 @@ const DetailInfo = ({ isCheck, open, setOpen, machine, user }) => {
                             </Typography>
                             <Typography variant="span" sx={{ fontSize: "14px", color: "gray" }}>
                                 {machine.lean_req ? machine.lean_req : user.lean}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={6} md={6}>
+                            <Typography variant="div" sx={{ fontSize: "14px", fontWeight: "500" }}>
+                                {t("process_status.status_1_mechanic")} {" "}
+                            </Typography>
+                            <Typography variant="div" sx={{ fontSize: "14px", color: "gray" }}>
+                                {machine?.name_machanic ? machine?.name_machanic : machine?.name}
                             </Typography>
                         </Grid>
                         <Grid item xs={12} md={12}>

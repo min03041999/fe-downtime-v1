@@ -75,6 +75,7 @@
     "status_1_floor": "Floor:",
     "status_1_lean": "Lean:",
     "status_1_remark": "Remark:",
+    "status_1_mechanic": "Mechanic:",
     "status_2": "The repair technician",
     "status_2_": "Confirming the request sent from production.",
     "status_2_header": "Request confirmation is sent from production.",
