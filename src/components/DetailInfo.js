@@ -8,7 +8,7 @@ const DetailInfo = ({ isCheck, open, setOpen, machine, user }) => {
 
     const [t] = useTranslation("global");
 
-    // console.log(machine);
+    console.log(machine);
 
     return (
         <>
@@ -67,7 +67,8 @@ const DetailInfo = ({ isCheck, open, setOpen, machine, user }) => {
                                 {t("process_status.status_1_mechanic")} {" "}
                             </Typography>
                             <Typography variant="div" sx={{ fontSize: "14px", color: "gray" }}>
-                                {machine?.name_machanic ? machine?.name_machanic : machine?.name}
+                                {/* {machine?.name_machanic ? machine?.name_machanic : machine?.name} */}
+                                {machine?.name_machanic}
                             </Typography>
                         </Grid>
                         <Grid item xs={12} md={12}>

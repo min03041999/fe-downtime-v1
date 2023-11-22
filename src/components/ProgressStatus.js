@@ -25,7 +25,7 @@ import { Toast } from "../utils/toast";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setErrorCode } from "../redux/features/electric";
-import ConfirmModal from "./ConfirmModal";
+// import ConfirmModal from "./ConfirmModal";
 import DetailInfo from "./DetailInfo";
 
 import { useTranslation } from "react-i18next";
@@ -49,17 +49,17 @@ const ProgressStatus = ({ listReport, user }) => {
         setOpen(true);
       },
     },
-    {
-      label: t("process_status.status_2"),
-      description: t("process_status.status_2_"),
-      performAction: function (status, lean, id_machine) {
-        if (status === 1 && (lean === "TD" || lean === "TM")) {
-          setActiveModal("confirm");
-          setIdMachine(id_machine);
-          setOpen(true);
-        }
-      },
-    },
+    // {
+    //   label: t("process_status.status_2"),
+    //   description: t("process_status.status_2_"),
+    //   performAction: function (status, lean, id_machine) {
+    //     if (status === 1 && (lean === "TD" || lean === "TM")) {
+    //       setActiveModal("confirm");
+    //       setIdMachine(id_machine);
+    //       setOpen(true);
+    //     }
+    //   },
+    // },
     {
       label: t("process_status.status_3"),
       description: t("process_status.status_3_"),
@@ -169,7 +169,7 @@ const ProgressStatus = ({ listReport, user }) => {
                     sx={{ width: "100%", padding: "0 15px" }}
                   >
                     <Stepper
-                      activeStep={product["status"] - 1}
+                      activeStep={product["status"] - 2}
                       orientation="vertical"
                     >
                       {steps.map((step, index) => (
@@ -206,7 +206,7 @@ const ProgressStatus = ({ listReport, user }) => {
             )}
 
             {/* Trạng thái 2: Xác nhận form */}
-            {activeModal === "confirm" && (
+            {/* {activeModal === "confirm" && (
               <ConfirmModal
                 isCheck={idMachine === product.id_machine}
                 idMachine={idMachine}
@@ -214,7 +214,7 @@ const ProgressStatus = ({ listReport, user }) => {
                 setOpen={setOpen}
                 user={user}
               />
-            )}
+            )} */}
 
             {/* Trạng thái 3: Quét mã scanner */}
             {activeModal === "scanner" && (

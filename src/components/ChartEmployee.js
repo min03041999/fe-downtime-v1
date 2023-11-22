@@ -30,6 +30,7 @@ const ContentStyle = {
 
 const ChartEmployee = ({ arrPercentfn }) => {
     const [t] = useTranslation("global");
+    const languages = localStorage.getItem('languages');
     const [chart, setChart] = useState({
         labels: [],
         datasets: [
@@ -72,7 +73,7 @@ const ChartEmployee = ({ arrPercentfn }) => {
         if (arrPercentfn !== undefined) {
             setChart(prevChart => ({
                 ...prevChart,
-                labels: arrPercentfn?.map((data) => data.skill_vn),
+                labels: arrPercentfn?.map((data) => languages === "EN" ? data.skill_en : data.skill_vn),
                 datasets: [
                     {
                         ...prevChart.datasets[0],
@@ -81,7 +82,7 @@ const ChartEmployee = ({ arrPercentfn }) => {
                 ]
             }));
         }
-    }, [setChart, arrPercentfn]);
+    }, [setChart, arrPercentfn, languages]);
 
     return (
         <Box sx={ChartEmployeeStyle}>
