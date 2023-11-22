@@ -109,7 +109,8 @@ const UserlistScreen = () => {
                       {row.lean}
                     </TableCell>
                     <TableCell align="center">
-                      {row.floor} - {row.floors}
+                      {row.floor}
+                      {/* {row.floor} - {row.floors} */}
                     </TableCell>
                     <TableCell align="center">
                       {statusCurrent(row.STS)}

@@ -20,8 +20,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { report_damage, setErrorCode, cancel_report_damage } from "../redux/features/product";
 
 import { useTranslation } from "react-i18next";
+import axios from "axios";
+import { BASE_URL } from "../utils/env";
+import authHeader from "../redux/services/auth_header";
 
 const Form = (props) => {
+    const [t] = useTranslation("global");
+    const languages = localStorage.getItem('languages');
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const product = useSelector((state) => state.product);
@@ -30,8 +36,7 @@ const Form = (props) => {
     const [statusForm, setStatusForm] = useState(false);
     const [statusPopup, setstatusPopup] = useState(false);
     const [removeTask, setRemoveTask] = useState(false);
-    const [t] = useTranslation("global");
-    const languages = localStorage.getItem('languages');
+    const [infoMachine, setInfoMachine] = useState(null);
 
     const onBack = () => {
         setScannerResult("");
@@ -67,6 +72,7 @@ const Form = (props) => {
         remark: Yup.string().required(t("info_machine_damage.validate_remark")).matches(/^[^\s]+(\s+[^\s]+)*$/, t('info_machine_damage.validate_no_spaces'))
     });
 
+
     const formik = useFormik({
         initialValues: {
             FullName: user.name,
@@ -76,6 +82,7 @@ const Form = (props) => {
             Floor: user.floor,
             DateReport: dayjs(new Date()),
             id_machine: scannerResult,
+            name_machine: "",
             fixer: "",
             remark: "",
         },
@@ -91,6 +98,36 @@ const Form = (props) => {
             // await dispatch(setErrorCode(null));
         },
     });
+
+
+    useEffect(() => {
+        const id_machine = scannerResult;
+        const { factory } = user;
+        const getInfoMachine = (factory, id_machine) => {
+            return axios.post(BASE_URL + "/damage_report/getMachine", {
+                factory, id_machine
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    ...authHeader(),
+                }
+            }).then((response) => {
+                setInfoMachine(response.data.data);
+                return response.data.data;
+            }).catch((error) => {
+                return error.response.data;
+            });
+        }
+
+        getInfoMachine(factory, id_machine);
+    }, [scannerResult, user])
+
+    useEffect(() => {
+        if (infoMachine) {
+            formik.setFieldValue("name_machine", languages === "EN" ? infoMachine.Name_en : infoMachine.Name_vn);
+        }
+    }, [infoMachine, languages]);
+
 
     useEffect(() => {
         if (product.errorCode === 0) {
@@ -344,6 +381,18 @@ const Form = (props) => {
                                 }
                                 onChange={formik.handleChange}
                                 value={formik.values.id_machine}
+                                inputProps={{ readOnly: true }}
+                            />
+                        </Grid>
+                        <Grid item xs={6} md={6}>
+                            <TextField
+                                label={t("info_machine_damage.name_machine")}
+                                name="name_machine"
+                                variant="outlined"
+                                size="small"
+                                fullWidth
+                                onChange={formik.handleChange}
+                                value={formik.values.name_machine}
                                 inputProps={{ readOnly: true }}
                             />
                         </Grid>

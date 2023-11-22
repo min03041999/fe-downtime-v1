@@ -42,6 +42,7 @@
     "floor": "Floor",
     "date": "Date",
     "id_machine": "ID Machine",
+    "name_machine": "Name Machine",
     "fixer": "Fixer",
     "electrician": "Electrician",
     "mechanic": "Mechanic",

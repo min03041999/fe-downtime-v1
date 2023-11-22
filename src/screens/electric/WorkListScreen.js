@@ -362,7 +362,9 @@ const WorkListScreen = () => {
                                             {row.name} - {row.id_user_request}
                                         </TableCell>
                                         <TableCell>
-                                            {row.floor} -  {row.floors}
+                                            {row.floor}
+
+                                            {/* {row.floor} -  {row.floors} */}
                                         </TableCell>
                                         <TableCell>
                                             <Button

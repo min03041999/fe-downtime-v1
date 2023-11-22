@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Paper } from "@mui/material";
 import BreadCrumb from "../../components/BreadCrumb";
 import Scanner from "../../components/Scanner";
 import Form from "../../components/Form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { get_info_machine } from "../../redux/features/machine";
 
 import { useTranslation } from "react-i18next";
 
@@ -17,6 +18,19 @@ const InfoMachineScreen = () => {
     const auth = useSelector((state) => state.auth);
     const [scannerResult, setScannerResult] = useState("");
     const [t] = useTranslation("global");
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const fetchInfoMachine = async () => {
+            const { factory } = auth.user;
+            const id_machine = scannerResult;
+
+            await dispatch(get_info_machine(factory, id_machine));
+        }
+
+        fetchInfoMachine();
+    }, [dispatch, scannerResult, auth.user]);
 
     return (
         <Box component="div">
