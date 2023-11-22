@@ -178,7 +178,8 @@ const TableEmployeeList = ({ open, setOpen, headerModal, getListAsignMechanic, t
                                         <TableCell sx={{ whiteSpace: "nowrap" }} style={{
                                             color: isSelected ? "#fff" : "#000",
                                         }}>
-                                            {row.floor} {row.floors ? ("- " + row.floors) : ("")}
+                                            {row.floor}
+                                            {/* {row.floors ? ("- " + row.floors) : ("")} */}
                                         </TableCell>
                                     </TableRow>
                                 );
