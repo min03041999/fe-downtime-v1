@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 function statusCurrent(status) {
   switch (status) {
     case 1:
-      return <Chip label="Availabel" color="success" sx={{ backgroundColor: "#11a52c" }} />;
+      return <Chip label="Available" color="success" sx={{ backgroundColor: "#11a52c" }} />;
     case 2:
       return <Chip label="Task" color="warning" />;
     case 3:

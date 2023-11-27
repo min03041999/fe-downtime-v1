@@ -65,7 +65,7 @@ const Form = (props) => {
         factory: Yup.string().required(t("info_machine_damage.validate_factory")),
         id_user_request: Yup.string().required(t("info_machine_damage.validate_id_user_request")),
         Lean: Yup.string().required(t("info_machine_damage.validate_lean")),
-        Floor: Yup.string().required(t("info_machine_damage.validate_floor")),
+        // Floor: Yup.string().required(t("info_machine_damage.validate_floor")),
         DateReport: Yup.string().required(t("info_machine_damage.validate_date_report")),
         id_machine: Yup.string().required(t("info_machine_damage.validate_id_machine")),
         fixer: Yup.string().required(t("info_machine_damage.validate_fixer")),
@@ -319,15 +319,15 @@ const Form = (props) => {
                                 variant="outlined"
                                 size="small"
                                 fullWidth
-                                className={
-                                    formik.errors.Floor && formik.touched.Floor ? "is-invalid" : ""
-                                }
-                                error={formik.errors.Floor && formik.touched.Floor === true}
-                                helperText={
-                                    formik.errors.Floor && formik.touched.Floor
-                                        ? formik.errors.Floor
-                                        : null
-                                }
+                                // className={
+                                //     formik.errors.Floor && formik.touched.Floor ? "is-invalid" : ""
+                                // }
+                                // error={formik.errors.Floor && formik.touched.Floor === true}
+                                // helperText={
+                                //     formik.errors.Floor && formik.touched.Floor
+                                //         ? formik.errors.Floor
+                                //         : null
+                                // }
                                 onChange={formik.handleChange}
                                 value={formik.values.Floor}
                                 inputProps={{ readOnly: true }}
